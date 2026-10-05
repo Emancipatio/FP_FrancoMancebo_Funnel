@@ -4,29 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Founder 80/20 Audit</title>
-<meta name="description" content="Find your first 40 hours back in 3 minutes. A free time audit for founders by Pareto Talent.">
+<meta name="description" content="Get hours back in your first week. Find yours in 3 minutes. A free time audit for founders by Pareto Talent.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: a quiz in three screens (start → pick → hours) that ends in one big reveal "report card", then the 30-day plan. */
+/* Layout: a quiz in three screens (start → pick tasks + hours per area → summary) that ends in one big reveal "report card", then the 30-day plan. */
+/* Theme: Pareto Talent's brand as on paretotalent.com (checked 2026-10-05): dark navy, emerald, Plus Jakarta Sans + DM Sans. Dark only. */
 :root{
-  --bg:#f3f5f2; --surface:#ffffff; --ink:#10212b; --muted:#56676c; --line:#dbe2dd; --soft:#e8eeea;
-  --keep:#3f55c8; --delegate:#0c8f69; --automate:#c07f06; --accent:#0c8f69; --accent-ink:#ffffff;
-  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --bg:#050a0e; --surface:#0f151a; --ink:#f0f4f8; --muted:#94a3b8; --line:#1e2a32; --soft:#141c22;
+  --keep:#818cf8; --delegate:#10b981; --automate:#f2b968; --accent:#10b981; --accent-ink:#050a0e;
+  --display:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --body:"DM Sans","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
-  color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0c1517; --surface:#132024; --ink:#e7eeeb; --muted:#93a5a2; --line:#24363a; --soft:#1a2b2f;
-    --keep:#93a8ff; --delegate:#3cc99c; --automate:#e6ad42; --accent:#3cc99c; --accent-ink:#06231a; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0c1517; --surface:#132024; --ink:#e7eeeb; --muted:#93a5a2; --line:#24363a; --soft:#1a2b2f;
-  --keep:#93a8ff; --delegate:#3cc99c; --automate:#e6ad42; --accent:#3cc99c; --accent-ink:#06231a; color-scheme:dark;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -66,6 +57,10 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .hero-copy{display:grid;gap:18px}
 .go{justify-self:start;border:0;background:var(--accent);color:var(--accent-ink);font:600 18px/1 var(--body);padding:18px 26px;border-radius:12px;cursor:pointer;box-shadow:0 8px 24px -10px var(--accent)}
 .go:hover{filter:brightness(1.06)}
+.ask{display:grid;gap:14px;border-left:3px solid var(--accent);padding:4px 0 4px 16px}
+.ask p{margin:0;max-width:48ch;color:var(--muted)}
+.ask p b{display:block;color:var(--ink);font:700 20px/1.25 var(--display);margin-bottom:4px}
+.proof{margin:0;font-size:13px;color:var(--muted)}
 .go:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .meta{display:flex;flex-wrap:wrap;gap:6px 18px;font:500 13px var(--mono);color:var(--muted)}
 .art{position:relative;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line);aspect-ratio:4/5;max-width:100%}
@@ -76,8 +71,10 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .preview span{font-size:13px;color:var(--muted)}
 .art-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px}
 .art-fallback canvas{width:100%;height:100%}
-.q{display:grid;gap:10px}
-.q p{margin:0;font-weight:600}
+.survey{display:grid;gap:12px;margin-top:8px;background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:18px 20px}
+.survey-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.survey-tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 9px}
+.survey > p:not(.tiny){margin:0;font-weight:600;font-size:17px}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
 .opt{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 16px;cursor:pointer}
 .opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
@@ -92,6 +89,40 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .card::after{content:"";position:absolute;top:13px;right:12px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line)}
 .card[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
 .card[aria-pressed="true"]::after{background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;border-color:var(--accent)}
+/* step 1: one area per slide */
+.slide-top{display:grid;gap:12px}
+.adots{display:flex;gap:6px}
+.adots i{flex:1;height:4px;border-radius:4px;background:var(--line);transition:background .3s ease}
+.adots i.done{background:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.adots i.now{background:var(--accent)}
+.slide{min-height:56vh;overflow:hidden}
+.slide-h{display:flex;gap:18px;align-items:center;margin-bottom:24px}
+.slide-ic{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent)}
+.slide-ic svg{width:36px;height:36px}
+.slide-q{margin:0 0 6px;font:500 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.slide-h h2{font-size:clamp(34px,6.4vw,60px)}
+.slide-h .sub{margin-top:6px;font-size:17px}
+.cards.big{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.cards.big .card{min-height:92px;font-size:17px;padding:18px 46px 18px 18px}
+.slide-in.fwd{animation:slf .45s cubic-bezier(.2,.8,.2,1) backwards}
+.slide-in.bwd{animation:slb .45s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes slf{from{opacity:0;transform:translateX(70px)}}
+@keyframes slb{from{opacity:0;transform:translateX(-70px)}}
+.slide-in .card{animation:pop .4s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i)*50ms + 140ms)}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.hrs{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:6px;transition:opacity .2s ease}
+.hrs.off{opacity:.55}
+.hrs-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.hrs-top label{font-weight:600}
+.hrs-top output{font:800 30px/1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hrs-top output small{font:500 13px var(--mono);color:var(--muted);margin-left:3px}
+.hrs input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;margin:14px 0 6px;border-radius:8px;cursor:pointer;background:linear-gradient(to right,var(--accent) var(--p,0%),var(--line) var(--p,0%))}
+.hrs input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--ink);border:5px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.45)}
+.hrs input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--ink);border:5px solid var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.45)}
+.hrs input[type=range]:disabled{cursor:not-allowed}
+.hrs-scale{display:flex;justify-content:space-between;font:500 11px var(--mono);color:var(--muted)}
+@media (max-width:560px){.slide-ic{width:54px;height:54px;border-radius:16px}.slide-ic svg{width:28px;height:28px}.slide-h{gap:14px}.cards.big .card{min-height:72px;font-size:16px}}
+@media (prefers-reduced-motion:reduce){.slide-in.fwd,.slide-in.bwd,.slide-in .card{animation:none}}
 .navbar{position:sticky;bottom:0;padding-block:14px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:space-between;align-items:center;gap:12px}
 .back{border:0;background:none;color:var(--muted);cursor:pointer;padding:10px 4px;font-weight:500}
 .count{font:500 13px var(--mono);color:var(--muted)}
@@ -101,6 +132,9 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .money input{width:6ch;border:0;background:transparent;color:var(--ink);font:500 20px var(--mono);padding:8px 4px}
 .chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 11px;font-size:13px;cursor:pointer}
 .chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rate.need{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+.rate-err{color:var(--accent);font-weight:600;margin:8px 0 0}
 .slist{display:grid;gap:10px}
 .arow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .arow .an{display:flex;align-items:center;gap:10px;min-width:0}
@@ -112,11 +146,16 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .picked .lab{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .tagx{font-size:12.5px;line-height:1.2;padding:4px 9px;border-radius:999px;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));color:var(--ink)}
 .edit{border:0;background:none;padding:2px 4px;font:600 12.5px var(--body);color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-.rng{display:flex;flex-wrap:wrap;gap:6px}
-.rng button{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:8px 12px;font:500 14px/1 var(--mono);cursor:pointer;color:var(--ink)}
-.rng button:hover{border-color:var(--accent)}
-.rng button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-@media (max-width:720px){.arow{grid-template-columns:minmax(0,1fr)}}
+.ahrs{text-align:right;white-space:nowrap}
+.ahrs b{font:800 26px/1 var(--display);font-variant-numeric:tabular-nums}
+.ahrs small{font:500 12px var(--mono);color:var(--muted);margin-left:2px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.stat b{font:800 clamp(26px,4.5vw,36px)/1 var(--display);font-variant-numeric:tabular-nums}
+.stat b.acc{color:var(--accent)}
+.stat span{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:16px;color:var(--muted);margin:0}
+@media (max-width:720px){.arow{grid-template-columns:minmax(0,1fr) auto}}
 .srow{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,220px) 64px auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .srow .nm{min-width:0;font-weight:500;line-height:1.3}
 .srow input[type=range]{width:100%;accent-color:var(--accent)}
@@ -179,7 +218,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="logo">Pareto<span>.</span>Talent</div>
     <ol class="stepper" id="progress" aria-label="Audit progress" hidden>
       <li data-st="1"><span class="dot">1</span><span class="lbl">Tasks</span></li>
-      <li data-st="2"><span class="dot">2</span><span class="lbl">Hours</span></li>
+      <li data-st="2"><span class="dot">2</span><span class="lbl">Summary</span></li>
       <li data-st="3"><span class="dot">✓</span><span class="lbl">Result</span></li>
     </ol>
   </div>
@@ -188,59 +227,66 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="hero">
       <div class="hero-copy">
         <div class="eyebrow">The Founder 80/20 Audit</div>
-        <h1>Find your first <em>40 hours</em> back.</h1>
-        <p class="sub">Tap what you still do. See what it costs you. Get a 30-day plan to hand it off.</p>
-        <div class="q">
-          <p>Have you tried delegating to an assistant before?</p>
-          <div class="opts" role="group" aria-label="Delegation history">
-            <button class="opt" type="button" data-hist="never" aria-pressed="false">Never</button>
-            <button class="opt" type="button" data-hist="worked" aria-pressed="false">Yes, it worked</button>
-            <button class="opt" type="button" data-hist="failed" aria-pressed="false">Yes, it didn't stick</button>
-          </div>
+        <h1>Get hours back in your <em>first week</em>.</h1>
+        <p class="sub">Your week is leaking into work someone else could do. Take it back, and spend it on growth, or on yourself.</p>
+        <div class="ask">
+          <p><b>How many hours could you get back?</b> Tap what you still do and see your number, what it costs you, and a plan that hands off the easiest tasks first.</p>
+          <button class="go" id="start" type="button">Find my hours →</button>
         </div>
-        <button class="go" id="start" type="button">Start my audit →</button>
-        <div class="meta"><span>~3 minutes</span><span>No sign-up</span><span>Free plan at the end</span></div>
+        <div class="meta"><span>~3 minutes</span><span>No sign-up</span><span>Free 30-day plan</span></div>
+        <p class="proof">Pareto Talent · 100+ founders served · 93% still with us after a year</p>
       </div>
       <div class="art" aria-hidden="true">
-        <img id="hero-img" src="hero.jpg" alt="" onerror="this.remove()">
+        <img id="hero-img" src="hero.webp" alt="" onerror="this.remove()">
         <div class="art-fallback"><canvas id="clock" width="600" height="600"></canvas></div>
-        <div class="preview"><small>Example result</small><b>113 hrs/month</b><span>an agency founder could stop doing</span></div>
+        <div class="preview"><small>Example result</small><b>113 hrs/month</b><span>an agency founder could stop doing, starting in week 1</span></div>
       </div>
     </div>
+    <aside class="survey" aria-labelledby="survey-q">
+      <div class="survey-h"><span class="eyebrow">Quick anonymous survey</span><span class="survey-tag">Optional · 1 question</span></div>
+      <p id="survey-q">Have you tried delegating to an assistant before?</p>
+      <div class="opts" role="group" aria-labelledby="survey-q">
+        <button class="opt" type="button" data-hist="never" aria-pressed="false">Never</button>
+        <button class="opt" type="button" data-hist="worked" aria-pressed="false">Yes, it worked</button>
+        <button class="opt" type="button" data-hist="failed" aria-pressed="false">Yes, it didn't stick</button>
+      </div>
+      <p class="tiny" id="survey-thanks">No name, no email. Your answer only tailors your plan.</p>
+    </aside>
   </section>
 
   <section class="screen" id="s1" hidden>
-    <div class="hero-copy">
-      <div class="eyebrow">Step 1 of 2 · Your tasks</div>
-      <h2 tabindex="-1">What do you <em>still</em> do every week?</h2>
-      <p class="sub">Tap every task that lands on your plate. Be honest, nobody's watching.</p>
+    <div class="slide-top">
+      <div class="eyebrow" id="s1-eyebrow">Step 1 of 2 · Your tasks</div>
+      <div class="adots" id="adots" aria-hidden="true"></div>
     </div>
-    <div class="areas" id="areas"></div>
+    <div class="slide" id="areas" aria-live="polite"></div>
     <div class="navbar">
-      <button class="back" type="button" data-go="0">← Back</button>
+      <button class="back" type="button" id="s1-back">← Back</button>
       <span class="count" id="picked">0 picked</span>
-      <button class="go" type="button" id="to2" disabled>Next: hours →</button>
+      <button class="go" type="button" id="to2">Continue →</button>
     </div>
   </section>
 
   <section class="screen" id="s2" hidden>
     <div class="hero-copy">
-      <div class="eyebrow">Step 2 of 2 · Your hours</div>
-      <h2 tabindex="-1">Roughly how many <em>hours</em> a week?</h2>
-      <p class="sub">One tap per area. We pre-selected a typical range, so change only what's off.</p>
+      <div class="eyebrow">Step 2 of 2 · Your summary</div>
+      <h2 tabindex="-1">Here's your <em>week</em> at a glance.</h2>
+      <p class="sub">Check it looks right. Tap Edit to change an area, then pick your revenue so we can price your hours.</p>
     </div>
-    <div class="rate">
-      <label for="rate">Your hour is worth</label>
-      <div class="money">$<input id="rate" type="number" inputmode="numeric" min="10" step="10" value="250">/hr</div>
-      <button class="chip" type="button" data-rate="125">$250K/yr</button>
-      <button class="chip" type="button" data-rate="250">$500K/yr</button>
-      <button class="chip" type="button" data-rate="500">$1M/yr</button>
-      <button class="chip" type="button" data-rate="1000">$2M+/yr</button>
-    </div>
-    <p class="tiny">Rule of thumb: annual revenue ÷ 2,000 hours.</p>
+    <div class="stats" id="stats"></div>
     <div class="slist" id="slist"></div>
+    <div class="rate" id="rate-box">
+      <label for="rate">Your yearly revenue <span class="tiny">(prices your hour)</span></label>
+      <button class="chip" type="button" data-rate="125" aria-pressed="false">$250K/yr</button>
+      <button class="chip" type="button" data-rate="250" aria-pressed="false">$500K/yr</button>
+      <button class="chip" type="button" data-rate="500" aria-pressed="false">$1M/yr</button>
+      <button class="chip" type="button" data-rate="1000" aria-pressed="false">$2M+/yr</button>
+      <div class="money">$<input id="rate" type="number" inputmode="numeric" min="10" step="10" placeholder="—" aria-describedby="rate-help">/hr</div>
+    </div>
+    <p class="tiny" id="rate-help">Tap your revenue, or type your own hourly value. Rule of thumb: annual revenue ÷ 2,000 hours.</p>
+    <p class="rate-err" id="rate-err" role="alert" hidden>Pick your revenue first. It's how we put a dollar figure on your hours.</p>
     <div class="navbar">
-      <button class="back" type="button" data-go="1">← Back</button>
+      <button class="back" type="button" data-go="1" data-slide="last">← Back</button>
       <button class="go" type="button" id="to3">Show my result →</button>
     </div>
   </section>
@@ -258,7 +304,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
         <div class="bignum"><span id="r-month">0</span><small> hrs/month</small></div>
         <p class="sub">of work you could stop doing yourself.</p>
         <div class="dollar">≈ <span id="r-cost">$0</span> a year</div>
-        <p class="tiny">That's what those hours are worth at your rate.</p>
+        <p class="tiny" id="r-rate">That's what those hours are worth at your rate.</p>
         <div class="legend">
           <span><i style="background:var(--keep)"></i>Keep <b id="r-k">0h</b>/wk</span>
           <span><i style="background:var(--delegate)"></i>Delegate <b id="r-d">0h</b>/wk</span>
@@ -281,7 +327,8 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       <h2 id="t-name">The Human Router</h2>
       <p id="t-desc"></p>
       <p id="t-win"></p>
-      <a class="cta" id="cta" href="#book" target="_blank" rel="noopener">Book my 20-minute Right Hand Fit Call</a>
+      <a class="cta" id="cta" href="#form" target="_blank" rel="noopener">Book my 20-minute Right Hand Fit Call</a>
+      <p class="tiny" id="cta-note" hidden>First, 4 quick questions to check a Right Hand is the right fit for you.</p>
       <p class="tiny">Meet 3 hand-picked candidates · pay nothing until you're excited about one · Freedom 40: 40 hours back in 30 days or next month free</p>
     </div>
 
@@ -294,13 +341,13 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="export copilot">
       <div class="eyebrow">Free bonus</div>
       <h2 style="font-size:clamp(26px,3.6vw,34px)">Your AI <em>Delegation Copilot</em></h2>
-      <p class="sub">Built from your answers. It turns any task on your list into a handoff doc a Right Hand could follow on day one.</p>
+      <p class="sub">Built from your answers. It starts with 9 quick questions about your business, tools and voice, then turns any task on your list into a handoff doc a Right Hand could follow on day one.</p>
       <div class="tabs" role="tablist" aria-label="Copilot version">
         <button type="button" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="true">Any AI chat</button>
         <button type="button" role="tab" id="tab-skill" aria-controls="panel-skill" aria-selected="false">Claude Skill (.zip)</button>
       </div>
       <div id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" class="panel">
-        <p class="tiny">Works in ChatGPT, Claude, Gemini, free plans included. Paste it, then type <b>handoff: inbox triage</b> (or any task) or <b>weekly check-in</b>.</p>
+        <p class="tiny">Works in ChatGPT, Claude, Gemini, free plans included. Paste it and answer its 9 questions (about 5 minutes; "skip" is fine). Then type <b>handoff: inbox triage</b> (or any task), <b>weekly check-in</b>, <b>next</b>, <b>profile</b>, or <b>starter pack</b> to bundle your handoff docs into one brief for a Right Hand.</p>
         <textarea id="prompt" readonly aria-label="Delegation Copilot prompt for any AI chat"></textarea>
         <div class="row"><button class="btn" id="copy" type="button">Copy my copilot</button></div>
         <p class="tiny">Tip: paste it into a ChatGPT Project or Custom GPT, a Gemini Gem, or a Claude Project, and it's there every time.</p>
@@ -311,7 +358,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
         <ol class="steps-install">
           <li><b>Claude (Pro, Max, Team, Enterprise):</b> turn on <i>Code execution and file creation</i> in Settings → Capabilities.</li>
           <li>Go to <b>Customize → Skills</b>, click <b>+</b> → <b>Create skill</b> → <b>Upload a skill</b>, and choose the .zip.</li>
-          <li>Start a chat and type <b>handoff: inbox triage</b>.</li>
+          <li>Start a chat and type <b>start my copilot</b>. It asks 9 quick questions first, then you can type <b>handoff: inbox triage</b>.</li>
         </ol>
         <p class="tiny">Using Claude Code? Unzip it into <code>~/.claude/skills/</code>.</p>
       </div>
@@ -332,7 +379,13 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (function(){
-  var BOOKING_URL = "#book"; // set to the GoHighLevel booking page
+  var FORM_URL = "#form"; // set to the GoHighLevel landing page form (L7/L8)
+  var BOOKING_URL = "#book"; // set to the GoHighLevel booking page (L9); qualified founders only
+  // Qualified founders arrive from the GoHighLevel redirect/email with ?q=1; everyone else goes through the form first.
+  var QUALIFIED = false;
+  try{ if(new URLSearchParams(location.search).get("q")==="1") localStorage.setItem("f8020q","1");
+    QUALIFIED = localStorage.getItem("f8020q")==="1"; }catch(e){}
+  var CALL_URL = QUALIFIED ? BOOKING_URL : FORM_URL;
   var RH_PRICE = 3600, WPM = 4.33, C = 2*Math.PI*80;
 
   var ICONS = {
@@ -385,19 +438,20 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   var BNAME = {K:"Keep",D:"Delegate",A:"Automate"}, NEXTB = {K:"D",D:"A",A:"K"};
 
   var tasks = LIB.map(function(t,i){ return {id:i,area:t[0],name:t[1],bucket:t[2],ease:t[3],note:t[4],ex:t[5],hours:t[5]||1,on:false}; });
-  var hist = null, areaSel = {};
+  var hist = null, areaHrs = {}; // hours/week per area, set by the slider; missing = typical estimate
   var $ = function(id){ return document.getElementById(id); };
   var rateEl = $("rate");
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); };
   var fmtH = function(n){ return (Math.round(n*10)/10).toString()+"h"; };
   var fmtM = function(n){ return "$"+Math.round(n).toLocaleString("en-US"); };
-  $("cta").href = BOOKING_URL;
+  $("cta").href = CALL_URL;
+  if(!QUALIFIED) $("cta-note").hidden = false;
 
-  try{ var s = JSON.parse(localStorage.getItem("f8020v3")||"null");
-    if(s){ rateEl.value = s.rate||rateEl.value; hist = s.hist||null; areaSel = s.a||{};
+  try{ var s = JSON.parse(localStorage.getItem("f8020v4")||"null");
+    if(s){ rateEl.value = s.rate||rateEl.value; hist = s.hist||null; areaHrs = s.h||{};
       (s.on||[]).forEach(function(id){ if(tasks[id]) tasks[id].on=true; }); }
   }catch(e){}
-  function save(){ try{ localStorage.setItem("f8020v3", JSON.stringify({rate:rateEl.value,hist:hist,a:areaSel,on:tasks.filter(function(t){return t.on}).map(function(t){return t.id})})); }catch(e){} }
+  function save(){ try{ localStorage.setItem("f8020v4", JSON.stringify({rate:rateEl.value,hist:hist,h:areaHrs,on:tasks.filter(function(t){return t.on}).map(function(t){return t.id})})); }catch(e){} }
 
   var REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   function show(id){
@@ -415,8 +469,8 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   function focusHead(id){ var h=$(id).querySelector("[tabindex='-1']"); if(h) try{ h.focus({preventScroll:true}); }catch(e){ h.focus(); } }
   function go(n){
     setStepper(n);
-    if(n===1) renderCards();
-    if(n===2) renderSliders();
+    if(n===1) renderCards(1);
+    if(n===2) renderSummary();
     if(n===3){
       applyHours(); save();
       if(REDUCE){ show("s3"); reveal(); focusHead("s3"); return; }
@@ -428,78 +482,132 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     }
     show("s"+n); focusHead("s"+n);
   }
-  document.addEventListener("click",function(e){ var b=e.target.closest("[data-go]"); if(b) go(+b.dataset.go); });
+  document.addEventListener("click",function(e){ var b=e.target.closest("[data-go]"); if(!b) return;
+    if(+b.dataset.go===1) slide = b.dataset.slide==="last" ? AREAS.length-1 : 0;
+    go(+b.dataset.go); });
 
   document.querySelectorAll(".opt").forEach(function(b){
     b.setAttribute("aria-pressed", String(b.dataset.hist===hist));
-    b.addEventListener("click",function(){ hist=b.dataset.hist; document.querySelectorAll(".opt").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))}); save(); });
+    b.addEventListener("click",function(){ hist=b.dataset.hist; document.querySelectorAll(".opt").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))}); save(); thanks(); });
   });
+  function thanks(){ if(hist) $("survey-thanks").textContent="Thanks! We'll factor that into your plan."; }
+  thanks();
   $("start").addEventListener("click",function(){ go(1); });
 
-  function renderCards(){
-    var areas=[],html="";
-    tasks.forEach(function(t){ if(areas.indexOf(t.area)<0) areas.push(t.area); });
-    areas.forEach(function(a){
-      html+='<div><div class="area-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[a]+'</svg><b>'+esc(a)+'</b><span data-ac="'+esc(a)+'"></span></div><div class="cards">';
-      tasks.filter(function(t){return t.area===a}).forEach(function(t){
-        html+='<button class="card" type="button" data-id="'+t.id+'" aria-pressed="'+t.on+'">'+esc(t.name)+'</button>';
-      });
-      html+='</div></div>';
+  /* step 1 is a slideshow: one area per slide */
+  var AREAS = []; tasks.forEach(function(t){ if(AREAS.indexOf(t.area)<0) AREAS.push(t.area); });
+  var HOOK = {
+    "Inbox & messages":"Messages that still go through you.",
+    "Calendar & travel":"Time you spend arranging time.",
+    "Sales & clients":"The work around winning and keeping clients.",
+    "Money & admin":"The paperwork that keeps the lights on.",
+    "Marketing & content":"Everything around your content.",
+    "Team & operations":"Keeping the team moving.",
+    "The 20% only you can do":"Tap what you do now. We'll protect it, not hand it off."
+  };
+  var slide = 0;
+  function renderCards(dir){
+    var a=AREAS[slide], i=0;
+    var html='<div class="slide-in '+(dir<0?"bwd":"fwd")+'"><div class="slide-h"><span class="slide-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[a]+'</svg></span>'+
+      '<div><p class="slide-q">What do you still do every week?</p><h2 tabindex="-1">'+esc(a)+'</h2><p class="sub">'+esc(HOOK[a]||"")+'</p></div></div><div class="cards big">';
+    tasks.filter(function(t){return t.area===a}).forEach(function(t){
+      html+='<button class="card" type="button" style="--i:'+(i++)+'" data-id="'+t.id+'" aria-pressed="'+t.on+'">'+esc(t.name)+'</button>';
     });
-    $("areas").innerHTML=html; updatePicked();
+    html+='</div><div class="hrs" id="hrs"><div class="hrs-top"><label for="hrs-in">Hours a week on '+esc(a)+'</label><output id="hrs-out" for="hrs-in"></output></div>'+
+      '<input type="range" id="hrs-in" min="0" max="'+HMAX+'" step="0.5">'+
+      '<div class="hrs-scale" aria-hidden="true"><span>0</span><span>5</span><span>10</span><span>15</span><span>'+HMAX+'h+</span></div>'+
+      '<p class="tiny" id="hrs-hint"></p></div>';
+    $("areas").innerHTML=html+'</div>';
+    $("s1-eyebrow").textContent="Step 1 of 2 · Area "+(slide+1)+" of "+AREAS.length;
+    $("adots").innerHTML=AREAS.map(function(x,k){ return '<i class="'+(k<slide?"done":k===slide?"now":"")+'"></i>'; }).join("");
+    updateHrs(); updatePicked();
   }
+  function toSlide(n,dir){ slide=n; renderCards(dir); window.scrollTo(0,0); focusHead("s1"); }
   $("areas").addEventListener("click",function(e){
     var c=e.target.closest(".card"); if(!c) return;
-    var t=tasks[+c.dataset.id]; t.on=!t.on; delete areaSel[t.area];
-    c.setAttribute("aria-pressed",String(t.on)); updatePicked(); save();
+    var t=tasks[+c.dataset.id]; t.on=!t.on;
+    if(!pickedIn(t.area).length) delete areaHrs[t.area]; // nothing picked here any more: back to the typical estimate
+    c.setAttribute("aria-pressed",String(t.on)); updateHrs(); updatePicked(); save();
   });
-  function updatePicked(){
-    var n=tasks.filter(function(t){return t.on}).length;
-    $("picked").textContent=n+" picked"; $("to2").disabled = n===0;
-    document.querySelectorAll("[data-ac]").forEach(function(s){ var a=s.dataset.ac; var k=tasks.filter(function(t){return t.area===a&&t.on}).length; s.textContent=k?k+" picked":""; });
+  $("areas").addEventListener("input",function(e){
+    if(e.target.id!=="hrs-in") return;
+    areaHrs[AREAS[slide]]=+e.target.value; updateHrs(); updatePicked(); save();
+  });
+  /* the slider under each slide: time invested in that area, split across its picked tasks */
+  function updateHrs(){
+    var el=$("hrs-in"); if(!el) return;
+    var a=AREAS[slide], n=pickedIn(a).length, v=hoursFor(a);
+    el.disabled=!n; el.value=v; el.style.setProperty("--p",(v/HMAX*100)+"%");
+    el.setAttribute("aria-valuetext",fmtH(v)+(v>=HMAX?" or more":"")+" a week");
+    $("hrs-out").innerHTML=(Math.round(v*10)/10)+(v>=HMAX?"+":"")+'<small>h / week</small>';
+    $("hrs").classList.toggle("off",!n);
+    $("hrs-hint").textContent = !n ? "Pick at least one task above, then slide to how much time it takes you."
+      : areaHrs[a]==null ? "We pre-set a typical amount for what you picked. Slide to match your real week."
+      : "Split across the "+n+" task"+(n>1?"s":"")+" you picked here.";
   }
-  $("to2").addEventListener("click",function(){ go(2); });
+  function updatePicked(){
+    var n=tasks.filter(function(t){return t.on}).length, a=AREAS[slide];
+    var here=pickedIn(a).length, lastSlide=slide===AREAS.length-1;
+    var tot=pickedAreas().reduce(function(x,ar){return x+hoursFor(ar)},0);
+    $("picked").textContent=n+" picked · "+fmtH(tot)+"/wk";
+    $("to2").textContent = lastSlide ? "Next: summary →" : here ? "Continue →" : "None of these →";
+    $("to2").disabled = lastSlide && n===0;
+  }
+  $("to2").addEventListener("click",function(){ if(slide<AREAS.length-1) toSlide(slide+1,1); else go(2); });
+  $("s1-back").addEventListener("click",function(){ if(slide>0) toSlide(slide-1,-1); else go(0); });
 
-  /* hours per area: one tap on a range; split across the picked tasks by typical weight */
-  var RANGES = [["0–1h",0.5],["1–3h",2],["3–5h",4],["5–10h",7.5],["10h+",12]];
+  /* hours per area come from the step-1 slider; split across the picked tasks by typical weight */
+  var HMAX = 20;
   var weight = function(t){ return t.ex>0 ? t.ex : 0.5; };
+  function pickedIn(area){ return tasks.filter(function(t){return t.on&&t.area===area}); }
   function pickedAreas(){ var a=[]; tasks.forEach(function(t){ if(t.on && a.indexOf(t.area)<0) a.push(t.area); }); return a; }
   function suggest(area){
-    var s=tasks.filter(function(t){return t.on&&t.area===area}).reduce(function(x,t){return x+weight(t)},0);
-    return s<1?0:s<3?1:s<5?2:s<10?3:4;
+    var s=pickedIn(area).reduce(function(x,t){return x+weight(t)},0);
+    return Math.min(HMAX,Math.round(s*2)/2);
   }
+  function hoursFor(area){ return pickedIn(area).length ? (areaHrs[area]!=null ? areaHrs[area] : suggest(area)) : 0; }
   function applyHours(){
     pickedAreas().forEach(function(a){
-      if(areaSel[a]==null) areaSel[a]=suggest(a);
-      var H=RANGES[areaSel[a]][1], list=tasks.filter(function(t){return t.on&&t.area===a}), sw=list.reduce(function(x,t){return x+weight(t)},0);
+      var H=hoursFor(a), list=pickedIn(a), sw=list.reduce(function(x,t){return x+weight(t)},0);
       list.forEach(function(t){ t.hours = sw ? H*weight(t)/sw : 0; });
     });
   }
-  function renderSliders(){
-    $("slist").innerHTML = pickedAreas().map(function(a){
-      if(areaSel[a]==null) areaSel[a]=suggest(a);
-      var tags=tasks.filter(function(t){return t.on&&t.area===a}).map(function(t){return '<span class="tagx">'+esc(t.name)+'</span>'}).join("");
-      return '<div class="arow" data-area="'+esc(a)+'"><div class="an"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[a]+'</svg><div><b>'+esc(a)+'</b>'+
-        '<div class="picked"><span class="lab">You picked</span>'+tags+'<button class="edit" type="button" data-edit="'+esc(a)+'" aria-label="Edit tasks in '+esc(a)+'">Edit</button></div></div></div>'+
-        '<div class="rng" role="group" aria-label="Hours per week on '+esc(a)+'">'+RANGES.map(function(r,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(areaSel[a]===i)+'">'+r[0]+'</button>'}).join("")+'</div></div>';
-    }).join("");
+  /* step 2: a read-back of everything picked in step 1 */
+  function renderSummary(){
+    var areas=pickedAreas(), n=tasks.filter(function(t){return t.on}).length;
+    var tot=areas.reduce(function(x,a){return x+hoursFor(a)},0);
+    $("stats").innerHTML='<div class="stat"><b class="acc">'+fmtH(tot)+'</b><span>a week in total</span></div>'+
+      '<div class="stat"><b>'+n+'</b><span>task'+(n===1?"":"s")+' picked</span></div>'+
+      '<div class="stat"><b>'+areas.length+'</b><span>area'+(areas.length===1?"":"s")+'</span></div>';
+    $("slist").innerHTML = areas.length ? areas.map(function(a){
+      var tags=pickedIn(a).map(function(t){return '<span class="tagx">'+esc(t.name)+'</span>'}).join(""), h=hoursFor(a);
+      return '<div class="arow"><div class="an"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[a]+'</svg><div><b>'+esc(a)+'</b>'+
+        '<div class="picked"><span class="lab">You picked</span>'+tags+'<button class="edit" type="button" data-edit="'+esc(a)+'" aria-label="Edit '+esc(a)+'">Edit</button></div></div></div>'+
+        '<div class="ahrs"><b>'+fmtH(h).replace("h","")+(h>=HMAX?"+":"")+'</b><small>h/wk</small></div></div>';
+    }).join("") : '<p class="empty">You haven\'t picked any tasks yet. Go back and tap what you still do.</p>';
     save();
   }
   $("slist").addEventListener("click",function(e){
-    var ed=e.target.closest(".edit");
-    if(ed){
-      var area=ed.dataset.edit; go(1);
-      var head=document.querySelector('[data-ac="'+area.replace(/"/g,'\\"')+'"]');
-      if(head) setTimeout(function(){ head.closest(".area-h").scrollIntoView({block:"start"}); window.scrollBy(0,-70); },60);
+    var ed=e.target.closest(".edit"); if(!ed) return;
+    slide=Math.max(0,AREAS.indexOf(ed.dataset.edit)); go(1);
+  });
+  var chips = document.querySelectorAll(".chip");
+  function syncRate(){
+    chips.forEach(function(c){ c.setAttribute("aria-pressed",String(c.dataset.rate===rateEl.value)); });
+    if(parseFloat(rateEl.value)>0){ $("rate-err").hidden=true; $("rate-box").classList.remove("need"); }
+  }
+  rateEl.addEventListener("input",function(){ syncRate(); save(); });
+  chips.forEach(function(c){ c.addEventListener("click",function(){ rateEl.value=c.dataset.rate; syncRate(); save(); }); });
+  syncRate();
+  /* no default rate: the dollar figure only shows once the founder has picked their own */
+  $("to3").addEventListener("click",function(){
+    if(!(parseFloat(rateEl.value)>0)){
+      $("rate-err").hidden=false; $("rate-box").classList.add("need");
+      $("rate-box").scrollIntoView({block:"center",behavior:REDUCE?"auto":"smooth"}); chips[0].focus({preventScroll:true});
       return;
     }
-    var b=e.target.closest(".rng button"); if(!b) return;
-    var row=b.closest(".arow"); areaSel[row.dataset.area]=+b.dataset.i;
-    row.querySelectorAll(".rng button").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); save();
+    go(3);
   });
-  rateEl.addEventListener("input",save);
-  document.querySelectorAll(".chip").forEach(function(c){ c.addEventListener("click",function(){ rateEl.value=c.dataset.rate; save(); }); });
-  $("to3").addEventListener("click",function(){ go(3); });
 
   function totals(){ var r={K:0,D:0,A:0}; tasks.forEach(function(t){ if(t.on&&t.hours>0) r[t.bucket]+=t.hours; }); r.all=r.K+r.D+r.A; return r; }
 
@@ -528,7 +636,9 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     setTimeout(function(){ done=true; el.textContent=fmt(to); }, dur+150);
   }
 
-  var WEEK = [["Week 1","Quick wins","Share access: delegated inbox, calendar, a password manager."],["Week 2","Clear the admin","Write the rule book: what gets escalated to you."],["Week 3","Client and team work","Your Right Hand drafts, you approve."],["Week 4","Systems","Your Right Hand writes the SOPs so it never comes back."]];
+  var WEEK = [["Week 1","Quick wins","Share access: delegated inbox, calendar, a password manager."],["Week 2","Clear the admin","Write the rule book: what gets escalated to you."],["Week 3","Client and team work","Your Right Hand drafts, you approve."],["Week 4","Make it stick","The goal: nothing you handed off lands back on your plate."]];
+  // Week 4 is about keeping the hours handed off, so it always has these, plus any harder handoffs
+  var STICK = ["Your Right Hand turns every handoff into a written SOP","Weekly 30-minute check-in: what came back to you?","Re-hand off anything that came back, with clearer rules","Pick the next area to hand off in month 2"];
   function plan(){
     var del=tasks.filter(function(t){return t.on&&t.hours>0&&t.bucket==="D"}).sort(function(x,y){return x.ease-y.ease||y.hours-x.hours});
     var auto=tasks.filter(function(t){return t.on&&t.hours>0&&t.bucket==="A"}).sort(function(x,y){return y.hours-x.hours});
@@ -537,7 +647,10 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     del.filter(function(t){return t.ease===2}).forEach(function(t){ w[2].push(t); });
     del.filter(function(t){return t.ease===3}).forEach(function(t){ w[3].push(t); });
     w[0]=w[0].concat(auto.slice(0,2)); w[1]=w[1].concat(auto.slice(2));
-    return {w:w,auto:auto,keep:tasks.filter(function(t){return t.on&&t.hours>0&&t.bucket==="K"})};
+    // no empty week 2 or 3: pull the last task forward from the nearest earlier week that has two or more
+    for(var i=1;i<3;i++){ if(w[i].length) continue;
+      for(var j=i-1;j>=0;j--){ if(w[j].length>1){ w[i].push(w[j].pop()); break; } } }
+    return {w:w,auto:auto,stick:STICK,keep:tasks.filter(function(t){return t.on&&t.hours>0&&t.bucket==="K"})};
   }
 
   var last=null;
@@ -545,6 +658,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     var rate=Math.max(0,parseFloat(rateEl.value)||0), T=totals(), off=T.D+T.A, month=off*WPM;
     countUp($("r-month"),month,function(v){return Math.round(v).toString()});
     countUp($("r-cost"),off*rate*52,fmtM);
+    $("r-rate").textContent="That's what those hours are worth at $"+rate.toLocaleString("en-US")+"/hr, the rate you picked.";
     $("r-k").textContent=fmtH(T.K); $("r-d").textContent=fmtH(T.D); $("r-a").textContent=fmtH(T.A);
     var share=T.all?off/T.all:0; $("r-share").textContent=Math.round(share*100)+"%";
     var parts=[["c-k",T.K],["c-d",T.D],["c-a",T.A]], acc=0;
@@ -558,7 +672,11 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     P.w.forEach(function(list,i){
       var hrs=list.reduce(function(s,t){return s+t.hours},0);
       html+='<div class="week"><span class="tag">'+WEEK[i][0]+'</span><h3>'+WEEK[i][1]+'</h3>';
-      if(list.length) html+='<ul>'+list.map(function(t){return '<li>'+esc(t.name)+' <small>· '+BNAME[t.bucket].toLowerCase()+'</small></li>'}).join("")+'</ul><span class="gain">+'+fmtH(hrs)+' a week back</span>';
+      var items=list.map(function(t){return '<li>'+esc(t.name)+' <small>· '+BNAME[t.bucket].toLowerCase()+'</small></li>'});
+      if(i===3) items=items.concat(P.stick.map(function(s){return '<li>'+esc(s)+' <small>· habit</small></li>'}));
+      if(items.length) html+='<ul>'+items.join("")+'</ul>';
+      if(i<3 && list.length) html+='<span class="gain">+'+fmtH(hrs)+' a week back</span>';
+      if(i===3 && off>0) html+='<span class="gain">'+fmtH(off)+' a week off your plate by day 30</span>';
       html+='<p class="tiny">'+esc(WEEK[i][2])+'</p></div>';
     });
     $("weeks").innerHTML=html;
@@ -573,6 +691,35 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     face:"My voice is the brand. First build a VOICE GUIDE (tone, phrases I use, phrases I never use, 3 example replies) so anything written for me sounds like me.",
     trapped:"Admin swallowed my week. First turn my recurring calendar and money tasks into simple WEEKLY CHECKLISTS an assistant can run without me."
   };
+  // the one intake question that changes most by founder type
+  var TYPEQ = {
+    burned:"Think of the last handoff that came back to you. What went wrong, in one or two lines?",
+    router:"Which three kinds of messages or questions reach you that someone else could answer?",
+    face:"Paste two or three short things you wrote (an email, a post, a DM reply) that sound exactly like you.",
+    trapped:"Which recurring admin task do you resent most, and when in the week does it hit?"
+  };
+  /* Intake: the copilot interviews the founder first and builds a FOUNDER PROFILE it reuses everywhere */
+  function intakeLines(L){
+    var first=(L.P.w[0][0]||L.P.w[1][0]||L.P.w[2][0]||{name:"the first task on my plan"}).name;
+    return [
+      "Before any handoff, interview me so your help fits my business. Ask in 3 short rounds, 3 questions per round, ONE round per message, numbered. Keep each question to one line. I can answer \"skip\" to any question; never ask the same one twice.",
+      "Round 1, my business:",
+      "  1. What does your business sell, to whom, and roughly how big is the team?",
+      "  2. What do you want to spend your time on once this plan works?",
+      "  3. What would a great week look like 90 days from now?",
+      "Round 2, how I work:",
+      "  4. Your first handoff is \""+first+"\". Which tools does it live in today (email, calendar, CRM, project board, docs, chat)?",
+      "  5. How do you want updates: a daily recap, only when something is blocked, or a weekly summary? By email, chat or voice note?",
+      "  6. Which decisions must always come to you, and up to what dollar amount can someone else decide without asking?",
+      "Round 3, my style and limits:",
+      "  7. "+TYPEQ[L.ft.k],
+      "  8. How should anything written for you sound: formal or casual? Any phrases you always use or never use?",
+      "  9. What is off-limits: confidential topics, personal matters, or anything you will never hand off?",
+      "After round 3, write my FOUNDER PROFILE: at most 12 short lines under Business · Goal for my time · Tools · Updates · Decision rules · Voice · Off-limits · Lessons from past handoffs. Ask me to confirm or correct it, then suggest the first task from my plan.",
+      "From then on, use the profile in everything: pre-fill tools, escalation rules, update format and voice in every handoff doc, and ask me only what the profile doesn't already answer. If something I say later contradicts it, update the profile and tell me in one line.",
+      "If you can save memories, offer to save the profile. If not, tell me once to paste it into my project instructions (ChatGPT Project, Gemini Gem or Claude Project) so it's there next time."
+    ];
+  }
   function planLines(L){
     var out=[], n=1;
     L.P.w.forEach(function(list,i){ list.forEach(function(t){ out.push((n++)+". "+t.name+" ("+BNAME[t.bucket].toLowerCase()+", ~"+fmtH(t.hours)+"/wk, "+WEEK[i][0]+")"); }); });
@@ -588,27 +735,42 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     planLines(L).forEach(function(s){ o.push("  "+s); });
     o.push("- I keep (my 20%): "+(L.P.keep.map(function(t){return t.name}).join("; ")||"not listed yet"),"",
       "FIRST FOCUS FOR MY TYPE",FOCUS[L.ft.k],"",
+      "GET TO KNOW ME FIRST");
+    intakeLines(L).forEach(function(s){ o.push(s); });
+    o.push("",
       "COMMANDS",
-      "1) \"handoff: <task>\"  Ask me up to 5 short questions in ONE message (what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate). Never ask for passwords; tell me to share access through a password manager. Then write a one-page handoff doc with: Title · Outcome (done means…) · When / how often · Tools and access · Steps (numbered) · Rules and judgement calls · Escalate to me if… · Example of a good result · Time it should take. End by naming the next task on my plan.",
-      "2) \"weekly check-in\"  Ask: what landed back on my plate, what I handed off, what's blocked. Then give me 3 bullets: keep, re-hand off, automate.",
-      "3) \"next\"  Tell me the next task on my plan and why it comes next.","",
+      "1) \"handoff: <task>\"  Ask me up to 5 short questions in ONE message, skipping anything my profile already answers (what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate). Never ask for passwords; tell me to share access through a password manager. Then write a one-page handoff doc with: Title · Outcome (done means…) · When / how often · Tools and access · Steps (numbered) · Rules and judgement calls · Escalate to me if… · Example of a good result · Time it should take.",
+      "   Finish every handoff doc with a \"WHO RUNS THIS?\" box, honest and specific to the task: AI can… (drafting, summarising, sorting, reminders) / Needs a person… (judgement, chasing people, calls, noticing what's missing, owning the result) / Hours a week this frees when someone owns it (use my plan's estimate).",
+      "   Then add one line: \"Documented so far: Xh/week across N tasks.\" (keep a running total of every handoff doc written in this chat), and name the next task on my plan.",
+      "2) \"weekly check-in\"  Ask: what landed back on my plate, what I handed off, what's blocked. Then give me 3 bullets: keep, re-hand off, automate. Remember earlier check-ins in this chat: if the same task lands back on my plate twice, say so plainly (\"<task> came back twice: a written doc isn't enough, it needs an owner\").",
+      "3) \"next\"  Tell me the next task on my plan and why it comes next.",
+      "4) \"profile\"  Show my founder profile. \"profile: <change>\" updates it.",
+      "5) \"starter pack\"  Combine every handoff doc from this chat into one RIGHT HAND STARTER PACK: Founder profile · Role summary (focus areas, hours a week, my founder type) · Week-1 priorities · Access checklist (tools only, never passwords) · Rules and escalation (merged, no duplicates) · Daily update format (done / in progress / blockers) · then each handoff doc in full. End with one line: \"Bring this to a Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you"+(CALL_URL.indexOf("http")===0?" ("+CALL_URL+")":"")+".\"","",
       "STYLE: short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.","",
-      "Start by confirming in one line, then suggest the first task from my plan.");
+      "Start with one line saying you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.");
     return o.join("\n");
   }
   function skillMd(L){
     return ["---","name: delegation-copilot",
-      "description: My personal Delegation Copilot, built from my Founder 80/20 Audit. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, or decide what to delegate next.",
+      "description: My personal Delegation Copilot, built from my Founder 80/20 Audit. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, decide what to delegate next, or bundle my handoff docs into a starter pack for a new hire. Also use it when I say \"start my copilot\" or ask to see or update my founder profile.",
       "---","","# Delegation Copilot","",
       "Read `my-80-20-plan.md` (same folder) before answering: it holds my founder type, my 30-day handoff order and the 20% I keep.","",
       "## First focus for my type","",FOCUS[L.ft.k],"",
+      "## Get to know me first","",
+      "If this conversation has no founder profile yet (and memory holds none), start here: say in one line that you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.",""]
+      .concat(intakeLines(L)).concat(["",
       "## Commands","",
-      "### handoff: <task>","1. Ask up to 5 short questions in one message: what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate. Never ask for passwords; suggest sharing access through a password manager.",
+      "### handoff: <task>","1. Ask up to 5 short questions in one message, skipping anything my founder profile already answers: what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate. Never ask for passwords; suggest sharing access through a password manager.",
       "2. Write a one-page handoff doc: **Title** · **Outcome** (done means…) · **When / how often** · **Tools and access** · **Steps** (numbered) · **Rules and judgement calls** · **Escalate to me if…** · **Example of a good result** · **Time it should take**.",
-      "3. End by naming the next task in my plan.","",
-      "### weekly check-in","Ask what landed back on my plate, what I handed off and what's blocked. Reply with three bullets: keep, re-hand off, automate.","",
+      "3. Finish with a **Who runs this?** box, honest and specific to the task:","   - **AI can:** drafting, summarising, sorting, reminders (only what truly applies)","   - **Needs a person:** judgement, chasing people, calls, noticing what's missing, owning the result","   - **Hours a week this frees when someone owns it:** use the estimate in `my-80-20-plan.md`",
+      "4. Add one line with the running total for this conversation: \"Documented so far: Xh/week across N tasks.\"",
+      "5. Name the next task in my plan.","",
+      "### weekly check-in","Ask what landed back on my plate, what I handed off and what's blocked. Reply with three bullets: keep, re-hand off, automate. If the same task has landed back on my plate in two check-ins in this conversation, say so plainly: \"[task] came back twice: a written doc isn't enough, it needs an owner.\"","",
       "### next","Name the next task in my plan and why it comes next.","",
-      "## Style","Short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.",""].join("\n");
+      "### profile","Show my founder profile. `profile: <change>` updates it.","",
+      "### starter pack","Combine every handoff doc from this conversation into one **Right Hand Starter Pack**:","1. Founder profile","2. Role summary (focus areas, hours a week, my founder type)","3. Week-1 priorities","4. Access checklist (tools only, never passwords)","5. Rules and escalation (merged, no duplicates)","6. Daily update format (done / in progress / blockers)","7. Each handoff doc in full",
+      "End with one line: \"Bring this to a Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you"+(CALL_URL.indexOf("http")===0?" ("+CALL_URL+")":"")+".\"","",
+      "## Style","Short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.",""]).join("\n");
   }
   function planMd(L){
     var o=["# My 80/20 plan","","Generated by the Founder 80/20 Audit (Pareto Talent).","",
@@ -619,6 +781,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     L.P.w.forEach(function(list,i){
       o.push("### "+WEEK[i][0]+": "+WEEK[i][1]);
       list.forEach(function(t){ o.push("- "+t.name+" ("+BNAME[t.bucket].toLowerCase()+", ~"+fmtH(t.hours)+"/wk). "+t.note); });
+      if(i===3) L.P.stick.forEach(function(s){ o.push("- "+s+" (habit)"); });
       o.push("- _"+WEEK[i][2]+"_","");
     });
     o.push("## I keep (my 20%)"); L.P.keep.forEach(function(t){ o.push("- "+t.name); });
@@ -650,9 +813,9 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     o.push("THE FOUNDER 80/20 AUDIT: MY 30-DAY HANDOFF PLAN","Pareto Talent · paretotalent.com","",
       "Founder type: "+L.ft.n,"Hours I could stop doing: "+Math.round(L.month)+" a month","Worth: "+fmtM(L.off*L.rate*52)+" a year at $"+L.rate+"/hr",
       "Keep "+fmtH(L.T.K)+"/wk · Delegate "+fmtH(L.T.D)+"/wk · Automate "+fmtH(L.T.A)+"/wk","");
-    L.P.w.forEach(function(list,i){ o.push(WEEK[i][0].toUpperCase()+": "+WEEK[i][1]); list.forEach(function(t){ o.push("  - "+t.name+" ("+BNAME[t.bucket]+", "+fmtH(t.hours)+"/wk): "+t.note); }); o.push("  * "+WEEK[i][2],""); });
+    L.P.w.forEach(function(list,i){ o.push(WEEK[i][0].toUpperCase()+": "+WEEK[i][1]); list.forEach(function(t){ o.push("  - "+t.name+" ("+BNAME[t.bucket]+", "+fmtH(t.hours)+"/wk): "+t.note); }); if(i===3) L.P.stick.forEach(function(s){ o.push("  - "+s+" (habit)"); }); o.push("  * "+WEEK[i][2],""); });
     o.push("KEEP (your 20%):"); L.P.keep.forEach(function(t){ o.push("  - "+t.name); });
-    o.push("","Want someone to run this plan with you? Book a 20-minute Right Hand Fit Call: "+(BOOKING_URL.indexOf("http")===0?BOOKING_URL:"paretotalent.com"));
+    o.push("","Want someone to run this plan with you? Book a 20-minute Right Hand Fit Call: "+(CALL_URL.indexOf("http")===0?CALL_URL:"paretotalent.com"));
     try{ var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([o.join("\n")],{type:"text/plain"})); a.download="founder-80-20-plan.txt"; document.body.appendChild(a); a.click(); a.remove(); $("status").textContent="Plan downloaded."; }
     catch(e){ $("status").textContent="Download blocked. Use Copy instead."; }
   });
