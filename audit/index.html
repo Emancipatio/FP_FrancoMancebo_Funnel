@@ -161,6 +161,14 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .btn{border:0;background:var(--ink);color:var(--bg);border-radius:10px;padding:11px 15px;font-weight:600;cursor:pointer}
 .btn-q{border:1px solid var(--line);background:transparent;border-radius:10px;padding:10px 14px;font-weight:500;cursor:pointer}
 .status{font-size:13px;color:var(--accent)}
+.copilot{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3.5vw,30px);gap:14px}
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:12px;background:var(--soft);justify-self:start;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;border-radius:9px;padding:9px 14px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.panel{display:grid;gap:10px}
+.copilot textarea{background:var(--bg);min-height:180px}
+.steps-install{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
+code{font:500 12.5px var(--mono);background:var(--soft);padding:1px 5px;border-radius:5px}
 footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -283,13 +291,32 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     </div>
     <div class="weeks" id="weeks"></div>
 
-    <div class="export">
-      <h2 style="font-size:24px">Start today with AI</h2>
-      <p class="tiny">Paste this into Claude or ChatGPT to write your first handoff docs.</p>
-      <textarea id="prompt" readonly aria-label="Delegation prompt for an AI assistant"></textarea>
+    <div class="export copilot">
+      <div class="eyebrow">Free bonus</div>
+      <h2 style="font-size:clamp(26px,3.6vw,34px)">Your AI <em>Delegation Copilot</em></h2>
+      <p class="sub">Built from your answers. It turns any task on your list into a handoff doc a Right Hand could follow on day one.</p>
+      <div class="tabs" role="tablist" aria-label="Copilot version">
+        <button type="button" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="true">Any AI chat</button>
+        <button type="button" role="tab" id="tab-skill" aria-controls="panel-skill" aria-selected="false">Claude Skill (.zip)</button>
+      </div>
+      <div id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" class="panel">
+        <p class="tiny">Works in ChatGPT, Claude, Gemini, free plans included. Paste it, then type <b>handoff: inbox triage</b> (or any task) or <b>weekly check-in</b>.</p>
+        <textarea id="prompt" readonly aria-label="Delegation Copilot prompt for any AI chat"></textarea>
+        <div class="row"><button class="btn" id="copy" type="button">Copy my copilot</button></div>
+        <p class="tiny">Tip: paste it into a ChatGPT Project or Custom GPT, a Gemini Gem, or a Claude Project, and it's there every time.</p>
+      </div>
+      <div id="panel-skill" role="tabpanel" aria-labelledby="tab-skill" class="panel" hidden>
+        <p class="tiny">A real Claude Skill: <code>delegation-copilot/SKILL.md</code> plus <code>my-80-20-plan.md</code> with your results. Claude uses it in every chat, no pasting.</p>
+        <div class="row"><button class="btn" id="zip" type="button">Download my skill (.zip)</button></div>
+        <ol class="steps-install">
+          <li><b>Claude (Pro, Max, Team, Enterprise):</b> turn on <i>Code execution and file creation</i> in Settings → Capabilities.</li>
+          <li>Go to <b>Customize → Skills</b>, click <b>+</b> → <b>Create skill</b> → <b>Upload a skill</b>, and choose the .zip.</li>
+          <li>Start a chat and type <b>handoff: inbox triage</b>.</li>
+        </ol>
+        <p class="tiny">Using Claude Code? Unzip it into <code>~/.claude/skills/</code>.</p>
+      </div>
       <div class="row">
-        <button class="btn" id="copy" type="button">Copy the prompt</button>
-        <button class="btn-q" id="download" type="button">Download my plan</button>
+        <button class="btn-q" id="download" type="button">Download my plan (.txt)</button>
         <button class="btn-q" type="button" data-go="1">Edit my answers</button>
         <span class="status" id="status" role="status"></span>
       </div>
@@ -302,6 +329,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   </footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (function(){
   var BOOKING_URL = "#book"; // set to the GoHighLevel booking page
@@ -476,10 +504,10 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   function totals(){ var r={K:0,D:0,A:0}; tasks.forEach(function(t){ if(t.on&&t.hours>0) r[t.bucket]+=t.hours; }); r.all=r.K+r.D+r.A; return r; }
 
   var TYPES = {
-    burned:{n:"The Burned Delegator",d:"You've tried handing work off and it came back to you. The problem wasn't delegating. It was handing off tasks instead of outcomes, to someone who wasn't trained to think ahead.",w:"Your first win: hand off one whole area (start with your inbox) with written rules, not one task at a time."},
-    router:{n:"The Human Router",d:"Every message, update and decision passes through you, so the company moves at the speed of your inbox.",w:"Your first win: make a Right Hand the hub. Inbox and status-chasing move off your plate in week one."},
-    face:{n:"The Face of the Brand",d:"Your content and your voice drive the business, but the work around them is eating the time you need to create.",w:"Your first win: keep the camera and the stage; hand off editing, posting and replies so you only show up for the 20%."},
-    trapped:{n:"The Trapped Founder",d:"You started this for freedom. Somewhere along the way, admin became the job.",w:"Your first win: clear calendar and money admin first. It's the fastest way to feel the business work without you."}
+    burned:{k:"burned",n:"The Burned Delegator",d:"You've tried handing work off and it came back to you. The problem wasn't delegating. It was handing off tasks instead of outcomes, to someone who wasn't trained to think ahead.",w:"Your first win: hand off one whole area (start with your inbox) with written rules, not one task at a time."},
+    router:{k:"router",n:"The Human Router",d:"Every message, update and decision passes through you, so the company moves at the speed of your inbox.",w:"Your first win: make a Right Hand the hub. Inbox and status-chasing move off your plate in week one."},
+    face:{k:"face",n:"The Face of the Brand",d:"Your content and your voice drive the business, but the work around them is eating the time you need to create.",w:"Your first win: keep the camera and the stage; hand off editing, posting and replies so you only show up for the 20%."},
+    trapped:{k:"trapped",n:"The Trapped Founder",d:"You started this for freedom. Somewhere along the way, admin became the job.",w:"Your first win: clear calendar and money admin first. It's the fastest way to feel the business work without you."}
   };
   function founderType(){
     if(hist==="failed") return TYPES.burned;
@@ -534,15 +562,84 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       html+='<p class="tiny">'+esc(WEEK[i][2])+'</p></div>';
     });
     $("weeks").innerHTML=html;
-    var L=["I'm a founder. I just took the Founder 80/20 Audit by Pareto Talent. My founder type: "+ft.n+". My hour is worth $"+rate+".",
-      "Weekly recurring work: keep "+fmtH(T.K)+", delegate "+fmtH(T.D)+", automate "+fmtH(T.A)+".","","DELEGATE:"];
-    P.w.forEach(function(l){ l.forEach(function(t){ if(t.bucket==="D") L.push("- "+t.name+" ("+fmtH(t.hours)+"/wk)"); }); });
-    L.push("AUTOMATE:"); P.auto.forEach(function(t){ L.push("- "+t.name+" ("+fmtH(t.hours)+"/wk). Idea: "+t.note); });
-    L.push("KEEP:"); P.keep.forEach(function(t){ L.push("- "+t.name); });
-    L.push("","Act as my chief of staff. 1) Ask me 5 questions about how I do my top 3 delegate tasks. 2) Write a one-page handoff doc for each (purpose, steps, rules, what to escalate to me). 3) Suggest the simplest setup for each automation.");
-    $("prompt").value=L.join("\n");
     last={rate:rate,T:T,P:P,ft:ft,month:month,off:off};
+    $("prompt").value=chatPrompt(last);
   }
+
+  /* ---- Delegation Copilot: one source, two formats (chat prompt + Claude Skill) ---- */
+  var FOCUS = {
+    burned:"Past handoffs failed because tasks were handed off without outcomes or rules. For every handoff, start with OUTCOME (what 'done' looks like) and an ESCALATION list (when to come to me) before any steps.",
+    router:"Everything routes through me. First build my INBOX RULE BOOK: what the assistant answers alone, what gets archived, what gets drafted for me, and what reaches me immediately.",
+    face:"My voice is the brand. First build a VOICE GUIDE (tone, phrases I use, phrases I never use, 3 example replies) so anything written for me sounds like me.",
+    trapped:"Admin swallowed my week. First turn my recurring calendar and money tasks into simple WEEKLY CHECKLISTS an assistant can run without me."
+  };
+  function planLines(L){
+    var out=[], n=1;
+    L.P.w.forEach(function(list,i){ list.forEach(function(t){ out.push((n++)+". "+t.name+" ("+BNAME[t.bucket].toLowerCase()+", ~"+fmtH(t.hours)+"/wk, "+WEEK[i][0]+")"); }); });
+    return out;
+  }
+  function chatPrompt(L){
+    var o=[];
+    o.push("You are my Delegation Copilot. Stay in this role for the whole chat.","",
+      "ABOUT ME (from my Founder 80/20 Audit by Pareto Talent)",
+      "- Founder type: "+L.ft.n+". "+L.ft.d,
+      "- Each week: keep "+fmtH(L.T.K)+", delegate "+fmtH(L.T.D)+", automate "+fmtH(L.T.A)+". About "+Math.round(L.month)+" hours a month could leave my plate.",
+      "- My 30-day handoff order:");
+    planLines(L).forEach(function(s){ o.push("  "+s); });
+    o.push("- I keep (my 20%): "+(L.P.keep.map(function(t){return t.name}).join("; ")||"not listed yet"),"",
+      "FIRST FOCUS FOR MY TYPE",FOCUS[L.ft.k],"",
+      "COMMANDS",
+      "1) \"handoff: <task>\"  Ask me up to 5 short questions in ONE message (what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate). Never ask for passwords; tell me to share access through a password manager. Then write a one-page handoff doc with: Title · Outcome (done means…) · When / how often · Tools and access · Steps (numbered) · Rules and judgement calls · Escalate to me if… · Example of a good result · Time it should take. End by naming the next task on my plan.",
+      "2) \"weekly check-in\"  Ask: what landed back on my plate, what I handed off, what's blocked. Then give me 3 bullets: keep, re-hand off, automate.",
+      "3) \"next\"  Tell me the next task on my plan and why it comes next.","",
+      "STYLE: short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.","",
+      "Start by confirming in one line, then suggest the first task from my plan.");
+    return o.join("\n");
+  }
+  function skillMd(L){
+    return ["---","name: delegation-copilot",
+      "description: My personal Delegation Copilot, built from my Founder 80/20 Audit. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, or decide what to delegate next.",
+      "---","","# Delegation Copilot","",
+      "Read `my-80-20-plan.md` (same folder) before answering: it holds my founder type, my 30-day handoff order and the 20% I keep.","",
+      "## First focus for my type","",FOCUS[L.ft.k],"",
+      "## Commands","",
+      "### handoff: <task>","1. Ask up to 5 short questions in one message: what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate. Never ask for passwords; suggest sharing access through a password manager.",
+      "2. Write a one-page handoff doc: **Title** · **Outcome** (done means…) · **When / how often** · **Tools and access** · **Steps** (numbered) · **Rules and judgement calls** · **Escalate to me if…** · **Example of a good result** · **Time it should take**.",
+      "3. End by naming the next task in my plan.","",
+      "### weekly check-in","Ask what landed back on my plate, what I handed off and what's blocked. Reply with three bullets: keep, re-hand off, automate.","",
+      "### next","Name the next task in my plan and why it comes next.","",
+      "## Style","Short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.",""].join("\n");
+  }
+  function planMd(L){
+    var o=["# My 80/20 plan","","Generated by the Founder 80/20 Audit (Pareto Talent).","",
+      "- **Founder type:** "+L.ft.n+": "+L.ft.d,
+      "- **Weekly hours:** keep "+fmtH(L.T.K)+" · delegate "+fmtH(L.T.D)+" · automate "+fmtH(L.T.A),
+      "- **Hours I could stop doing:** about "+Math.round(L.month)+" a month",
+      "- **My hourly value:** $"+L.rate,"","## 30-day handoff order",""];
+    L.P.w.forEach(function(list,i){
+      o.push("### "+WEEK[i][0]+": "+WEEK[i][1]);
+      list.forEach(function(t){ o.push("- "+t.name+" ("+BNAME[t.bucket].toLowerCase()+", ~"+fmtH(t.hours)+"/wk). "+t.note); });
+      o.push("- _"+WEEK[i][2]+"_","");
+    });
+    o.push("## I keep (my 20%)"); L.P.keep.forEach(function(t){ o.push("- "+t.name); });
+    return o.join("\n")+"\n";
+  }
+
+  function selectTab(which){
+    ["chat","skill"].forEach(function(k){ var on=k===which; $("tab-"+k).setAttribute("aria-selected",String(on)); $("panel-"+k).hidden=!on; });
+  }
+  $("tab-chat").addEventListener("click",function(){ selectTab("chat"); });
+  $("tab-skill").addEventListener("click",function(){ selectTab("skill"); });
+
+  function saveBlob(blob,name){ var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); },4000); }
+  $("zip").addEventListener("click",function(){
+    if(!last) return;
+    if(!window.JSZip){ $("status").textContent="The download needs a moment to load. Try again, or use the Any AI chat tab."; return; }
+    var z=new JSZip(), f=z.folder("delegation-copilot");
+    f.file("SKILL.md",skillMd(last)); f.file("my-80-20-plan.md",planMd(last));
+    z.generateAsync({type:"blob"}).then(function(b){ saveBlob(b,"delegation-copilot.zip"); $("status").textContent="Skill downloaded. Upload it in Claude: Customize → Skills."; },
+      function(){ $("status").textContent="Couldn't build the zip. Use the Any AI chat tab instead."; });
+  });
 
   $("copy").addEventListener("click",function(){
     var ta=$("prompt"), st=$("status"), fb=function(){ ta.focus(); ta.select(); st.textContent="Press Ctrl+C (Cmd+C on Mac) to copy."; };
