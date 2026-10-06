@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Business Map · Right Hand Brief funnel</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .flow{display:grid;gap:0;justify-items:center;margin-top:32px}
+  .node{width:min(100%,560px);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:6px}
+  .node h3{font-size:18px}
+  .node p{color:var(--muted);font-size:15px}
+  .node .tag{font:700 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .node a{font-size:14px;word-break:break-all}
+  .node.decision{border-color:var(--amber);border-style:dashed}
+  .node.decision .tag{color:var(--amber)}
+  .node.gap{border-color:#f87171;background:#1a0f12}
+  .node.gap .tag{color:#f87171}
+  .arrow{width:2px;height:28px;background:var(--line);position:relative}
+  .arrow::after{content:"";position:absolute;left:-5px;bottom:-2px;border:6px solid transparent;border-top-color:var(--muted)}
+  .branch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;width:100%}
+  .branch > div{display:grid;justify-items:center;align-content:start}
+  .branch .label{font:700 13px/1 var(--display);padding:8px 0;color:var(--mint)}
+  .branch .label.no{color:#f87171}
+  @media (max-width:760px){.branch{grid-template-columns:minmax(0,1fr)}}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line);background:var(--surface)}
+  .legend .d::before{border:1px dashed var(--amber)}
+  .legend .g::before{border-color:#f87171;background:#1a0f12}
+</style>
+</head>
+<body>
+<!-- FP | Franco Mancebo | Business Map (L3) -->
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="../">Pareto<span>.</span>Talent</a>
+    <span class="small note">FP | Franco Mancebo | Business Map</span>
+  </header>
+
+  <section aria-labelledby="h1" style="padding-bottom:20px">
+    <div class="stack">
+      <div class="eyebrow">Business Map · L3</div>
+      <h1 id="h1" style="font-size:clamp(32px,5vw,48px)">From ad to call, <em>through the founder's eyes</em>.</h1>
+      <p class="lead">Every step links to the real asset. Anything not built yet is marked in red as a gap.</p>
+      <div class="legend"><span>Built and linked</span><span class="d">Decision</span><span class="g">Gap (not built yet)</span></div>
+    </div>
+  </section>
+
+  <div class="flow" id="flow">
+    <div class="node">
+      <span class="tag">1 · Ad (Facebook / Instagram)</span>
+      <h3>Founder sees one of 5 ads</h3>
+      <p>Human Router and Trapped Founder (top), Face of the Brand and law firm owner (middle), Burned Delegator (bottom). Every ad promises the Right Hand Brief.</p>
+      <a href="https://drive.google.com/drive/folders/1onY_S5us43UuNJHacBhck4xRJCMf0rpY">L13 · Ads folder</a>
+    </div>
+    <div class="arrow"></div>
+    <div class="node">
+      <span class="tag">2 · Landing page</span>
+      <h3>"80% of your week is someone else's job. Find out which 80%."</h3>
+      <p>Hero, what's inside, who it's for, proof, form, FAQ.</p>
+      <a href="../">L7 · Landing page</a>
+    </div>
+    <div class="arrow"></div>
+    <div class="node" data-slot="form">
+      <span class="tag">3 · Qualifying form (GoHighLevel)</span>
+      <h3>Name, email, role, revenue, timing</h3>
+      <p>FP | Franco Mancebo | Qualifying Form, embedded on the landing page. Submitting it starts the Opt-in Workflow: tag, opportunity, delivery email, notification.</p>
+      <a href="../#get">L8 · Qualifying form</a>
+    </div>
+    <div class="arrow"></div>
+    <div class="node decision">
+      <span class="tag">4 · Decision</span>
+      <h3>Qualified?</h3>
+      <p>Founder or owner <b>and</b> $500K+ revenue <b>and</b> wants help within 90 days.</p>
+    </div>
+
+    <div class="branch">
+      <div>
+        <div class="label">Yes</div>
+        <div class="node">
+          <span class="tag">5a · Booking page</span>
+          <h3>"Your brief is ready. Want someone to run it for you?"</h3>
+          <p>Opens the brief, then books a 20-minute Right Hand Fit Call. Pipeline stage: Qualified.</p>
+          <a href="../book/">L9 · Booking page</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">6a · Lead magnet</span>
+          <h3>The 10-Minute Right Hand Brief</h3>
+          <p>Hours, dollar figure, outcomes for the first 30 days, access list. CTA: book the Fit Call.</p>
+          <a href="../brief/?q=1">L6 · Lead magnet (qualified version)</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">7a · Not booked yet?</span>
+          <h3>Qualified Follow-up Workflow</h3>
+          <p>3 emails (day 1, 3, 5). Each checks "booked?" first; exits when the founder books.</p>
+          <a href="https://drive.google.com/drive/folders/1LPgVnwtnVZ8IfKCPv62TJK1EEUKroUkW">L12 · Workflow screenshots</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">8a · Booked</span>
+          <h3>Booking Workflow</h3>
+          <p>Stage: Call booked. Confirmation now, reminders 24 hours and 1 hour before.</p>
+          <a href="https://drive.google.com/drive/folders/1LPgVnwtnVZ8IfKCPv62TJK1EEUKroUkW">L12 · Workflow screenshots</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">9a · Right Hand Fit Call</span>
+          <h3>20 minutes with Pareto</h3>
+          <p>Go through the brief; if it's a fit, 3 hand-picked profiles within 24 hours. Won: stage Client.</p>
+          <a href="https://drive.google.com/drive/folders/1oN0F2iPC79IiUA2-VKZxbnxPcjsEZdWQ">L11 · Pipeline screenshots</a>
+        </div>
+      </div>
+      <div>
+        <div class="label no">No</div>
+        <div class="node">
+          <span class="tag">5b · Thank-you page</span>
+          <h3>"Your Right Hand Brief is ready."</h3>
+          <p>Opens the brief right away; the link is also emailed. Pipeline stage: Unqualified.</p>
+          <a href="../thanks/">L10 · Thank-you page</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">6b · Lead magnet</span>
+          <h3>The 10-Minute Right Hand Brief</h3>
+          <p>Same brief; the CTA points to the Right Hand Program page instead of a call.</p>
+          <a href="../brief/">L6 · Lead magnet</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">7b · Nurture</span>
+          <h3>Unqualified Nurture Workflow</h3>
+          <p>3 value emails (day 2, 5, 9): use the brief, why VAs fail, when a Right Hand makes sense.</p>
+          <a href="https://drive.google.com/drive/folders/1LPgVnwtnVZ8IfKCPv62TJK1EEUKroUkW">L12 · Workflow screenshots</a>
+        </div>
+        <div class="arrow"></div>
+        <div class="node">
+          <span class="tag">8b · Later</span>
+          <h3>Grows into a fit</h3>
+          <p>When revenue or timing changes, the founder comes back through the landing page and qualifies.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="gaps" style="margin-top:40px">
+    <div class="stack" style="max-width:760px">
+      <div class="eyebrow" style="color:#f87171">Gaps, marked honestly</div>
+      <h2 id="gaps">What this map doesn't cover yet</h2>
+      <ul class="fit no">
+        <li>No paid spend: the ads are written and designed but not running, so there's no cost-per-lead data yet.</li>
+        <li>Emails send from a shared GoHighLevel test account and all workflows are OFF, so delivery is shown in the workflow logs, not a live inbox.</li>
+        <li>No re-entry path for unqualified founders who later qualify (8b) beyond coming back through the landing page.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Pareto Talent · Right Hand Brief funnel</span>
+    <span>FP | Franco Mancebo · Pareto Bootcamp final project</span>
+  </footer>
+</div>
+</body>
+</html>
