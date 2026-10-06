@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Your Right Hand Kit is ready · Pareto Talent</title>
+<title>Find your founder style · Pareto Talent</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../assets/site.css">
+<style>
+.emblems{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-self:center}
+.emblems figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:8px}
+.emblems img{width:100%;height:auto;border-radius:12px}
+.emblems figcaption{font:700 15px/1.2 var(--display);text-align:center}
+</style>
 </head>
 <body>
 <!-- FP | Franco Mancebo | Thank You Page (L10): everyone who doesn't qualify lands here from the form -->
@@ -20,25 +26,29 @@
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
       <div class="eyebrow">Thank you · Check your inbox</div>
-      <h1 id="h1">Your <em>Right Hand Kit</em> is ready.</h1>
-      <p class="lead">Download it now and set it up in about two minutes. We've also emailed you the link, so you can come back to it any time.</p>
-      <a class="btn" href="../brief/">Get my kit →</a>
+      <h1 id="h1">Now find out <em>which founder you are</em>.</h1>
+      <p class="lead">Your quiz is on the kit page: 8 questions, then your kit downloads tuned to your style. We've emailed you the link too.</p>
+      <a class="btn" href="../brief/#quiz">Take the quiz →</a>
       <p class="note">Don't see the email? Check your promotions or spam folder for "Your Right Hand Kit".</p>
     </div>
-    <div class="art"><img src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
+    <div class="emblems" aria-label="The 4 founder styles">
+      <figure><img src="../assets/styles/visionary.svg" alt="" width="240" height="240"><figcaption>The Visionary</figcaption></figure>
+      <figure><img src="../assets/styles/captain.svg" alt="" width="240" height="240"><figcaption>The Captain</figcaption></figure>
+      <figure><img src="../assets/styles/craftsman.svg" alt="" width="240" height="240"><figcaption>The Craftsman</figcaption></figure>
+      <figure><img src="../assets/styles/systems.svg" alt="" width="240" height="240"><figcaption>The Systems Builder</figcaption></figure>
+    </div>
   </section>
 
   <section aria-labelledby="how">
     <div class="stack">
       <div class="eyebrow">Get the most out of it</div>
-      <h2 id="how">Three steps, about two minutes</h2>
+      <h2 id="how">Three steps</h2>
     </div>
     <ol class="steps" style="margin-top:22px;max-width:760px">
-      <li>In Claude, open <strong>Settings → Capabilities</strong> and turn on <strong>Code execution and file creation</strong>.</li>
-      <li>Open <strong>Customize → Skills</strong>, choose <strong>Upload a skill</strong> and pick the <strong>right-hand-kit.zip</strong> from the kit page.</li>
-      <li>Connect <strong>Gmail</strong> and <strong>Google Calendar</strong> in <strong>Settings → Connectors</strong>, start a new chat and type <strong>audit my week</strong>.</li>
+      <li>Take the <strong>2-minute quiz</strong> on the kit page.</li>
+      <li>Download your <strong>tuned kit</strong>, or copy your prompt if you're not on Claude.</li>
+      <li>Type <strong>audit my week</strong>.</li>
     </ol>
-    <p class="note" style="margin-top:14px">Not on Claude? The <a href="../brief/#other">kit page</a> has a copy-paste version for any AI chat.</p>
   </section>
 
   <section aria-labelledby="proof">
