@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Founder 80/20 Audit</title>
-<meta name="description" content="Get hours back in your first week. Find yours in 3 minutes. A free time audit for founders by Pareto Talent.">
+<title>The 10-Minute Right Hand Brief</title>
+<meta name="description" content="Find the 80% of your week that's someone else's job, and get the brief to hand it off. Free for founders, by Pareto Talent.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: a quiz in three screens (start → pick tasks + hours per area → summary) that ends in one big reveal "report card", then the 30-day plan. */
+/* Layout: three screens (start → pick tasks + hours per area → summary) that end in the result and the Right Hand Brief, then the 30-day order. */
 /* Theme: Pareto Talent's brand as on paretotalent.com (checked 2026-10-05): dark navy, emerald, Plus Jakarta Sans + DM Sans. Dark only. */
 :root{
   --bg:#050a0e; --surface:#0f151a; --ink:#f0f4f8; --muted:#94a3b8; --line:#1e2a32; --soft:#141c22;
@@ -206,6 +206,30 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .copilot textarea{background:var(--bg);min-height:180px}
 .steps-install{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
 code{font:500 12.5px var(--mono);background:var(--soft);padding:1px 5px;border-radius:5px}
+.brief{display:grid;gap:18px;background:var(--ink);color:var(--bg);border-radius:22px;padding:clamp(20px,4vw,34px);border-top:6px solid var(--accent)}
+.brief .eyebrow{color:#0c8f69}
+.brief h2{color:var(--bg)}
+.brief h2 em{color:#0c8f69}
+.brief p{margin:0;max-width:62ch}
+.brief .tiny{color:#3b4a55}
+.brief-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:22px}
+@media (max-width:760px){.brief-grid{grid-template-columns:minmax(0,1fr)}}
+.brief h3{margin:0 0 8px;font:800 15px/1.2 var(--display);letter-spacing:.02em;text-transform:uppercase;color:#3b4a55}
+.brief ol,.brief ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.brief ol li b{display:block;font-weight:600}
+.brief ol li small,.brief ul li small{color:#3b4a55}
+.brief li::marker{color:#0c8f69;font-weight:700}
+.brief .side{display:grid;gap:18px;align-content:start}
+.brief .value{background:#e3f6ee;border-radius:12px;padding:12px 14px;color:#0b3b2c}
+.brief .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.brief .btn-q{border-color:#c9d3da;color:var(--bg)}
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#10212b}
+  .wrap > *:not(#s3), #s3 > *:not(#brief), .top, footer, .brief .actions{display:none!important}
+  #s3{display:block!important;padding:0;animation:none}
+  .brief{background:#fff;color:#10212b;border:1px solid #dbe2dd;border-top:6px solid #0c8f69;box-shadow:none}
+}
 footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -224,16 +248,16 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   <section class="screen" id="s0">
     <div class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">The Founder 80/20 Audit</div>
-        <h1>Get hours back in your <em>first week</em>.</h1>
-        <p class="sub">Your week is leaking into work someone else could do. Take it back, for growth or for yourself.</p>
-        <button class="go" id="start" type="button">Find my hours →</button>
-        <div class="meta"><span>~3 minutes</span><span>No sign-up</span><span>Free 30-day plan</span></div>
+        <div class="eyebrow">The 10-Minute Right Hand Brief</div>
+        <h1>Find the 80% of your week that's <em>someone else's job</em>.</h1>
+        <p class="sub">Tap what you still do every week. Get your hours, what they cost you, and a one-page brief a Right Hand could start from on day one.</p>
+        <button class="go" id="start" type="button">Build my brief →</button>
+        <div class="meta"><span>Under 10 minutes</span><span>No sign-up</span><span>Save it as a PDF</span></div>
       </div>
       <div class="art" aria-hidden="true">
         <img id="hero-img" src="hero.webp" alt="" onerror="this.remove()">
         <div class="art-fallback"><canvas id="clock" width="600" height="600"></canvas></div>
-        <div class="preview"><small>Example result</small><b>113 hrs/month</b><span>an agency founder could stop doing, starting in week 1</span></div>
+        <div class="preview"><small>Example result</small><b>113 hrs/month</b><span>an agency founder handed to a Right Hand, starting in week 1</span></div>
       </div>
     </div>
   </section>
@@ -277,14 +301,14 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 
   <section class="screen calc" id="sc" hidden aria-live="polite">
     <div class="spin" aria-hidden="true"></div>
-    <p id="calc-msg">Calculating your 80/20…</p>
+    <p id="calc-msg">Building your Right Hand Brief…</p>
     <span class="tiny" id="calc-sub">Adding up your week</span>
   </section>
 
   <section class="screen" id="s3" hidden>
     <div class="report">
       <div style="display:grid;gap:12px;min-width:0">
-        <div class="eyebrow" tabindex="-1" id="r-head">Your 80/20 result</div>
+        <div class="eyebrow" tabindex="-1" id="r-head">Your result</div>
         <div class="bignum"><span id="r-month">0</span><small> hrs/month</small></div>
         <p class="sub">of work you could stop doing yourself.</p>
         <div class="dollar">≈ <span id="r-cost">$0</span> a year</div>
@@ -306,30 +330,35 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       </div>
     </div>
 
-    <div class="type" id="type-card">
-      <div class="t-head">
-        <span class="t-badge" id="t-badge" aria-hidden="true"></span>
+    <div class="brief" id="brief">
+      <div>
+        <div class="eyebrow">Your Right Hand Brief</div>
+        <h2 id="b-title">A Right Hand who owns <em>0h a week</em> of your work.</h2>
+      </div>
+      <p id="b-role"></p>
+      <div class="brief-grid">
         <div>
-          <div class="eyebrow">Your founder type</div>
-          <h2 id="t-name">The Human Router</h2>
+          <h3>Outcomes they own by day 30</h3>
+          <ol id="b-outcomes"></ol>
+        </div>
+        <div class="side">
+          <div><h3>Automate alongside</h3><ul id="b-auto"></ul></div>
+          <div><h3>You keep (your 20%)</h3><ul id="b-keep"></ul></div>
+          <div><h3>Access to share in week 1</h3><ul id="b-access"></ul></div>
+          <div><h3>How they report</h3><ul><li>Daily: done, in progress, blocked</li><li>Weekly: a 30-minute check-in on anything that came back to you</li></ul></div>
         </div>
       </div>
-      <p class="t-hook" id="t-hook"></p>
-      <p id="t-desc"></p>
-      <p class="t-blend" id="t-blend" hidden></p>
-      <div class="t-signs">
-        <b>You'll recognise yourself if…</b>
-        <ul id="t-signs"></ul>
+      <p class="value" id="b-value"></p>
+      <div class="actions">
+        <a class="cta" id="cta" href="https://www.paretotalent.com/" target="_blank" rel="noopener">See how the Right Hand Program works</a>
+        <button class="btn-q" id="print" type="button">Save my brief as PDF</button>
       </div>
-      <p class="t-sig" id="t-sig" hidden></p>
-      <p id="t-win"></p>
-      <a class="cta" id="cta" href="https://go.paretotalent.com/" target="_blank" rel="noopener">See how the Right Hand Program works</a>
-      <p class="tiny" id="cta-note">A Right Hand is a full-time, AI-trained executive assistant who takes this plan as their job description from day one.</p>
-      <p class="tiny">Meet 3 hand-picked candidates · pay nothing until you're excited about one · Freedom 40: 40 hours back in 30 days or next month free</p>
+      <p class="tiny" id="cta-note">A Right Hand is a full-time, AI-trained operator matched to you by Pareto Talent. This brief is what they start from.</p>
+      <p class="tiny">3 hand-picked candidates in 24 hours · you owe nothing unless you're excited about one · free replacement, any time, forever</p>
     </div>
 
     <div class="hero-copy">
-      <h2>Your 30-day handoff plan</h2>
+      <h2>Your 30-day handoff order</h2>
       <p class="sub">Easiest, biggest tasks first, so you feel it in week one.</p>
     </div>
     <div class="weeks" id="weeks"></div>
@@ -337,7 +366,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="export copilot">
       <div class="eyebrow">Free bonus</div>
       <h2 style="font-size:clamp(26px,3.6vw,34px)">Your AI <em>Delegation Copilot</em></h2>
-      <p class="sub">Built from your answers. It starts with 9 quick questions about your business, tools and voice, then turns any task on your list into a handoff doc a Right Hand could follow on day one.</p>
+      <p class="sub">Built from your brief. It starts with 9 quick questions about your business, tools and voice, then turns any task on your list into a handoff doc a Right Hand could follow on day one.</p>
       <div class="tabs" role="tablist" aria-label="Copilot version">
         <button type="button" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="true">Any AI chat</button>
         <button type="button" role="tab" id="tab-skill" aria-controls="panel-skill" aria-selected="false">Claude Skill (.zip)</button>
@@ -349,7 +378,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
         <p class="tiny">Tip: paste it into a ChatGPT Project or Custom GPT, a Gemini Gem, or a Claude Project, and it's there every time.</p>
       </div>
       <div id="panel-skill" role="tabpanel" aria-labelledby="tab-skill" class="panel" hidden>
-        <p class="tiny">A real Claude Skill: <code>delegation-copilot/SKILL.md</code> plus <code>my-80-20-plan.md</code> with your results. Claude uses it in every chat, no pasting.</p>
+        <p class="tiny">A real Claude Skill: <code>delegation-copilot/SKILL.md</code> plus <code>my-right-hand-brief.md</code> with your results. Claude uses it in every chat, no pasting.</p>
         <div class="row"><button class="btn" id="zip" type="button">Download my skill (.zip)</button></div>
         <ol class="steps-install">
           <li><b>Claude (Pro, Max, Team, Enterprise):</b> turn on <i>Code execution and file creation</i> in Settings → Capabilities.</li>
@@ -359,7 +388,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
         <p class="tiny">Using Claude Code? Unzip it into <code>~/.claude/skills/</code>.</p>
       </div>
       <div class="row">
-        <button class="btn-q" id="download" type="button">Download my plan (.txt)</button>
+        <button class="btn-q" id="download" type="button">Download my brief (.txt)</button>
         <button class="btn-q" type="button" data-go="1">Edit my answers</button>
         <span class="status" id="status" role="status"></span>
       </div>
@@ -375,16 +404,17 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (function(){
-  var PROGRAM_URL = "https://go.paretotalent.com/"; // Right Hand Program page; for founders who didn't qualify
-  var BOOKING_URL = "https://pareto-fit-call.vibepreview.app/"; // booking page (L9); qualified founders only
+  var PROGRAM_URL = "https://www.paretotalent.com/"; // Right Hand Program page; for founders who didn't qualify
+  var BOOKING_URL = "../book/"; // booking page (L9); qualified founders only
   // Everyone fills the qualifying form before the audit. Qualified founders arrive from the booking page with ?q=1
   // and get the Fit Call button; everyone else (thank-you page, nurture email) gets the program page, never a call.
   var QUALIFIED = false;
   try{ if(new URLSearchParams(location.search).get("q")==="1") localStorage.setItem("f8020q","1");
     QUALIFIED = localStorage.getItem("f8020q")==="1"; }catch(e){}
   var CALL_URL = QUALIFIED ? BOOKING_URL : PROGRAM_URL;
-  var NEXT_LINE = QUALIFIED ? "Book a 20-minute Right Hand Fit Call: "+BOOKING_URL : "See how the Right Hand Program works: "+PROGRAM_URL;
-  var PACK_LINE = QUALIFIED ? "Bring this to your Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you ("+BOOKING_URL+")."
+  var BOOK_ABS = new URL(BOOKING_URL, location.href).href;
+  var NEXT_LINE = QUALIFIED ? "Book a 20-minute Right Hand Fit Call: "+BOOK_ABS : "See how the Right Hand Program works: "+PROGRAM_URL;
+  var PACK_LINE = QUALIFIED ? "Bring this to your Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you ("+BOOK_ABS+")."
     : "If you hire a Right Hand through Pareto Talent, this is the brief they use to match and onboard you ("+PROGRAM_URL+").";
   var RH_PRICE = 3600, WPM = 4.33, C = 2*Math.PI*80;
 
@@ -445,7 +475,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   var fmtH = function(n){ return (Math.round(n*10)/10).toString()+"h"; };
   var fmtM = function(n){ return "$"+Math.round(n).toLocaleString("en-US"); };
   $("cta").href = CALL_URL;
-  if(QUALIFIED){ $("cta").textContent = "Book my 20-minute Right Hand Fit Call"; $("cta-note").textContent = "You qualified: pick a time and bring this plan to the call."; }
+  if(QUALIFIED){ $("cta").textContent = "Book my 20-minute Right Hand Fit Call"; $("cta").removeAttribute("target"); $("cta-note").textContent = "You qualified: pick a time and bring this brief to the call. Pareto turns it into your Right Hand's role."; }
 
   try{ var s = JSON.parse(localStorage.getItem("f8020v4")||"null");
     if(s){ rateEl.value = s.rate||rateEl.value; areaHrs = s.h||{};
@@ -475,7 +505,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       applyHours(); save();
       if(REDUCE){ show("s3"); reveal(); focusHead("s3"); return; }
       show("sc");
-      var msgs=["Adding up your week","Splitting Keep, Delegate, Automate","Building your 30-day plan"], i=0;
+      var msgs=["Adding up your week","Splitting Keep, Delegate, Automate","Writing your Right Hand Brief"], i=0;
       var tick=setInterval(function(){ i++; if(i<msgs.length) $("calc-sub").textContent=msgs[i]; },500);
       setTimeout(function(){ clearInterval(tick); $("calc-sub").textContent=msgs[0]; show("s3"); reveal(); focusHead("s3"); },1500);
       return;
@@ -654,19 +684,6 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     return ft;
   }
   var SVG = function(a){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+ICONS[a]+'</svg>'; };
-  function showType(ft){
-    var card=$("type-card");
-    card.style.setProperty("--tc",ft.c);
-    $("t-badge").innerHTML=SVG(ft.a);
-    $("t-name").textContent=ft.n; $("t-hook").textContent=ft.h; $("t-desc").textContent=ft.d;
-    $("t-signs").innerHTML=ft.s.map(function(s){ return "<li>"+esc(s)+"</li>"; }).join("");
-    var b=$("t-blend"); b.hidden=!ft.blend;
-    if(ft.blend){ card.style.setProperty("--tb",ft.blend.c);
-      b.innerHTML="<b>With a streak of "+esc(ft.blend.n.replace(/^The /,""))+".</b> "+esc(ft.blend.h)+" Your plan covers both."; }
-    var g=$("t-sig"); g.hidden=!ft.sig;
-    if(ft.sig) g.innerHTML="<b>Your signature handoff:</b> "+esc(ft.sig.name)+", about "+fmtH(ft.sig.hours)+" a week.";
-  }
-
   function countUp(el,to,fmt){
     var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.textContent=fmt(reduce?to:0); if(reduce) return;
@@ -693,6 +710,63 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     return {w:w,auto:auto,stick:STICK,keep:tasks.filter(function(t){return t.on&&t.hours>0&&t.bucket==="K"})};
   }
 
+  // the outcome a Right Hand owns for each delegated task (outcomes, not tasks)
+  var OUTCOME = {
+    "Inbox triage and routine replies":"Inbox triaged twice a day; only what needs you reaches you",
+    "Chasing people for answers":"Every open loop chased and closed, with a daily status note",
+    "Routing messages between team and clients":"Team and client messages go to your Right Hand first, not you",
+    "Prepping for meetings":"A one-page brief waiting before every meeting",
+    "Booking travel and events":"Trips and events booked to your saved preferences",
+    "Personal errands and appointments":"Personal bookings, renewals and reminders handled",
+    "Updating the CRM after calls":"CRM updated within 24 hours of every call",
+    "Drafting proposals and contracts":"Proposals drafted from templates within a day, ready for your approval",
+    "Client onboarding paperwork":"New clients onboarded end to end from one checklist",
+    "Receipts and bookkeeping prep":"Receipts collected and books prepped every month",
+    "Paying bills and vendors":"Bills queued for your one-click approval",
+    "Auditing tools and subscriptions":"Unused tools and subscriptions cancelled",
+    "Filing contracts and documents":"Every contract and document in one tidy shared drive",
+    "Editing videos and posting":"Videos cut, captioned and scheduled without you",
+    "Assembling the newsletter":"Newsletter built every week; you add one paragraph",
+    "Answering DMs and comments":"DMs and comments answered in your voice, leads flagged to you",
+    "Updating landing pages":"Page and form updates done without you",
+    "Hiring admin and screening":"Hiring pipeline run end to end; you only meet finalists",
+    "Chasing the team for updates":"Project board and weekly recap kept current, so updates come to you",
+    "Writing SOPs only you know":"Your know-how recorded once and written up as SOPs",
+    "Onboarding admin for new hires":"New hires get accounts, docs and a day-one plan"
+  };
+  var ACCESS = {
+    "Inbox & messages":"Delegated access to your email",
+    "Calendar & travel":"Calendar edit access and your travel preferences",
+    "Sales & clients":"Your CRM and proposal templates",
+    "Money & admin":"Accounting and invoicing tools (payments stay approve-only)",
+    "Marketing & content":"Social accounts and your content scheduler",
+    "Team & operations":"Your project board and team chat"
+  };
+  function brief(L){
+    var order=[]; L.P.w.forEach(function(list,i){ list.forEach(function(t){ if(t.bucket==="D") order.push({t:t,wk:i+1}); }); });
+    var areas={}; order.forEach(function(o){ areas[o.t.area]=(areas[o.t.area]||0)+o.t.hours; });
+    var focus=Object.keys(areas).sort(function(a,b){return areas[b]-areas[a]}).slice(0,2);
+    return {order:order, focus:focus,
+      access:Object.keys(areas).map(function(a){return ACCESS[a]}).filter(Boolean).concat(["A password manager to share logins safely"]),
+      dval:L.T.D*WPM*L.rate};
+  }
+  function renderBrief(L){
+    var B=brief(L);
+    $("b-title").innerHTML='A Right Hand who owns <em>'+fmtH(L.T.D)+' a week</em> of your work.';
+    $("b-role").textContent = B.focus.length ? "Main focus: "+B.focus.join(" and ").toLowerCase()+". They own outcomes, not tasks, and come back to you only for the decisions you keep."
+      : "Pick a few tasks to delegate and your Right Hand's role appears here.";
+    $("b-outcomes").innerHTML = B.order.length ? B.order.slice(0,7).map(function(o){
+      return '<li><b>'+esc(OUTCOME[o.t.name]||o.t.name)+'</b><small>Week '+o.wk+' · about '+fmtH(o.t.hours)+' a week off your plate</small></li>'; }).join("")
+      : '<li><b>Nothing to hand off yet</b><small>Go back and tap the tasks you still do.</small></li>';
+    $("b-auto").innerHTML = L.P.auto.length ? L.P.auto.map(function(t){ return '<li>'+esc(t.name)+' <small>· '+esc(t.note)+'</small></li>'; }).join("") : '<li><small>Nothing picked</small></li>';
+    $("b-keep").innerHTML = L.P.keep.length ? L.P.keep.map(function(t){ return '<li>'+esc(t.name)+'</li>'; }).join("") : '<li><small>Vision, key clients and big decisions</small></li>';
+    $("b-access").innerHTML = B.access.map(function(a){ return '<li>'+esc(a)+'</li>'; }).join("");
+    $("b-value").innerHTML = '<b>At $'+L.rate.toLocaleString("en-US")+'/hr, the hours in this brief are worth '+fmtM(B.dval)+' a month.</b> '+
+      (B.dval>=3000 ? "That's more than a Right Hand costs on Pareto's annual plan ($3,000 a month)." : "Pareto's founders save 10\u201315 hours a week in their first month.");
+    return B;
+  }
+  $("print").addEventListener("click",function(){ window.print(); });
+
   var last=null;
   function reveal(){
     var rate=Math.max(0,parseFloat(rateEl.value)||0), T=totals(), off=T.D+T.A, month=off*WPM;
@@ -705,9 +779,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     parts.forEach(function(p){ var el=$(p[0]); el.setAttribute("stroke-dasharray","0 "+C); el.setAttribute("stroke-dashoffset","0"); });
     setTimeout(function(){ parts.forEach(function(p){ var len=T.all?p[1]/T.all*C:0, el=$(p[0]); el.setAttribute("stroke-dasharray",len+" "+(C-len)); el.setAttribute("stroke-dashoffset",String(-acc)); acc+=len; }); },80);
     $("ring").setAttribute("aria-label","Keep "+fmtH(T.K)+", delegate "+fmtH(T.D)+", automate "+fmtH(T.A)+" per week");
-    var ft=founderType(); showType(ft);
-    var dval=T.D*WPM*rate;
-    $("t-win").textContent = ft.w + (month>=40 ? " You have "+Math.round(month)+" hours a month to hand off, more than the 40 hours Pareto guarantees back in your first 30 days"+(dval>=RH_PRICE?". At your rate, the delegable hours alone are worth "+fmtM(dval)+" a month.":".") : " You're under 40 hours a month today, so start with the automations in week 1. Most founders find more tasks once someone else starts taking them.");
+    var ft=founderType();
     var P=plan(), html="";
     P.w.forEach(function(list,i){
       var hrs=list.reduce(function(s,t){return s+t.hours},0);
@@ -720,7 +792,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       html+='<p class="tiny">'+esc(WEEK[i][2])+'</p></div>';
     });
     $("weeks").innerHTML=html;
-    last={rate:rate,T:T,P:P,ft:ft,month:month,off:off};
+    last={rate:rate,T:T,P:P,ft:ft,month:month,off:off}; last.B=renderBrief(last);
     $("prompt").value=chatPrompt(last);
   }
 
@@ -774,7 +846,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   function chatPrompt(L){
     var o=[];
     o.push("You are my Delegation Copilot. Stay in this role for the whole chat.","",
-      "ABOUT ME (from my Founder 80/20 Audit by Pareto Talent)",
+      "ABOUT ME (from my Right Hand Brief by Pareto Talent)",
       "- Founder type: "+L.ft.full+". "+L.ft.h+" "+L.ft.d,
       "- Each week: keep "+fmtH(L.T.K)+", delegate "+fmtH(L.T.D)+", automate "+fmtH(L.T.A)+". About "+Math.round(L.month)+" hours a month could leave my plate.",
       "- My 30-day handoff order:");
@@ -798,9 +870,9 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   }
   function skillMd(L){
     return ["---","name: delegation-copilot",
-      "description: My personal Delegation Copilot, built from my Founder 80/20 Audit. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, decide what to delegate next, or bundle my handoff docs into a starter pack for a new hire. Also use it when I say \"start my copilot\" or ask to see or update my founder profile.",
+      "description: My personal Delegation Copilot, built from my Right Hand Brief. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, decide what to delegate next, or bundle my handoff docs into a starter pack for a new hire. Also use it when I say \"start my copilot\" or ask to see or update my founder profile.",
       "---","","# Delegation Copilot","",
-      "Read `my-80-20-plan.md` (same folder) before answering: it holds my founder type, my 30-day handoff order and the 20% I keep.","",
+      "Read `my-right-hand-brief.md` (same folder) before answering: it holds my brief, my 30-day handoff order and the 20% I keep.","",
       "## First focus for my type","",FOCUS[L.ft.k],""].concat(L.ft.blend?["After that: "+FOCUS[L.ft.blend.k],""]:[]).concat([
       "## Get to know me first","",
       "If this conversation has no founder profile yet (and memory holds none), start here: say in one line that you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.",""])
@@ -808,7 +880,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       "## Commands","",
       "### handoff: <task>","1. Ask up to 5 short questions in one message, skipping anything my founder profile already answers: what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate. Never ask for passwords; suggest sharing access through a password manager.",
       "2. Write a one-page handoff doc: **Title** · **Outcome** (done means…) · **When / how often** · **Tools and access** · **Steps** (numbered) · **Rules and judgement calls** · **Escalate to me if…** · **Example of a good result** · **Time it should take**.",
-      "3. Finish with a **Who runs this?** box, honest and specific to the task:","   - **AI can:** drafting, summarising, sorting, reminders (only what truly applies)","   - **Needs a person:** judgement, chasing people, calls, noticing what's missing, owning the result","   - **Hours a week this frees when someone owns it:** use the estimate in `my-80-20-plan.md`",
+      "3. Finish with a **Who runs this?** box, honest and specific to the task:","   - **AI can:** drafting, summarising, sorting, reminders (only what truly applies)","   - **Needs a person:** judgement, chasing people, calls, noticing what's missing, owning the result","   - **Hours a week this frees when someone owns it:** use the estimate in `my-right-hand-brief.md`",
       "4. Add one line with the running total for this conversation: \"Documented so far: Xh/week across N tasks.\"",
       "5. Name the next task in my plan.","",
       "### weekly check-in","Ask what landed back on my plate, what I handed off and what's blocked. Reply with three bullets: keep, re-hand off, automate. If the same task has landed back on my plate in two check-ins in this conversation, say so plainly: \"[task] came back twice: a written doc isn't enough, it needs an owner.\"","",
@@ -819,11 +891,11 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       "## Style","Short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.",""]).join("\n");
   }
   function planMd(L){
-    var o=["# My 80/20 plan","","Generated by the Founder 80/20 Audit (Pareto Talent).","",
+    var o=["# My Right Hand Brief","","Generated by The 10-Minute Right Hand Brief (Pareto Talent).","","## Outcomes my Right Hand owns by day 30",""].concat(L.B.order.map(function(x){ return "- "+(OUTCOME[x.t.name]||x.t.name)+" (week "+x.wk+", ~"+fmtH(x.t.hours)+"/wk)"; })).concat(["",
       "- **Founder type:** "+L.ft.full+": "+L.ft.h+" "+L.ft.d,
       "- **Weekly hours:** keep "+fmtH(L.T.K)+" · delegate "+fmtH(L.T.D)+" · automate "+fmtH(L.T.A),
       "- **Hours I could stop doing:** about "+Math.round(L.month)+" a month",
-      "- **My hourly value:** $"+L.rate,"","## 30-day handoff order",""];
+      "- **My hourly value:** $"+L.rate,"","## 30-day handoff order",""]);
     L.P.w.forEach(function(list,i){
       o.push("### "+WEEK[i][0]+": "+WEEK[i][1]);
       list.forEach(function(t){ o.push("- "+t.name+" ("+BNAME[t.bucket].toLowerCase()+", ~"+fmtH(t.hours)+"/wk). "+t.note); });
@@ -845,7 +917,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     if(!last) return;
     if(!window.JSZip){ $("status").textContent="The download needs a moment to load. Try again, or use the Any AI chat tab."; return; }
     var z=new JSZip(), f=z.folder("delegation-copilot");
-    f.file("SKILL.md",skillMd(last)); f.file("my-80-20-plan.md",planMd(last));
+    f.file("SKILL.md",skillMd(last)); f.file("my-right-hand-brief.md",planMd(last));
     z.generateAsync({type:"blob"}).then(function(b){ saveBlob(b,"delegation-copilot.zip"); $("status").textContent="Skill downloaded. Upload it in Claude: Customize → Skills."; },
       function(){ $("status").textContent="Couldn't build the zip. Use the Any AI chat tab instead."; });
   });
@@ -856,13 +928,17 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   });
   $("download").addEventListener("click",function(){
     if(!last) return; var L=last, o=[];
-    o.push("THE FOUNDER 80/20 AUDIT: MY 30-DAY HANDOFF PLAN","Pareto Talent · paretotalent.com","",
-      "Founder type: "+L.ft.full,"\""+L.ft.h+"\"","Hours I could stop doing: "+Math.round(L.month)+" a month","Worth: "+fmtM(L.off*L.rate*52)+" a year at $"+L.rate+"/hr",
+    o.push("MY RIGHT HAND BRIEF","The 10-Minute Right Hand Brief · Pareto Talent · paretotalent.com","",
+      "A Right Hand who owns "+fmtH(L.T.D)+" a week of my work.","Hours I could stop doing: "+Math.round(L.month)+" a month","Worth: "+fmtM(L.off*L.rate*52)+" a year at $"+L.rate+"/hr","",
+      "OUTCOMES MY RIGHT HAND OWNS BY DAY 30");
+    L.B.order.forEach(function(x){ o.push("  - "+(OUTCOME[x.t.name]||x.t.name)+" (week "+x.wk+", ~"+fmtH(x.t.hours)+"/wk)"); });
+    o.push("","ACCESS TO SHARE IN WEEK 1"); L.B.access.forEach(function(a){ o.push("  - "+a); });
+    o.push("","30-DAY HANDOFF ORDER",
       "Keep "+fmtH(L.T.K)+"/wk · Delegate "+fmtH(L.T.D)+"/wk · Automate "+fmtH(L.T.A)+"/wk","");
     L.P.w.forEach(function(list,i){ o.push(WEEK[i][0].toUpperCase()+": "+WEEK[i][1]); list.forEach(function(t){ o.push("  - "+t.name+" ("+BNAME[t.bucket]+", "+fmtH(t.hours)+"/wk): "+t.note); }); if(i===3) L.P.stick.forEach(function(s){ o.push("  - "+s+" (habit)"); }); o.push("  * "+WEEK[i][2],""); });
     o.push("KEEP (your 20%):"); L.P.keep.forEach(function(t){ o.push("  - "+t.name); });
     o.push("","Want someone to run this plan with you? "+NEXT_LINE);
-    try{ var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([o.join("\n")],{type:"text/plain"})); a.download="founder-80-20-plan.txt"; document.body.appendChild(a); a.click(); a.remove(); $("status").textContent="Plan downloaded."; }
+    try{ var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([o.join("\n")],{type:"text/plain"})); a.download="my-right-hand-brief.txt"; document.body.appendChild(a); a.click(); a.remove(); $("status").textContent="Brief downloaded."; }
     catch(e){ $("status").textContent="Download blocked. Use Copy instead."; }
   });
 
