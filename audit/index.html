@@ -66,13 +66,6 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .preview span{font-size:13px;color:var(--muted)}
 .art-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px}
 .art-fallback canvas{width:100%;height:100%}
-.survey{display:grid;gap:12px;margin-top:8px;background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:18px 20px}
-.survey-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
-.survey-tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 9px}
-.survey > p:not(.tiny){margin:0;font-weight:600;font-size:17px}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 16px;cursor:pointer}
-.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
 .areas{display:grid;gap:26px}
 .area-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .area-h svg{width:22px;height:22px;color:var(--accent);flex:none}
@@ -233,16 +226,6 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
         <div class="preview"><small>Example result</small><b>113 hrs/month</b><span>an agency founder could stop doing, starting in week 1</span></div>
       </div>
     </div>
-    <aside class="survey" aria-labelledby="survey-q">
-      <div class="survey-h"><span class="eyebrow">Quick anonymous survey</span><span class="survey-tag">Optional · 1 question</span></div>
-      <p id="survey-q">Have you tried delegating to an assistant before?</p>
-      <div class="opts" role="group" aria-labelledby="survey-q">
-        <button class="opt" type="button" data-hist="never" aria-pressed="false">Never</button>
-        <button class="opt" type="button" data-hist="worked" aria-pressed="false">Yes, it worked</button>
-        <button class="opt" type="button" data-hist="failed" aria-pressed="false">Yes, it didn't stick</button>
-      </div>
-      <p class="tiny" id="survey-thanks">No name, no email. Your answer only tailors your plan.</p>
-    </aside>
   </section>
 
   <section class="screen" id="s1" hidden>
@@ -429,7 +412,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   var BNAME = {K:"Keep",D:"Delegate",A:"Automate"}, NEXTB = {K:"D",D:"A",A:"K"};
 
   var tasks = LIB.map(function(t,i){ return {id:i,area:t[0],name:t[1],bucket:t[2],ease:t[3],note:t[4],ex:t[5],hours:t[5]||1,on:false}; });
-  var hist = null, areaHrs = {}; // hours/week per area, set by the slider; missing = typical estimate
+  var areaHrs = {}; // hours/week per area, set by the slider; missing = typical estimate
   var $ = function(id){ return document.getElementById(id); };
   var rateEl = $("rate");
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); };
@@ -439,10 +422,10 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   if(!QUALIFIED) $("cta-note").hidden = false;
 
   try{ var s = JSON.parse(localStorage.getItem("f8020v4")||"null");
-    if(s){ rateEl.value = s.rate||rateEl.value; hist = s.hist||null; areaHrs = s.h||{};
+    if(s){ rateEl.value = s.rate||rateEl.value; areaHrs = s.h||{};
       (s.on||[]).forEach(function(id){ if(tasks[id]) tasks[id].on=true; }); }
   }catch(e){}
-  function save(){ try{ localStorage.setItem("f8020v4", JSON.stringify({rate:rateEl.value,hist:hist,h:areaHrs,on:tasks.filter(function(t){return t.on}).map(function(t){return t.id})})); }catch(e){} }
+  function save(){ try{ localStorage.setItem("f8020v4", JSON.stringify({rate:rateEl.value,h:areaHrs,on:tasks.filter(function(t){return t.on}).map(function(t){return t.id})})); }catch(e){} }
 
   var REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   function show(id){
@@ -477,12 +460,6 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     if(+b.dataset.go===1) slide = b.dataset.slide==="last" ? AREAS.length-1 : 0;
     go(+b.dataset.go); });
 
-  document.querySelectorAll(".opt").forEach(function(b){
-    b.setAttribute("aria-pressed", String(b.dataset.hist===hist));
-    b.addEventListener("click",function(){ hist=b.dataset.hist; document.querySelectorAll(".opt").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))}); save(); thanks(); });
-  });
-  function thanks(){ if(hist) $("survey-thanks").textContent="Thanks! We'll factor that into your plan."; }
-  thanks();
   $("start").addEventListener("click",function(){ go(1); });
 
   /* step 1 is a slideshow: one area per slide */
@@ -603,13 +580,11 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   function totals(){ var r={K:0,D:0,A:0}; tasks.forEach(function(t){ if(t.on&&t.hours>0) r[t.bucket]+=t.hours; }); r.all=r.K+r.D+r.A; return r; }
 
   var TYPES = {
-    burned:{k:"burned",n:"The Burned Delegator",d:"You've tried handing work off and it came back to you. The problem wasn't delegating. It was handing off tasks instead of outcomes, to someone who wasn't trained to think ahead.",w:"Your first win: hand off one whole area (start with your inbox) with written rules, not one task at a time."},
     router:{k:"router",n:"The Human Router",d:"Every message, update and decision passes through you, so the company moves at the speed of your inbox.",w:"Your first win: make a Right Hand the hub. Inbox and status-chasing move off your plate in week one."},
     face:{k:"face",n:"The Face of the Brand",d:"Your content and your voice drive the business, but the work around them is eating the time you need to create.",w:"Your first win: keep the camera and the stage; hand off editing, posting and replies so you only show up for the 20%."},
     trapped:{k:"trapped",n:"The Trapped Founder",d:"You started this for freedom. Somewhere along the way, admin became the job.",w:"Your first win: clear calendar and money admin first. It's the fastest way to feel the business work without you."}
   };
   function founderType(){
-    if(hist==="failed") return TYPES.burned;
     var byArea={};
     tasks.forEach(function(t){ if(t.on&&t.hours>0&&t.area!=="The 20% only you can do") byArea[t.area]=(byArea[t.area]||0)+t.hours; });
     var top=Object.keys(byArea).sort(function(a,b){return byArea[b]-byArea[a]})[0];
@@ -677,14 +652,12 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 
   /* ---- Delegation Copilot: one source, two formats (chat prompt + Claude Skill) ---- */
   var FOCUS = {
-    burned:"Past handoffs failed because tasks were handed off without outcomes or rules. For every handoff, start with OUTCOME (what 'done' looks like) and an ESCALATION list (when to come to me) before any steps.",
     router:"Everything routes through me. First build my INBOX RULE BOOK: what the assistant answers alone, what gets archived, what gets drafted for me, and what reaches me immediately.",
     face:"My voice is the brand. First build a VOICE GUIDE (tone, phrases I use, phrases I never use, 3 example replies) so anything written for me sounds like me.",
     trapped:"Admin swallowed my week. First turn my recurring calendar and money tasks into simple WEEKLY CHECKLISTS an assistant can run without me."
   };
   // the one intake question that changes most by founder type
   var TYPEQ = {
-    burned:"Think of the last handoff that came back to you. What went wrong, in one or two lines?",
     router:"Which three kinds of messages or questions reach you that someone else could answer?",
     face:"Paste two or three short things you wrote (an email, a post, a DM reply) that sound exactly like you.",
     trapped:"Which recurring admin task do you resent most, and when in the week does it hit?"
