@@ -10,6 +10,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+@media (max-width:900px){.types{grid-template-columns:repeat(2,1fr)}}
+.type{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;align-content:start}
+.type img{width:100%;height:auto;border-radius:12px}
+.type h3{font-size:19px}
+.type p{margin:0;color:var(--muted);font-size:15px}
+</style>
 </head>
 <body>
 <!-- FP | Franco Mancebo | Lead Magnet Landing Page (L7) -->
@@ -21,14 +29,30 @@
 
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
-      <div class="eyebrow">Free for founders · Founder Working Style + Right Hand Kit</div>
-      <h1 id="h1">Find your <em>Founder Working Style</em>. Get a Right Hand Kit built around it.</h1>
-      <p class="lead">8 quick questions show how you work best. Then a Claude skill reads your real inbox and calendar and writes the hand-off kit tuned to you, down to how your Right Hand should update you.</p>
-      <p class="note">No Claude? Answer 6 quick questions in any AI chat instead.</p>
-      <a class="btn" href="#get">Get my style and kit →</a>
-      <div class="meta"><span>Works on Claude's free plan</span><span>Read only, never sends or deletes</span><span>Yours to keep</span></div>
+      <div class="eyebrow">Free · 2-minute quiz for founders</div>
+      <h1 id="h1">Which kind of <em>founder</em> are you?</h1>
+      <p class="lead">8 questions reveal your working style, then your free Right Hand Kit is built around it.</p>
+      <a class="btn" href="#get">Find my style →</a>
+      <div class="meta"><span>8 questions</span><span>Free</span><span>Yours to keep</span></div>
     </div>
     <div class="art"><img src="brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
+  </section>
+
+  <section aria-labelledby="types">
+    <div class="stack">
+      <div class="eyebrow">The 4 founder styles</div>
+      <h2 id="types">Four ways founders work. <em>One is yours.</em></h2>
+    </div>
+    <div class="types">
+      <div class="type"><img src="assets/styles/visionary.svg" alt="" width="240" height="240"><h3>The Visionary</h3><p>Sets the direction. Hates the details.</p></div>
+      <div class="type"><img src="assets/styles/captain.svg" alt="" width="240" height="240"><h3>The Captain</h3><p>Leads from the front. Keeps the big calls.</p></div>
+      <div class="type"><img src="assets/styles/craftsman.svg" alt="" width="240" height="240"><h3>The Craftsman</h3><p>Quality is the signature. Letting go is hard.</p></div>
+      <div class="type"><img src="assets/styles/systems.svg" alt="" width="240" height="240"><h3>The Systems Builder</h3><p>Builds it once. Never touches it again.</p></div>
+    </div>
+    <div class="row" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+      <p class="lead" style="margin:0"><strong style="color:var(--ink)">Which one are you?</strong> Take the quiz to find out.</p>
+      <a class="btn" href="#get">Find my style →</a>
+    </div>
   </section>
 
   <section aria-labelledby="inside">
