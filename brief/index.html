@@ -14,26 +14,30 @@
 .parts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .parts li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
 .parts b{font:800 13px/1 var(--display);color:var(--accent);letter-spacing:.08em}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
-table{width:100%;border-collapse:collapse;font-size:15px;min-width:560px}
-th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
-th{font:700 13px/1.2 var(--display);color:var(--muted);letter-spacing:.04em}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-tr.total td{font-weight:700;color:var(--ink);border-bottom:0}
-tr.total td.n{color:var(--amber)}
 .tag{display:inline-block;font:700 11px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:5px 9px}
 textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font:400 14px/1.5 ui-monospace,Consolas,monospace;resize:vertical}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .status{font-size:14px;color:var(--mint);min-height:1.4em}
-.quiz{display:grid;gap:14px;max-width:760px;margin-top:22px}
-.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0;display:grid;gap:10px}
-.q legend{font:700 17px/1.35 var(--display);padding:0;margin-bottom:4px;float:left;width:100%}
-.q legend b{color:var(--accent);margin-right:8px;font-size:13px;letter-spacing:.08em}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;clear:both}
+.quiz{max-width:760px;margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,30px);overflow:hidden}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:12px;font:700 13px/1 var(--display);letter-spacing:.08em;color:var(--muted)}
+.qtop button{background:none;border:0;color:var(--mint);font:600 15px var(--body);cursor:pointer;padding:6px 0}
+.qtop button[hidden]{visibility:hidden;display:inline}
+.bar{height:6px;background:var(--line);border-radius:99px;margin:14px 0 26px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .4s ease}
+.slide{transition:transform .25s ease,opacity .25s ease}
+.slide.out{transform:translateX(-40px);opacity:0}
+.slide.in{transform:translateX(40px);opacity:0;transition:none}
+.slide h3{font-size:clamp(22px,3vw,30px);margin-bottom:22px;min-height:2.4em}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:600px){.opts{grid-template-columns:1fr}}
-.opts label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:16px;color:var(--ink);background:var(--bg)}
-.opts input{accent-color:var(--accent);margin-top:4px}
-.opts label:has(input:checked){border-color:var(--accent);background:var(--surface-2)}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;font:500 17px/1.35 var(--body);color:var(--ink);background:var(--bg);transition:border-color .2s,background .2s,transform .15s}
+.opt:hover{border-color:var(--accent);transform:translateY(-2px)}
+.opt b{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;border:1px solid var(--line);font:800 13px var(--display);color:var(--accent)}
+.opt.on{border-color:var(--accent);background:var(--surface-2)}
+.opt.on b{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.done{text-align:center;display:grid;gap:16px;justify-items:center;padding:10px 0}
+.done .btn{justify-self:center}
+@media (prefers-reduced-motion:reduce){.slide,.bar i,.opt{transition:none}}
 .result{background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:clamp(18px,3vw,28px);display:grid;gap:14px;max-width:760px;margin-top:22px}
 .result[hidden]{display:none}
 .result h3{font-size:clamp(28px,4vw,38px)}
@@ -45,16 +49,11 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 .rhead img{width:120px;height:120px;border-radius:18px}
 @media (max-width:480px){.rhead{grid-template-columns:88px 1fr}.rhead img{width:88px;height:88px}}
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:640px){.rhead{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center}
-.rhead img{width:120px;height:120px;border-radius:18px}
-@media (max-width:480px){.rhead{grid-template-columns:88px 1fr}.rhead img{width:88px;height:88px}}
-.paths{grid-template-columns:1fr}}
+@media (max-width:640px){.paths{grid-template-columns:1fr}}
 .path{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
 .path .btn{font-size:16px;padding:14px 18px}
 .result details summary{cursor:pointer;color:var(--muted);font-size:15px}
 .result textarea{margin-top:10px}
-.howto{margin-top:22px;max-width:760px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:12px}
-.howto h3 .note{font:400 14px var(--body);margin-left:6px}
 </style>
 </head>
 <body>
@@ -87,10 +86,10 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <p class="lead">Pick the answer closer to you. There's no right one: your answers decide how your kit tells a Right Hand to work with you.</p>
     </div>
     <span id="other"></span>
-    <form class="quiz" id="qform" novalidate></form>
-    <div class="row" style="margin-top:16px">
-      <button class="btn" id="see" type="button" disabled>See my style →</button>
-      <span class="skip" id="left">8 questions left</span>
+    <div class="quiz" id="qform" aria-live="polite">
+      <div class="qtop"><span id="qcount">Loading the quiz…</span><button type="button" id="back" hidden>← Back</button></div>
+      <div class="bar"><i id="qbar"></i></div>
+      <div class="slide" id="slide"></div>
     </div>
     <div class="result" id="result" hidden aria-live="polite">
       <div class="rhead">
@@ -135,42 +134,6 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <li>Connect <strong>Gmail</strong> and <strong>Google Calendar</strong> in <strong>Settings → Connectors</strong>, start a new chat and type <strong>audit my week</strong>.</li>
     </ol>
     <p class="note" style="margin-top:14px">Using the prompt instead? Skip this: paste it into any AI chat and it starts. Using Claude Code? Unzip it into <code>~/.claude/skills/</code>. Skills and Google connectors are available on every Claude plan, Free included.</p>
-  </section>
-
-  <section aria-labelledby="sample">
-    <div class="stack">
-      <div class="eyebrow">What you'll see first</div>
-      <h2 id="sample">Your week, as a table you can act on</h2>
-      <p class="lead"><span class="tag">Example</span> A fictional agency founder at $1.2M a year, so about $600 an hour. Your numbers come from your own inbox and calendar.</p>
-    </div>
-    <div class="tablewrap" style="margin-top:22px">
-      <table>
-        <thead><tr><th>Area</th><th class="n">Hours/week (est.)</th><th>Keep · Delegate · Automate</th><th class="n">Cost/month</th></tr></thead>
-        <tbody>
-          <tr><td>Inbox</td><td class="n">9</td><td>2 · 5 · 2</td><td class="n">$18,060</td></tr>
-          <tr><td>Meetings</td><td class="n">11</td><td>7 · 4 · 0</td><td class="n">$10,320</td></tr>
-          <tr><td>Scheduling</td><td class="n">3.5</td><td>0.5 · 2 · 1</td><td class="n">$7,740</td></tr>
-          <tr><td>Follow-ups</td><td class="n">3</td><td>0.5 · 2 · 0.5</td><td class="n">$6,450</td></tr>
-          <tr><td>Admin and money</td><td class="n">2.5</td><td>0.5 · 1.5 · 0.5</td><td class="n">$5,160</td></tr>
-          <tr class="total"><td>Could leave your plate</td><td class="n">18.5</td><td></td><td class="n">$47,730</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <ul class="fit" style="margin-top:18px;max-width:760px">
-      <li><strong>Your bottleneck:</strong> most of your sent email answers your own team's questions.</li>
-      <li><strong>Top 3 leaks:</strong> team questions in the inbox (5h), recurring internal meetings (4h), scheduling back-and-forth (3h). Pick one and the kit builds the fix.</li>
-    </ul>
-    <div class="howto">
-      <div class="eyebrow">And your "How to work with me" page</div>
-      <p class="note" style="margin:0"><span class="tag">Example</span> The same fictional founder, who took the quiz and set a $500 limit.</p>
-      <h3>The Captain <span class="note">Big picture · Hands-on · Live · Deliberate</span></h3>
-      <ul class="fit">
-        <li><strong>What I want from you:</strong> 2–3 options for every decision with your recommendation, follow-through the moment I decide, and a decisions log.</li>
-        <li><strong>Decide alone vs ask me:</strong> routine items under $500 follow the rules; anything client-facing or new comes to me with a recommendation.</li>
-        <li><strong>How to update me:</strong> a 10-minute call each day, then a short written recap.</li>
-        <li><strong>Drafts:</strong> double-check before anything goes out, and flag risks early.</li>
-      </ul>
-    </div>
   </section>
 
   <section aria-labelledby="next">
@@ -224,21 +187,43 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
   // Both answers in a dimension must agree on "a"; a split takes the safer start (Detail, Hands-on, Live, Deliberate).
   var SPLIT = {focus:"big picture vs detail", control:"hands-off vs hands-on", contact:"written vs live updates", pace:"fast vs checked drafts"};
   fetch("../kit/styles.json").then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(S){
-    var f = $("qform"), n = S.questions.length;
-    S.questions.forEach(function(x, i){
-      var fs = document.createElement("fieldset"); fs.className = "q";
-      fs.innerHTML = '<legend><b>' + String(i+1).padStart(2,"0") + '</b>' + esc(x.q) + '</legend><div class="opts">' +
-        ['a','b'].map(function(k){ return '<label><input type="radio" name="q' + i + '" value="' + k + '" required> <span>' + esc(x[k]) + '</span></label>'; }).join("") + '</div>';
-      f.appendChild(fs);
+    var n = S.questions.length, a = [], cur = 0, sl = $("slide"), busy = false;
+    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function paint(){
+      $("back").hidden = cur === 0;
+      $("qbar").style.width = (Math.min(cur, n) / n * 100) + "%";
+      if (cur >= n) {
+        $("qcount").textContent = "All done";
+        sl.innerHTML = '<div class="done"><h3 style="min-height:0;margin:0">Your style is ready.</h3><button class="btn" id="see" type="button">See my style →</button></div>';
+        $("see").addEventListener("click", show);
+        return;
+      }
+      var x = S.questions[cur];
+      $("qcount").textContent = "Question " + (cur + 1) + " of " + n;
+      sl.innerHTML = '<h3>' + esc(x.q) + '</h3><div class="opts">' + ['a','b'].map(function(k){
+        return '<button type="button" class="opt' + (a[cur] === k ? ' on' : '') + '" data-k="' + k + '"><b>' + k.toUpperCase() + '</b><span>' + esc(x[k]) + '</span></button>';
+      }).join("") + '</div>';
+    }
+    function go(to){
+      if (still) { cur = to; paint(); return; }
+      busy = true; sl.classList.add("out");
+      setTimeout(function(){
+        cur = to; paint();
+        sl.classList.remove("out"); sl.classList.add("in");
+        void sl.offsetWidth; sl.classList.remove("in");
+        setTimeout(function(){ busy = false; }, 250);
+      }, 250);
+    }
+    sl.addEventListener("click", function(e){
+      var b = e.target.closest(".opt"); if (!b || busy) return;
+      a[cur] = b.dataset.k;
+      Array.prototype.forEach.call(sl.querySelectorAll(".opt"), function(o){ o.classList.toggle("on", o === b); });
+      busy = true; setTimeout(function(){ busy = false; go(cur + 1); }, 220);
     });
-    function answers(){ return S.questions.map(function(x, i){ var c = f.querySelector('input[name="q' + i + '"]:checked'); return c && c.value; }); }
-    f.addEventListener("change", function(){
-      var left = answers().filter(function(a){ return !a; }).length;
-      $("left").textContent = left ? left + (left === 1 ? " question left" : " questions left") : "All done";
-      $("see").disabled = left > 0;
-    });
-    $("see").addEventListener("click", function(){
-      var a = answers(), dims = {}, split = [];
+    $("back").addEventListener("click", function(){ if (!busy && cur > 0) go(cur - 1); });
+    paint();
+    function show(){
+      var dims = {}, split = [];
       S.questions.forEach(function(x, i){ (dims[x.dim] = dims[x.dim] || []).push(a[i]); });
       var end = function(d){ var v = dims[d]; if (v[0] !== v[1]) split.push(SPLIT[d]); return v.every(function(k){ return k === "a"; }); };
       var big = end("focus"), off = end("control"), as = end("contact"), fast = end("pace");
@@ -257,7 +242,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       loadPrompt("kits/" + key + ".txt");
       $("result").hidden = false;
       $("result").scrollIntoView({behavior:"smooth", block:"start"});
-    });
+    }
   }).catch(function(){
     $("qform").innerHTML = '<p class="note">The quiz couldn\'t load here. Download the standard kit below: it asks the style questions inside the chat.</p>';
   });
