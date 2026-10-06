@@ -41,8 +41,14 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 .chips span{font:700 12px/1 var(--display);letter-spacing:.06em;color:var(--mint);border:1px solid var(--line);border-radius:999px;padding:7px 11px}
 .result p{margin:0;color:var(--muted)}
 .skip{font-size:15px;color:var(--muted)}
+.rhead{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center}
+.rhead img{width:120px;height:120px;border-radius:18px}
+@media (max-width:480px){.rhead{grid-template-columns:88px 1fr}.rhead img{width:88px;height:88px}}
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:640px){.paths{grid-template-columns:1fr}}
+@media (max-width:640px){.rhead{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center}
+.rhead img{width:120px;height:120px;border-radius:18px}
+@media (max-width:480px){.rhead{grid-template-columns:88px 1fr}.rhead img{width:88px;height:88px}}
+.paths{grid-template-columns:1fr}}
 .path{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
 .path .btn{font-size:16px;padding:14px 18px}
 .result details summary{cursor:pointer;color:var(--muted);font-size:15px}
@@ -87,8 +93,13 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <span class="skip" id="left">8 questions left</span>
     </div>
     <div class="result" id="result" hidden aria-live="polite">
-      <div class="eyebrow">Your Founder Working Style</div>
-      <h3 id="r-name"></h3>
+      <div class="rhead">
+        <img id="r-img" src="" alt="" width="240" height="240">
+        <div class="stack" style="gap:8px">
+          <div class="eyebrow">Your Founder Working Style</div>
+          <h3 id="r-name"></h3>
+        </div>
+      </div>
       <div class="chips" id="r-chips"></div>
       <p id="r-line"></p>
       <div><strong>Your Right Hand should:</strong>
@@ -235,6 +246,8 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       var contact = as ? "async" : "live", pace = fast ? "fast" : "deliberate";
       var st = S.styles[style], key = style + "-" + contact + "-" + pace + sfx;
       $("r-name").textContent = st.name;
+      $("r-img").src = "../assets/styles/" + style + ".svg";
+      $("r-img").alt = st.name + " emblem";
       $("r-chips").innerHTML = st.axes.split(" · ").concat([S.contact[contact].label + " updates", S.pace[pace].label + " drafts"])
         .map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");
       $("r-line").textContent = st.line;
