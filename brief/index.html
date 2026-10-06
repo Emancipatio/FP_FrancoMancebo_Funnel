@@ -41,6 +41,14 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 .chips span{font:700 12px/1 var(--display);letter-spacing:.06em;color:var(--mint);border:1px solid var(--line);border-radius:999px;padding:7px 11px}
 .result p{margin:0;color:var(--muted)}
 .skip{font-size:15px;color:var(--muted)}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.paths{grid-template-columns:1fr}}
+.path{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
+.path .btn{font-size:16px;padding:14px 18px}
+.result details summary{cursor:pointer;color:var(--muted);font-size:15px}
+.result textarea{margin-top:10px}
+.howto{margin-top:22px;max-width:760px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:12px}
+.howto h3 .note{font:400 14px var(--body);margin-left:6px}
 </style>
 </head>
 <body>
@@ -72,6 +80,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <h2 id="quiz">How do you <em>work best</em>?</h2>
       <p class="lead">Pick the answer closer to you. There's no right one: your answers decide how your kit tells a Right Hand to work with you.</p>
     </div>
+    <span id="other"></span>
     <form class="quiz" id="qform" novalidate></form>
     <div class="row" style="margin-top:16px">
       <button class="btn" id="see" type="button" disabled>See my style →</button>
@@ -85,15 +94,28 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <div><strong>Your Right Hand should:</strong>
         <ul class="fit" id="r-rh" style="margin-top:8px"></ul></div>
       <p id="r-split" class="note"></p>
-      <a class="btn" id="zip" href="right-hand-kit.zip" download="right-hand-kit.zip">Download my tuned kit (.zip) →</a>
-      <p class="note">Your style is built into the skill, so it greets you by style and writes your kit around it.</p>
+      <div class="paths">
+        <div class="path">
+          <div class="eyebrow">On Claude</div>
+          <a class="btn" id="zip" href="right-hand-kit.zip" download="right-hand-kit.zip">Download my kit (.zip) →</a>
+          <p class="note">Reads your real inbox and calendar. Set it up in the 3 steps below.</p>
+        </div>
+        <div class="path">
+          <div class="eyebrow">Not on Claude</div>
+          <button class="btn ghost" id="copy" type="button">Copy my prompt</button>
+          <p class="note">Paste it into ChatGPT or Gemini and it starts. <a id="ptxt" href="prompt.txt">Open it as a text file</a></p>
+        </div>
+      </div>
+      <p class="status" id="status" role="status"></p>
+      <details><summary>See the prompt</summary><textarea id="prompt" readonly aria-label="Your Right Hand Kit prompt for any AI chat">Loading the prompt…</textarea></details>
+      <p class="note">Both have your style built in, so they greet you by style and write your kit around it.</p>
     </div>
-    <p class="skip" style="margin-top:16px">Rather skip the quiz? <a id="zip-generic" href="right-hand-kit.zip" download="right-hand-kit.zip">Download the standard kit</a>. It asks 4 quick style questions inside the chat instead.</p>
+    <p class="skip" style="margin-top:16px">Rather skip the quiz? <a id="zip-generic" href="right-hand-kit.zip" download="right-hand-kit.zip">Download the standard kit</a> or <a id="copy-generic" href="prompt.txt">copy the standard prompt</a>. Both ask 4 quick style questions inside the chat instead. <span class="status" id="status-generic" role="status"></span></p>
   </section>
 
   <section aria-labelledby="setup">
     <div class="stack">
-      <div class="eyebrow">Step 2 · Set it up once</div>
+      <div class="eyebrow">Step 2 · On Claude: set it up once</div>
       <h2 id="setup">Three steps, about two minutes</h2>
     </div>
     <ol class="steps" style="margin-top:22px;max-width:760px">
@@ -101,7 +123,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <li>Open <strong>Customize → Skills</strong>, choose <strong>Upload a skill</strong> and pick the <strong>right-hand-kit.zip</strong> you just downloaded.</li>
       <li>Connect <strong>Gmail</strong> and <strong>Google Calendar</strong> in <strong>Settings → Connectors</strong>, start a new chat and type <strong>audit my week</strong>.</li>
     </ol>
-    <p class="note" style="margin-top:14px">Using Claude Code? Unzip it into <code>~/.claude/skills/</code>. Skills and Google connectors are available on every Claude plan, Free included.</p>
+    <p class="note" style="margin-top:14px">Using the prompt instead? Skip this: paste it into any AI chat and it starts. Using Claude Code? Unzip it into <code>~/.claude/skills/</code>. Skills and Google connectors are available on every Claude plan, Free included.</p>
   </section>
 
   <section aria-labelledby="sample">
@@ -127,16 +149,16 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <li><strong>Your bottleneck:</strong> most of your sent email answers your own team's questions.</li>
       <li><strong>Top 3 leaks:</strong> team questions in the inbox (5h), recurring internal meetings (4h), scheduling back-and-forth (3h). Pick one and the kit builds the fix.</li>
     </ul>
-  </section>
-
-  <section aria-labelledby="other">
-    <div class="stack" style="max-width:760px">
-      <div class="eyebrow">Not on Claude?</div>
-      <h2 id="other">Use the same kit in any AI chat</h2>
-      <p class="lead">Paste this into ChatGPT, Gemini or Claude. It asks 6 quick questions instead of reading your inbox, then runs the same steps. <span id="p-style">Take the quiz first and this prompt includes your style.</span></p>
-      <textarea id="prompt" readonly aria-label="Right Hand Kit prompt for any AI chat">Loading the prompt…</textarea>
-      <div class="row"><button class="btn" id="copy" type="button">Copy the prompt</button><a class="note" id="ptxt" href="prompt.txt">Open it as a text file</a></div>
-      <p class="status" id="status" role="status"></p>
+    <div class="howto">
+      <div class="eyebrow">And your "How to work with me" page</div>
+      <p class="note" style="margin:0"><span class="tag">Example</span> The same fictional founder, who took the quiz and set a $500 limit.</p>
+      <h3>The Captain <span class="note">Big picture · Hands-on · Live · Deliberate</span></h3>
+      <ul class="fit">
+        <li><strong>What I want from you:</strong> 2–3 options for every decision with your recommendation, follow-through the moment I decide, and a decisions log.</li>
+        <li><strong>Decide alone vs ask me:</strong> routine items under $500 follow the rules; anything client-facing or new comes to me with a recommendation.</li>
+        <li><strong>How to update me:</strong> a 10-minute call each day, then a short written recap.</li>
+        <li><strong>Drafts:</strong> double-check before anything goes out, and flag risks early.</li>
+      </ul>
     </div>
   </section>
 
@@ -175,8 +197,15 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       .catch(function(){ $("prompt").value = "Couldn't load the prompt here. Use the \"Open it as a text file\" link below."; });
   }
   loadPrompt("prompt" + sfx + ".txt");
+  $("copy-generic").addEventListener("click", function(e){
+    e.preventDefault();
+    var st = $("status-generic"), url = "prompt" + sfx + ".txt";
+    fetch(url).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(t){
+      return navigator.clipboard.writeText(t).then(function(){ st.textContent = "Copied. Paste it into your AI chat."; });
+    }).catch(function(){ location.href = url; });
+  });
   $("copy").addEventListener("click", function(){
-    var ta = $("prompt"), st = $("status"), fb = function(){ ta.focus(); ta.select(); st.textContent = "Press Ctrl+C (Cmd+C on Mac) to copy."; };
+    var ta = $("prompt"), st = $("status"), fb = function(){ ta.closest("details").open = true; ta.focus(); ta.select(); st.textContent = "Press Ctrl+C (Cmd+C on Mac) to copy."; };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function(){ st.textContent = "Copied. Paste it into your AI chat."; }, fb); else fb();
   });
 
@@ -212,7 +241,6 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       $("r-rh").innerHTML = st.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("");
       $("r-split").textContent = split.length ? "You were split on " + split.join(" and ") + ", so your kit starts with the safer setting: more check-ins at first, fewer later." : "";
       $("zip").href = "kits/" + key + ".zip";
-      $("p-style").textContent = "This prompt now includes your style: " + st.name + ".";
       loadPrompt("kits/" + key + ".txt");
       $("result").hidden = false;
       $("result").scrollIntoView({behavior:"smooth", block:"start"});
