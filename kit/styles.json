@@ -1,0 +1,70 @@
+{
+  "questions": [
+    {"dim": "focus", "q": "A new project lands on your desk. First, you want to know…", "a": "The outcome and the deadline", "b": "The plan, step by step"},
+    {"dim": "focus", "q": "When someone hands you finished work, you notice first…", "a": "Whether it moves the goal", "b": "The details that are off"},
+    {"dim": "control", "q": "A good result reached a different way than yours…", "a": "Fine by me, it's done", "b": "I'd rather it was done my way"},
+    {"dim": "control", "q": "How much do you want to approve before it goes out?", "a": "Only the big things", "b": "Most things"},
+    {"dim": "contact", "q": "The best way to get an update from your team is…", "a": "A written note I read when I'm ready", "b": "A quick call"},
+    {"dim": "contact", "q": "When something is unclear, you'd rather…", "a": "Get a message with options", "b": "Talk it through"},
+    {"dim": "pace", "q": "Which would you rather have?", "a": "A draft that's 80% right today", "b": "A draft that's 100% right on Friday"},
+    {"dim": "pace", "q": "Before something goes to a client, you want…", "a": "It out fast; fix it later if needed", "b": "A second check first"}
+  ],
+  "styles": {
+    "visionary": {
+      "name": "The Visionary",
+      "axes": "Big picture · Hands-off",
+      "line": "You set the direction and want it handled. You think in outcomes and lose energy in the details.",
+      "rh": [
+        "Owns outcomes end to end, not task lists",
+        "Brings you decisions, never problems without options",
+        "Decides alone on anything inside your limits and tells you after"
+      ],
+      "sop": "Short SOPs: the outcome, the rules and when to escalate. Skip step-by-step detail the Right Hand can work out.",
+      "decide": "The Right Hand decides alone on everything inside the dollar limit and the rules, and lists those decisions in the update."
+    },
+    "captain": {
+      "name": "The Captain",
+      "axes": "Big picture · Hands-on",
+      "line": "You lead from the front and like to steer. You want the big calls to stay yours, without doing the legwork.",
+      "rh": [
+        "Prepares 2–3 options for every decision, with a recommendation",
+        "Runs the follow-through the moment you decide",
+        "Keeps a decisions log so nothing waits on your memory"
+      ],
+      "sop": "SOPs centred on decision points: what the Right Hand prepares, what you choose, and what happens after.",
+      "decide": "The Right Hand prepares and recommends; you make the final call on anything client-facing or new. Routine items follow the rules."
+    },
+    "craftsman": {
+      "name": "The Craftsman",
+      "axes": "Detail · Hands-on",
+      "line": "You care how things are done, not just that they're done. Quality is your signature, and it's why letting go is hard.",
+      "rh": [
+        "Works from detailed SOPs with examples of your standard",
+        "Shows you work at agreed checkpoints in the first 30 days",
+        "Earns autonomy task by task as the checkpoints pass"
+      ],
+      "sop": "Detailed SOPs: numbered steps, an example of a good result, and a quality checklist for every task.",
+      "decide": "For the first 30 days you review at checkpoints; each task moves to 'decides alone' once it passes two reviews in a row."
+    },
+    "systems": {
+      "name": "The Systems Builder",
+      "axes": "Detail · Hands-off",
+      "line": "You like things to run on rules, not on you. You'd rather design the system once than touch it every day.",
+      "rh": [
+        "Documents every process and keeps the SOPs current",
+        "Runs the systems and reports by exception",
+        "Suggests a rule or automation whenever something repeats"
+      ],
+      "sop": "Rule-based SOPs: triggers, if/then rules, and what gets automated vs done by hand.",
+      "decide": "The Right Hand follows the rules without asking and only escalates exceptions the rules don't cover."
+    }
+  },
+  "contact": {
+    "async": {"label": "Async", "update": "A written update at the end of each day (done / in progress / blocked / needs your decision). Urgent items only by direct message."},
+    "live": {"label": "Live", "update": "A 10-minute check-in call each day, followed by a short written recap of what was agreed."}
+  },
+  "pace": {
+    "fast": {"label": "Fast", "drafts": "Send 80% drafts early and improve them in the open. Speed beats polish on internal work."},
+    "deliberate": {"label": "Deliberate", "drafts": "Double-check before anything goes out, and flag risks before they become problems. Polish beats speed on client-facing work."}
+  }
+}

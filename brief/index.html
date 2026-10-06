@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>The Right Hand Kit · Pareto Talent</title>
-<meta name="description" content="A free Claude skill that finds the hours in your real inbox and calendar that someone else should own, gets your first ones back today, and writes the kit to hand off the rest.">
+<title>Founder Working Style + Right Hand Kit · Pareto Talent</title>
+<meta name="description" content="Take the 8-question Founder Working Style quiz, then get a free Claude skill tuned to you: it audits your real inbox and calendar, gets your first hours back today, and writes the hand-off kit for how you work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
@@ -25,6 +25,22 @@ tr.total td.n{color:var(--amber)}
 textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font:400 14px/1.5 ui-monospace,Consolas,monospace;resize:vertical}
 .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .status{font-size:14px;color:var(--mint);min-height:1.4em}
+.quiz{display:grid;gap:14px;max-width:760px;margin-top:22px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0;display:grid;gap:10px}
+.q legend{font:700 17px/1.35 var(--display);padding:0;margin-bottom:4px;float:left;width:100%}
+.q legend b{color:var(--accent);margin-right:8px;font-size:13px;letter-spacing:.08em}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;clear:both}
+@media (max-width:600px){.opts{grid-template-columns:1fr}}
+.opts label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:16px;color:var(--ink);background:var(--bg)}
+.opts input{accent-color:var(--accent);margin-top:4px}
+.opts label:has(input:checked){border-color:var(--accent);background:var(--surface-2)}
+.result{background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:clamp(18px,3vw,28px);display:grid;gap:14px;max-width:760px;margin-top:22px}
+.result[hidden]{display:none}
+.result h3{font-size:clamp(28px,4vw,38px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font:700 12px/1 var(--display);letter-spacing:.06em;color:var(--mint);border:1px solid var(--line);border-radius:999px;padding:7px 11px}
+.result p{margin:0;color:var(--muted)}
+.skip{font-size:15px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -37,22 +53,47 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
       <div class="eyebrow">Free for founders · The Right Hand Kit</div>
-      <h1 id="h1">Your <em>Right Hand Kit</em>: your week back in 30 minutes.</h1>
-      <p class="lead">A Claude skill that reads your last 2 weeks of email and calendar, then does three things:</p>
+      <h1 id="h1">Find your <em>Founder Working Style</em>. Get a Right Hand Kit built around it.</h1>
+      <p class="lead">8 quick questions show how you work best. Then a Claude skill reads your real inbox and calendar and writes the hand-off kit tuned to you, down to how your Right Hand should update you.</p>
       <ol class="parts">
-        <li><b>01</b><span><strong>Your real week, audited.</strong> Where your hours go, what they cost at your own rate, and where you're the bottleneck.</span></li>
-        <li><b>02</b><span><strong>Your first hours back today.</strong> Pick your biggest leak and get ready-to-paste filters, templates and calendar rules.</span></li>
-        <li><b>03</b><span><strong>Your Right Hand Kit.</strong> The job description, 30-day scorecard, SOPs and access checklist a Right Hand starts from.</span></li>
+        <li><b>01</b><span><strong>Your working style.</strong> One of 4 founder styles, plus how you like updates and drafts.</span></li>
+        <li><b>02</b><span><strong>Your real week, audited.</strong> Where your hours go, what they cost at your own rate, and your first hours back today.</span></li>
+        <li><b>03</b><span><strong>Your Right Hand Kit, tuned to you.</strong> Job description, 30-day scorecard, SOPs, and a "How to work with me" guide for your style.</span></li>
       </ol>
-      <a class="btn" id="zip" href="right-hand-kit.zip" download>Download the skill (.zip) →</a>
+      <a class="btn" href="#quiz">Take the 2-minute quiz →</a>
       <div class="meta"><span>Works on Claude's free plan</span><span>Read only: it never sends or deletes</span><span>Your email stays in your Claude</span></div>
     </div>
     <div class="art"><img src="hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
   </section>
 
+  <section aria-labelledby="quiz">
+    <div class="stack" style="max-width:760px">
+      <div class="eyebrow">Step 1 · Founder Working Style</div>
+      <h2 id="quiz">How do you <em>work best</em>?</h2>
+      <p class="lead">Pick the answer closer to you. There's no right one: your answers decide how your kit tells a Right Hand to work with you.</p>
+    </div>
+    <form class="quiz" id="qform" novalidate></form>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="see" type="button" disabled>See my style →</button>
+      <span class="skip" id="left">8 questions left</span>
+    </div>
+    <div class="result" id="result" hidden aria-live="polite">
+      <div class="eyebrow">Your Founder Working Style</div>
+      <h3 id="r-name"></h3>
+      <div class="chips" id="r-chips"></div>
+      <p id="r-line"></p>
+      <div><strong>Your Right Hand should:</strong>
+        <ul class="fit" id="r-rh" style="margin-top:8px"></ul></div>
+      <p id="r-split" class="note"></p>
+      <a class="btn" id="zip" href="right-hand-kit.zip" download="right-hand-kit.zip">Download my tuned kit (.zip) →</a>
+      <p class="note">Your style is built into the skill, so it greets you by style and writes your kit around it.</p>
+    </div>
+    <p class="skip" style="margin-top:16px">Rather skip the quiz? <a id="zip-generic" href="right-hand-kit.zip" download="right-hand-kit.zip">Download the standard kit</a>. It asks 4 quick style questions inside the chat instead.</p>
+  </section>
+
   <section aria-labelledby="setup">
     <div class="stack">
-      <div class="eyebrow">Set it up once</div>
+      <div class="eyebrow">Step 2 · Set it up once</div>
       <h2 id="setup">Three steps, about two minutes</h2>
     </div>
     <ol class="steps" style="margin-top:22px;max-width:760px">
@@ -92,7 +133,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
     <div class="stack" style="max-width:760px">
       <div class="eyebrow">Not on Claude?</div>
       <h2 id="other">Use the same kit in any AI chat</h2>
-      <p class="lead">Paste this into ChatGPT, Gemini or Claude. It asks 6 quick questions instead of reading your inbox, then runs the same three steps.</p>
+      <p class="lead">Paste this into ChatGPT, Gemini or Claude. It asks 6 quick questions instead of reading your inbox, then runs the same steps. <span id="p-style">Take the quiz first and this prompt includes your style.</span></p>
       <textarea id="prompt" readonly aria-label="Right Hand Kit prompt for any AI chat">Loading the prompt…</textarea>
       <div class="row"><button class="btn" id="copy" type="button">Copy the prompt</button><a class="note" id="ptxt" href="prompt.txt">Open it as a text file</a></div>
       <p class="status" id="status" role="status"></p>
@@ -103,7 +144,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
     <div class="stack" style="max-width:760px">
       <div class="eyebrow">When the kit is done</div>
       <h2 id="next" data-q="Bring your kit to a <em>Right Hand Fit Call</em>.">Want someone to <em>run your kit</em> with you?</h2>
-      <p class="lead" id="next-p" data-q="20 minutes. We read your audit together, turn your kit into your Right Hand's role and, if it's a fit, show you 3 hand-picked candidates within 24 hours.">Pareto Talent matches founders with a full-time, AI-trained Right Hand who owns outcomes, not just tasks. 100+ founders served, 93% still with us after 12 months.</p>
+      <p class="lead" id="next-p" data-q="20 minutes. We read your audit and your working style together, turn your kit into your Right Hand's role and, if it's a fit, show you 3 hand-picked candidates matched to how you work, within 24 hours.">Pareto Talent matches founders with a full-time, AI-trained Right Hand who owns outcomes, not just tasks. 100+ founders served, 93% still with us after 12 months.</p>
       <a class="btn ghost" id="next-a" href="https://paretotalent.com" data-q="../book/" data-qtext="Book my Fit Call →">See the Right Hand Program →</a>
     </div>
   </section>
@@ -117,8 +158,8 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 (function(){
   var q = /[?&]q=1(&|$)/.test(location.search), sfx = q ? "-fitcall" : "";
   var $ = function(id){ return document.getElementById(id); };
-  $("zip").href = "right-hand-kit" + sfx + ".zip";
-  $("zip").setAttribute("download", "right-hand-kit.zip");
+  var esc = function(t){ var d = document.createElement("div"); d.textContent = t; return d.innerHTML; };
+  $("zip").href = $("zip-generic").href = "right-hand-kit" + sfx + ".zip";
   $("ptxt").href = "prompt" + sfx + ".txt";
   if (q) {
     $("next").innerHTML = $("next").dataset.q;
@@ -127,12 +168,57 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
     $("next-a").textContent = $("next-a").dataset.qtext;
     $("next-a").classList.remove("ghost");
   }
-  fetch("prompt" + sfx + ".txt").then(function(r){ if(!r.ok) throw 0; return r.text(); })
-    .then(function(t){ $("prompt").value = t; })
-    .catch(function(){ $("prompt").value = "Couldn't load the prompt here. Use the \"Open it as a text file\" link below."; });
+  function loadPrompt(url){
+    $("ptxt").href = url;
+    fetch(url).then(function(r){ if(!r.ok) throw 0; return r.text(); })
+      .then(function(t){ $("prompt").value = t; })
+      .catch(function(){ $("prompt").value = "Couldn't load the prompt here. Use the \"Open it as a text file\" link below."; });
+  }
+  loadPrompt("prompt" + sfx + ".txt");
   $("copy").addEventListener("click", function(){
     var ta = $("prompt"), st = $("status"), fb = function(){ ta.focus(); ta.select(); st.textContent = "Press Ctrl+C (Cmd+C on Mac) to copy."; };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function(){ st.textContent = "Copied. Paste it into your AI chat."; }, fb); else fb();
+  });
+
+  // Founder Working Style quiz. Answer a = first end (Big picture, Hands-off, Async, Fast).
+  // Both answers in a dimension must agree on "a"; a split takes the safer start (Detail, Hands-on, Live, Deliberate).
+  var SPLIT = {focus:"big picture vs detail", control:"hands-off vs hands-on", contact:"written vs live updates", pace:"fast vs checked drafts"};
+  fetch("../kit/styles.json").then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(S){
+    var f = $("qform"), n = S.questions.length;
+    S.questions.forEach(function(x, i){
+      var fs = document.createElement("fieldset"); fs.className = "q";
+      fs.innerHTML = '<legend><b>' + String(i+1).padStart(2,"0") + '</b>' + esc(x.q) + '</legend><div class="opts">' +
+        ['a','b'].map(function(k){ return '<label><input type="radio" name="q' + i + '" value="' + k + '" required> <span>' + esc(x[k]) + '</span></label>'; }).join("") + '</div>';
+      f.appendChild(fs);
+    });
+    function answers(){ return S.questions.map(function(x, i){ var c = f.querySelector('input[name="q' + i + '"]:checked'); return c && c.value; }); }
+    f.addEventListener("change", function(){
+      var left = answers().filter(function(a){ return !a; }).length;
+      $("left").textContent = left ? left + (left === 1 ? " question left" : " questions left") : "All done";
+      $("see").disabled = left > 0;
+    });
+    $("see").addEventListener("click", function(){
+      var a = answers(), dims = {}, split = [];
+      S.questions.forEach(function(x, i){ (dims[x.dim] = dims[x.dim] || []).push(a[i]); });
+      var end = function(d){ var v = dims[d]; if (v[0] !== v[1]) split.push(SPLIT[d]); return v.every(function(k){ return k === "a"; }); };
+      var big = end("focus"), off = end("control"), as = end("contact"), fast = end("pace");
+      var style = big ? (off ? "visionary" : "captain") : (off ? "systems" : "craftsman");
+      var contact = as ? "async" : "live", pace = fast ? "fast" : "deliberate";
+      var st = S.styles[style], key = style + "-" + contact + "-" + pace + sfx;
+      $("r-name").textContent = st.name;
+      $("r-chips").innerHTML = st.axes.split(" · ").concat([S.contact[contact].label + " updates", S.pace[pace].label + " drafts"])
+        .map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");
+      $("r-line").textContent = st.line;
+      $("r-rh").innerHTML = st.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("");
+      $("r-split").textContent = split.length ? "You were split on " + split.join(" and ") + ", so your kit starts with the safer setting: more check-ins at first, fewer later." : "";
+      $("zip").href = "kits/" + key + ".zip";
+      $("p-style").textContent = "This prompt now includes your style: " + st.name + ".";
+      loadPrompt("kits/" + key + ".txt");
+      $("result").hidden = false;
+      $("result").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  }).catch(function(){
+    $("qform").innerHTML = '<p class="note">The quiz couldn\'t load here. Download the standard kit below: it asks the style questions inside the chat.</p>';
   });
 })();
 </script>

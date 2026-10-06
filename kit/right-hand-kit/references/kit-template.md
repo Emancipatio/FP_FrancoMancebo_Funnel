@@ -62,3 +62,14 @@ Sent at <time they prefer> by <email or chat>:
 - In progress
 - Blocked / needs a decision from <founder>
 - Tomorrow's top 3
+
+## 6. How to work with me
+
+From the founder's Founder Working Style (`my-style.md`, or their answers):
+- **My style:** <style name> (<focus> · <control> · <contact> · <pace>), in one sentence
+- **What I want from you:** the 3 behaviours for this style
+- **Decide alone vs ask me:** the decision rule for this style, with the dollar limit
+- **How to update me:** the update format for their Contact preference
+- **Drafts:** the rule for their Pace preference
+- **Never:** 2–3 things that would frustrate this founder in particular
+

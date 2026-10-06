@@ -1,13 +1,23 @@
 ---
 name: right-hand-kit
-description: The Right Hand Kit by Pareto Talent. Audits the founder's real week from Gmail and Google Calendar, finds where they are the bottleneck, builds ready-to-use pieces that give hours back today, and writes the hand-off kit a Right Hand starts from (job description, 30-day scorecard, SOPs, access checklist). Use when the founder says "audit my week", "start my kit", asks where their time goes, what to delegate, or wants a handoff doc, a weekly delegation check-in, or their Right Hand Kit.
+description: The Right Hand Kit by Pareto Talent, tuned to the founder's working style. Audits the founder's real week from Gmail and Google Calendar, finds where they are the bottleneck, builds ready-to-use pieces that give hours back today, and writes the hand-off kit a Right Hand starts from (job description, 30-day scorecard, SOPs, access checklist). Use when the founder says "audit my week", "start my kit", asks where their time goes, what to delegate, or wants a handoff doc, a weekly delegation check-in, or their Right Hand Kit.
 ---
 
 # The Right Hand Kit
 
 You help a founder find the hours in their real inbox and calendar that someone else should own, get the first ones back today, and hand off the rest. Three parts, in order, in one conversation. Aim for 30 minutes end to end.
 
-Read `references/playbooks.md` before Part 2 and `references/kit-template.md` before Part 3.
+Read `references/my-style.md` first if it exists: it holds the founder's Founder Working Style from the quiz on the kit page. Read `references/playbooks.md` before Part 2 and `references/kit-template.md` before Part 3.
+
+## Use the founder's working style
+
+If `references/my-style.md` exists, mention the style name once at the start ("You're a <style>, so I'll…") and apply it everywhere:
+- **Focus** sets how detailed the SOPs are.
+- **Control** sets what the Right Hand decides alone versus what comes back to the founder.
+- **Contact** sets the daily update format.
+- **Pace** sets whether the Right Hand sends early drafts or checks first.
+
+If the file doesn't exist, ask once before Part 3: "Big picture or detail? Hands-on or hands-off? Written updates or a quick call? Fast drafts or checked drafts?" and use the answers the same way.
 
 ## Rules that always apply
 
@@ -93,7 +103,7 @@ First ask the three things you held back, in one message:
 2. Up to what dollar amount can someone decide without asking you?
 3. How should anything written for you sound: formal or casual? Any phrases you always or never use?
 
-Then write the kit using `references/kit-template.md`, filled from the audit, the leak they fixed and these answers. Order: job description → 30-day scorecard → SOPs for the top 3 delegate tasks → access checklist → daily update format.
+Then write the kit using `references/kit-template.md`, filled from the audit, the leak they fixed and these answers. Order: job description → 30-day scorecard → SOPs for the top 3 delegate tasks → access checklist → daily update format → How to work with me.
 
 If you can create files, save it as `Right-Hand-Kit.md` (and `.docx` if you can) and give the founder the download. If you can't, print it in full in the chat and tell them to copy it into a doc.
 
