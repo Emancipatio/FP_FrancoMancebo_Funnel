@@ -171,6 +171,16 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .type h2{color:var(--bg)}
 .type p{margin:0;max-width:60ch;opacity:.88}
 .type .tiny{color:var(--bg);opacity:.7}
+.type{--tc:var(--accent);border-top:6px solid var(--tc)}
+.t-head{display:flex;align-items:center;gap:14px}
+.t-badge{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--tc);color:#050a0e}
+.t-badge svg{width:28px;height:28px}
+.type .t-hook{font:700 clamp(18px,2.4vw,22px)/1.3 var(--display);opacity:1}
+.type .t-blend{border-left:4px solid var(--tb,var(--tc));padding:4px 0 4px 12px;opacity:1}
+.t-signs{display:grid;gap:6px}
+.t-signs ul{margin:0;padding-left:20px;display:grid;gap:4px;max-width:60ch}
+.t-signs li::marker{color:var(--tc)}
+.type .t-sig{background:color-mix(in srgb,var(--tc) 22%,transparent);border-radius:10px;padding:10px 12px;opacity:1;justify-self:start}
 .cta{display:inline-block;justify-self:start;text-decoration:none;background:var(--accent);color:var(--accent-ink);font:600 17px/1.2 var(--body);padding:16px 22px;border-radius:12px;margin-top:6px}
 .cta:hover{filter:brightness(1.06)}
 .weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -296,13 +306,25 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       </div>
     </div>
 
-    <div class="type">
-      <div class="eyebrow">Your founder type</div>
-      <h2 id="t-name">The Human Router</h2>
+    <div class="type" id="type-card">
+      <div class="t-head">
+        <span class="t-badge" id="t-badge" aria-hidden="true"></span>
+        <div>
+          <div class="eyebrow">Your founder type</div>
+          <h2 id="t-name">The Human Router</h2>
+        </div>
+      </div>
+      <p class="t-hook" id="t-hook"></p>
       <p id="t-desc"></p>
+      <p class="t-blend" id="t-blend" hidden></p>
+      <div class="t-signs">
+        <b>You'll recognise yourself if…</b>
+        <ul id="t-signs"></ul>
+      </div>
+      <p class="t-sig" id="t-sig" hidden></p>
       <p id="t-win"></p>
-      <a class="cta" id="cta" href="#form" target="_blank" rel="noopener">Book my 20-minute Right Hand Fit Call</a>
-      <p class="tiny" id="cta-note" hidden>First, 4 quick questions to check a Right Hand is the right fit for you.</p>
+      <a class="cta" id="cta" href="https://go.paretotalent.com/" target="_blank" rel="noopener">See how the Right Hand Program works</a>
+      <p class="tiny" id="cta-note">A Right Hand is a full-time, AI-trained executive assistant who takes this plan as their job description from day one.</p>
       <p class="tiny">Meet 3 hand-picked candidates · pay nothing until you're excited about one · Freedom 40: 40 hours back in 30 days or next month free</p>
     </div>
 
@@ -353,13 +375,17 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (function(){
-  var FORM_URL = "#form"; // set to the GoHighLevel landing page form (L7/L8)
-  var BOOKING_URL = "#book"; // set to the GoHighLevel booking page (L9); qualified founders only
-  // Qualified founders arrive from the GoHighLevel redirect/email with ?q=1; everyone else goes through the form first.
+  var PROGRAM_URL = "https://go.paretotalent.com/"; // Right Hand Program page; for founders who didn't qualify
+  var BOOKING_URL = "https://pareto-fit-call.vibepreview.app/"; // booking page (L9); qualified founders only
+  // Everyone fills the qualifying form before the audit. Qualified founders arrive from the booking page with ?q=1
+  // and get the Fit Call button; everyone else (thank-you page, nurture email) gets the program page, never a call.
   var QUALIFIED = false;
   try{ if(new URLSearchParams(location.search).get("q")==="1") localStorage.setItem("f8020q","1");
     QUALIFIED = localStorage.getItem("f8020q")==="1"; }catch(e){}
-  var CALL_URL = QUALIFIED ? BOOKING_URL : FORM_URL;
+  var CALL_URL = QUALIFIED ? BOOKING_URL : PROGRAM_URL;
+  var NEXT_LINE = QUALIFIED ? "Book a 20-minute Right Hand Fit Call: "+BOOKING_URL : "See how the Right Hand Program works: "+PROGRAM_URL;
+  var PACK_LINE = QUALIFIED ? "Bring this to your Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you ("+BOOKING_URL+")."
+    : "If you hire a Right Hand through Pareto Talent, this is the brief they use to match and onboard you ("+PROGRAM_URL+").";
   var RH_PRICE = 3600, WPM = 4.33, C = 2*Math.PI*80;
 
   var ICONS = {
@@ -419,7 +445,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   var fmtH = function(n){ return (Math.round(n*10)/10).toString()+"h"; };
   var fmtM = function(n){ return "$"+Math.round(n).toLocaleString("en-US"); };
   $("cta").href = CALL_URL;
-  if(!QUALIFIED) $("cta-note").hidden = false;
+  if(QUALIFIED){ $("cta").textContent = "Book my 20-minute Right Hand Fit Call"; $("cta-note").textContent = "You qualified: pick a time and bring this plan to the call."; }
 
   try{ var s = JSON.parse(localStorage.getItem("f8020v4")||"null");
     if(s){ rateEl.value = s.rate||rateEl.value; areaHrs = s.h||{};
@@ -579,18 +605,66 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
 
   function totals(){ var r={K:0,D:0,A:0}; tasks.forEach(function(t){ if(t.on&&t.hours>0) r[t.bucket]+=t.hours; }); r.all=r.K+r.D+r.A; return r; }
 
+  // one type per area; n name · h hook · d description · s signs · w first win · c colour · a area (icon)
   var TYPES = {
-    router:{k:"router",n:"The Human Router",d:"Every message, update and decision passes through you, so the company moves at the speed of your inbox.",w:"Your first win: make a Right Hand the hub. Inbox and status-chasing move off your plate in week one."},
-    face:{k:"face",n:"The Face of the Brand",d:"Your content and your voice drive the business, but the work around them is eating the time you need to create.",w:"Your first win: keep the camera and the stage; hand off editing, posting and replies so you only show up for the 20%."},
-    trapped:{k:"trapped",n:"The Trapped Founder",d:"You started this for freedom. Somewhere along the way, admin became the job.",w:"Your first win: clear calendar and money admin first. It's the fastest way to feel the business work without you."}
+    router:{k:"router",a:"Inbox & messages",c:"#10b981",n:"The Human Router",h:"The company moves at the speed of your inbox.",
+      d:"Every message, update and decision passes through you. Things aren't stuck because people are slow; they're stuck waiting on your reply.",
+      s:["You answer email at red lights and in bed","Your team asks you things they could look up","One day offline means two days of backlog"],
+      w:"Your first win: make a Right Hand the hub. Inbox triage and chasing answers move off your plate in week one."},
+    calendar:{k:"calendar",a:"Calendar & travel",c:"#38bdf8",n:"The Calendar Hostage",h:"Your week belongs to whoever booked it first.",
+      d:"Scheduling, prep and logistics fill every gap between meetings, so deep work only happens before 8am or after everyone logs off.",
+      s:["You've traded six emails to find one 30-minute slot","You prep for meetings in the five minutes before them","Booking a trip takes longer than the trip"],
+      w:"Your first win: booking links this week, then a Right Hand who owns your calendar, travel and meeting briefs. You just show up."},
+    closer:{k:"closer",a:"Sales & clients",c:"#f2b968",n:"The Closer Who Does the Paperwork",h:"You win the deal, then spend the evening logging it.",
+      d:"You're the best seller in the company, and also its CRM clerk, proposal writer and onboarding team. Every hour of paperwork is an hour you're not in front of a buyer.",
+      s:["CRM notes get written days later, if at all","Proposals wait on you, so deals cool off","Good leads go quiet because nobody followed up"],
+      w:"Your first win: you take the calls. A Right Hand logs the CRM, drafts proposals from templates and runs onboarding, and a sequence handles follow-up."},
+    bookkeeper:{k:"bookkeeper",a:"Money & admin",c:"#a3e635",n:"The Accidental Bookkeeper",h:"You didn't start a company to chase receipts.",
+      d:"Invoices, receipts, bills and contracts quietly took over your week. None of it is hard; all of it waits on you, and month-end feels like a second job.",
+      s:["You chase clients for payment yourself","Receipts live in your inbox, your car and your wallet","You're still paying for tools nobody uses"],
+      w:"Your first win: recurring invoices and automatic reminders, then a Right Hand who preps the books and queues payments for your one-click approval."},
+    face:{k:"face",a:"Marketing & content",c:"#f472b6",n:"The Face of the Brand",h:"Your voice drives growth; the editing is eating it.",
+      d:"Your content and your voice drive the business, but the work around them is eating the time you need to create.",
+      s:["You've filmed content that never got posted","DMs and comments pile up between posts","You edit at midnight because nobody else knows how"],
+      w:"Your first win: keep the camera and the stage; hand off editing, posting and replies so you only show up for the 20%."},
+    chaser:{k:"chaser",a:"Team & operations",c:"#818cf8",n:"The Chief Chaser",h:"You built a team and became its reminder app.",
+      d:"Your team is capable, but status, reports and hiring admin still run through you. You spend more time asking \"where are we on this?\" than deciding what's next.",
+      s:["You know who's late before their manager does","The weekly report exists because you build it","Half your SOPs live only in your head"],
+      w:"Your first win: a Right Hand runs the project board and the weekly recap, so updates come to you instead of you going to get them."},
+    trapped:{k:"trapped",a:"The 20% only you can do",c:"#94a3b8",n:"The Trapped Founder",h:"You started this for freedom. Somewhere along the way, admin became the job.",
+      d:"There's no single fire, just a hundred small ones across every part of the business, and every one of them needs you.",
+      s:["Every area of the business has a task waiting on you","You can't remember a week without admin","You're busy all day and can't say what moved"],
+      w:"Your first win: clear the easiest task in every area first. One Right Hand, one list, and week one already feels lighter."}
   };
+  var AREA_TYPE = {"Inbox & messages":"router","Calendar & travel":"calendar","Sales & clients":"closer","Money & admin":"bookkeeper","Marketing & content":"face","Team & operations":"chaser"};
+  var CLOSE = 0.8; // an area within 80% of the top area's hours counts as "close"
   function founderType(){
     var byArea={};
-    tasks.forEach(function(t){ if(t.on&&t.hours>0&&t.area!=="The 20% only you can do") byArea[t.area]=(byArea[t.area]||0)+t.hours; });
-    var top=Object.keys(byArea).sort(function(a,b){return byArea[b]-byArea[a]})[0];
-    if(top==="Inbox & messages"||top==="Team & operations") return TYPES.router;
-    if(top==="Marketing & content") return TYPES.face;
-    return TYPES.trapped;
+    tasks.forEach(function(t){ if(t.on&&t.hours>0&&t.bucket!=="K"&&AREA_TYPE[t.area]) byArea[t.area]=(byArea[t.area]||0)+t.hours; });
+    var ranked=Object.keys(byArea).sort(function(a,b){return byArea[b]-byArea[a]});
+    var top=ranked[0], close=ranked.filter(function(a){ return byArea[a]>=byArea[top]*CLOSE; });
+    // no clear leader (3+ areas neck and neck) or nothing to hand off: spread thin
+    var base = (!top || close.length>=3) ? TYPES.trapped : TYPES[AREA_TYPE[top]];
+    var ft={}; for(var k in base) ft[k]=base[k];
+    ft.blend = (base!==TYPES.trapped && close.length===2) ? TYPES[AREA_TYPE[close[1]]] : null;
+    ft.full = ft.n + (ft.blend ? ", with a streak of "+ft.blend.n.replace(/^The /,"") : "");
+    // signature handoff: the biggest delegate/automate task in the top area
+    ft.sig = base===TYPES.trapped ? null : tasks.filter(function(t){ return t.on&&t.hours>0&&t.bucket!=="K"&&t.area===top; })
+      .sort(function(x,y){ return y.hours-x.hours; })[0] || null;
+    return ft;
+  }
+  var SVG = function(a){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+ICONS[a]+'</svg>'; };
+  function showType(ft){
+    var card=$("type-card");
+    card.style.setProperty("--tc",ft.c);
+    $("t-badge").innerHTML=SVG(ft.a);
+    $("t-name").textContent=ft.n; $("t-hook").textContent=ft.h; $("t-desc").textContent=ft.d;
+    $("t-signs").innerHTML=ft.s.map(function(s){ return "<li>"+esc(s)+"</li>"; }).join("");
+    var b=$("t-blend"); b.hidden=!ft.blend;
+    if(ft.blend){ card.style.setProperty("--tb",ft.blend.c);
+      b.innerHTML="<b>With a streak of "+esc(ft.blend.n.replace(/^The /,""))+".</b> "+esc(ft.blend.h)+" Your plan covers both."; }
+    var g=$("t-sig"); g.hidden=!ft.sig;
+    if(ft.sig) g.innerHTML="<b>Your signature handoff:</b> "+esc(ft.sig.name)+", about "+fmtH(ft.sig.hours)+" a week.";
   }
 
   function countUp(el,to,fmt){
@@ -631,7 +705,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     parts.forEach(function(p){ var el=$(p[0]); el.setAttribute("stroke-dasharray","0 "+C); el.setAttribute("stroke-dashoffset","0"); });
     setTimeout(function(){ parts.forEach(function(p){ var len=T.all?p[1]/T.all*C:0, el=$(p[0]); el.setAttribute("stroke-dasharray",len+" "+(C-len)); el.setAttribute("stroke-dashoffset",String(-acc)); acc+=len; }); },80);
     $("ring").setAttribute("aria-label","Keep "+fmtH(T.K)+", delegate "+fmtH(T.D)+", automate "+fmtH(T.A)+" per week");
-    var ft=founderType(); $("t-name").textContent=ft.n; $("t-desc").textContent=ft.d;
+    var ft=founderType(); showType(ft);
     var dval=T.D*WPM*rate;
     $("t-win").textContent = ft.w + (month>=40 ? " You have "+Math.round(month)+" hours a month to hand off, more than the 40 hours Pareto guarantees back in your first 30 days"+(dval>=RH_PRICE?". At your rate, the delegable hours alone are worth "+fmtM(dval)+" a month.":".") : " You're under 40 hours a month today, so start with the automations in week 1. Most founders find more tasks once someone else starts taking them.");
     var P=plan(), html="";
@@ -653,13 +727,21 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   /* ---- Delegation Copilot: one source, two formats (chat prompt + Claude Skill) ---- */
   var FOCUS = {
     router:"Everything routes through me. First build my INBOX RULE BOOK: what the assistant answers alone, what gets archived, what gets drafted for me, and what reaches me immediately.",
+    calendar:"My calendar runs me. First build my CALENDAR RULES: meeting hours, buffers, what gets a yes without me, what needs me, and a one-page brief template for every meeting.",
+    closer:"I sell; the paperwork after the call slows me down. First build my AFTER-CALL CHECKLIST: what gets logged in the CRM, which proposal template to use, and the follow-up sequence, so every call ends in one handoff.",
+    bookkeeper:"Money admin swallowed my week. First turn invoicing, receipts and bill payments into a MONTHLY MONEY CHECKLIST an assistant runs, with my approval only for payments.",
     face:"My voice is the brand. First build a VOICE GUIDE (tone, phrases I use, phrases I never use, 3 example replies) so anything written for me sounds like me.",
+    chaser:"I chase my team for updates. First build a WEEKLY RECAP SYSTEM: what each person reports, where, by when, and what the assistant escalates to me.",
     trapped:"Admin swallowed my week. First turn my recurring calendar and money tasks into simple WEEKLY CHECKLISTS an assistant can run without me."
   };
   // the one intake question that changes most by founder type
   var TYPEQ = {
     router:"Which three kinds of messages or questions reach you that someone else could answer?",
+    calendar:"Which meetings in a typical week could be shorter, async, or attended by someone else?",
+    closer:"Walk me through what happens after a good sales call today, step by step, until the client is onboarded.",
+    bookkeeper:"Which money task do you resent most (invoices, receipts, bills, chasing payments), and which tools hold it today?",
     face:"Paste two or three short things you wrote (an email, a post, a DM reply) that sound exactly like you.",
+    chaser:"Which updates do you chase most often, and from whom?",
     trapped:"Which recurring admin task do you resent most, and when in the week does it hit?"
   };
   /* Intake: the copilot interviews the founder first and builds a FOUNDER PROFILE it reuses everywhere */
@@ -693,12 +775,12 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
     var o=[];
     o.push("You are my Delegation Copilot. Stay in this role for the whole chat.","",
       "ABOUT ME (from my Founder 80/20 Audit by Pareto Talent)",
-      "- Founder type: "+L.ft.n+". "+L.ft.d,
+      "- Founder type: "+L.ft.full+". "+L.ft.h+" "+L.ft.d,
       "- Each week: keep "+fmtH(L.T.K)+", delegate "+fmtH(L.T.D)+", automate "+fmtH(L.T.A)+". About "+Math.round(L.month)+" hours a month could leave my plate.",
       "- My 30-day handoff order:");
     planLines(L).forEach(function(s){ o.push("  "+s); });
     o.push("- I keep (my 20%): "+(L.P.keep.map(function(t){return t.name}).join("; ")||"not listed yet"),"",
-      "FIRST FOCUS FOR MY TYPE",FOCUS[L.ft.k],"",
+      "FIRST FOCUS FOR MY TYPE",FOCUS[L.ft.k]+(L.ft.blend?" After that: "+FOCUS[L.ft.blend.k]:""),"",
       "GET TO KNOW ME FIRST");
     intakeLines(L).forEach(function(s){ o.push(s); });
     o.push("",
@@ -709,7 +791,7 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       "2) \"weekly check-in\"  Ask: what landed back on my plate, what I handed off, what's blocked. Then give me 3 bullets: keep, re-hand off, automate. Remember earlier check-ins in this chat: if the same task lands back on my plate twice, say so plainly (\"<task> came back twice: a written doc isn't enough, it needs an owner\").",
       "3) \"next\"  Tell me the next task on my plan and why it comes next.",
       "4) \"profile\"  Show my founder profile. \"profile: <change>\" updates it.",
-      "5) \"starter pack\"  Combine every handoff doc from this chat into one RIGHT HAND STARTER PACK: Founder profile · Role summary (focus areas, hours a week, my founder type) · Week-1 priorities · Access checklist (tools only, never passwords) · Rules and escalation (merged, no duplicates) · Daily update format (done / in progress / blockers) · then each handoff doc in full. End with one line: \"Bring this to a Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you"+(CALL_URL.indexOf("http")===0?" ("+CALL_URL+")":"")+".\"","",
+      "5) \"starter pack\"  Combine every handoff doc from this chat into one RIGHT HAND STARTER PACK: Founder profile · Role summary (focus areas, hours a week, my founder type) · Week-1 priorities · Access checklist (tools only, never passwords) · Rules and escalation (merged, no duplicates) · Daily update format (done / in progress / blockers) · then each handoff doc in full. End with one line: \""+PACK_LINE+"\"","",
       "STYLE: short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.","",
       "Start with one line saying you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.");
     return o.join("\n");
@@ -719,9 +801,9 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       "description: My personal Delegation Copilot, built from my Founder 80/20 Audit. Use it when I want to hand off a task to an assistant or Right Hand, write a handoff doc or SOP, run my weekly delegation check-in, decide what to delegate next, or bundle my handoff docs into a starter pack for a new hire. Also use it when I say \"start my copilot\" or ask to see or update my founder profile.",
       "---","","# Delegation Copilot","",
       "Read `my-80-20-plan.md` (same folder) before answering: it holds my founder type, my 30-day handoff order and the 20% I keep.","",
-      "## First focus for my type","",FOCUS[L.ft.k],"",
+      "## First focus for my type","",FOCUS[L.ft.k],""].concat(L.ft.blend?["After that: "+FOCUS[L.ft.blend.k],""]:[]).concat([
       "## Get to know me first","",
-      "If this conversation has no founder profile yet (and memory holds none), start here: say in one line that you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.",""]
+      "If this conversation has no founder profile yet (and memory holds none), start here: say in one line that you'll ask 9 quick questions in 3 rounds so your help fits my business, then ask round 1.",""])
       .concat(intakeLines(L)).concat(["",
       "## Commands","",
       "### handoff: <task>","1. Ask up to 5 short questions in one message, skipping anything my founder profile already answers: what triggers it, which tools it lives in, what good looks like, what must never happen, when to escalate. Never ask for passwords; suggest sharing access through a password manager.",
@@ -733,12 +815,12 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
       "### next","Name the next task in my plan and why it comes next.","",
       "### profile","Show my founder profile. `profile: <change>` updates it.","",
       "### starter pack","Combine every handoff doc from this conversation into one **Right Hand Starter Pack**:","1. Founder profile","2. Role summary (focus areas, hours a week, my founder type)","3. Week-1 priorities","4. Access checklist (tools only, never passwords)","5. Rules and escalation (merged, no duplicates)","6. Daily update format (done / in progress / blockers)","7. Each handoff doc in full",
-      "End with one line: \"Bring this to a Right Hand Fit Call with Pareto Talent: it's the brief they use to match and onboard you"+(CALL_URL.indexOf("http")===0?" ("+CALL_URL+")":"")+".\"","",
+      "End with one line: \""+PACK_LINE+"\"","",
       "## Style","Short, plain English, no jargon, no hype. Never invent facts about my business; ask instead.",""]).join("\n");
   }
   function planMd(L){
     var o=["# My 80/20 plan","","Generated by the Founder 80/20 Audit (Pareto Talent).","",
-      "- **Founder type:** "+L.ft.n+": "+L.ft.d,
+      "- **Founder type:** "+L.ft.full+": "+L.ft.h+" "+L.ft.d,
       "- **Weekly hours:** keep "+fmtH(L.T.K)+" · delegate "+fmtH(L.T.D)+" · automate "+fmtH(L.T.A),
       "- **Hours I could stop doing:** about "+Math.round(L.month)+" a month",
       "- **My hourly value:** $"+L.rate,"","## 30-day handoff order",""];
@@ -775,11 +857,11 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   $("download").addEventListener("click",function(){
     if(!last) return; var L=last, o=[];
     o.push("THE FOUNDER 80/20 AUDIT: MY 30-DAY HANDOFF PLAN","Pareto Talent · paretotalent.com","",
-      "Founder type: "+L.ft.n,"Hours I could stop doing: "+Math.round(L.month)+" a month","Worth: "+fmtM(L.off*L.rate*52)+" a year at $"+L.rate+"/hr",
+      "Founder type: "+L.ft.full,"\""+L.ft.h+"\"","Hours I could stop doing: "+Math.round(L.month)+" a month","Worth: "+fmtM(L.off*L.rate*52)+" a year at $"+L.rate+"/hr",
       "Keep "+fmtH(L.T.K)+"/wk · Delegate "+fmtH(L.T.D)+"/wk · Automate "+fmtH(L.T.A)+"/wk","");
     L.P.w.forEach(function(list,i){ o.push(WEEK[i][0].toUpperCase()+": "+WEEK[i][1]); list.forEach(function(t){ o.push("  - "+t.name+" ("+BNAME[t.bucket]+", "+fmtH(t.hours)+"/wk): "+t.note); }); if(i===3) L.P.stick.forEach(function(s){ o.push("  - "+s+" (habit)"); }); o.push("  * "+WEEK[i][2],""); });
     o.push("KEEP (your 20%):"); L.P.keep.forEach(function(t){ o.push("  - "+t.name); });
-    o.push("","Want someone to run this plan with you? Book a 20-minute Right Hand Fit Call: "+(CALL_URL.indexOf("http")===0?CALL_URL:"paretotalent.com"));
+    o.push("","Want someone to run this plan with you? "+NEXT_LINE);
     try{ var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([o.join("\n")],{type:"text/plain"})); a.download="founder-80-20-plan.txt"; document.body.appendChild(a); a.click(); a.remove(); $("status").textContent="Plan downloaded."; }
     catch(e){ $("status").textContent="Download blocked. Use Copy instead."; }
   });
