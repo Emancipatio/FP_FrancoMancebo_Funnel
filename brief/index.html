@@ -71,6 +71,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 @media (max-width:520px){.mystery{gap:8px}.myst{padding:6px}.myst .qm{font-size:28px}.myst b{font-size:11px}}
 @media (prefers-reduced-motion:reduce){.myst,.myst img{transition:none}}
 .emblems img,.myst img,.rhead img{aspect-ratio:3/4;object-fit:cover;object-position:top;height:auto}
+.linkbtn{background:none;border:0;color:var(--mint);font:inherit;cursor:pointer;text-decoration:underline;padding:0}
 </style>
 </head>
 <body>
@@ -126,6 +127,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <div><strong>Your Right Hand should:</strong>
         <ul class="fit" id="r-rh" style="margin-top:8px"></ul></div>
       <p id="r-split" class="note"></p>
+      <p class="note" style="margin:0">Not you? <button type="button" class="linkbtn" id="retake">Retake the quiz</button></p>
       <div class="paths">
         <div class="path">
           <div class="eyebrow">On Claude</div>
@@ -172,6 +174,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
     <span>FP | Franco Mancebo · Pareto Bootcamp final project</span>
   </footer>
 </div>
+<script src="../assets/fptype.js"></script>
 <script>
 (function(){
   var q = /[?&]q=1(&|$)/.test(location.search), sfx = q ? "-fitcall" : "";
@@ -205,68 +208,35 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function(){ st.textContent = "Copied. Paste it into your AI chat."; }, fb); else fb();
   });
 
-  // Founder Working Style quiz. Answer a = first end (Big picture, Hands-off, Async, Fast).
-  // Both answers in a dimension must agree on "a"; a split takes the safer start (Detail, Hands-on, Live, Deliberate).
-  var SPLIT = {focus:"big picture vs detail", control:"hands-off vs hands-on", contact:"written vs live updates", pace:"fast vs checked drafts"};
-  fetch("../kit/styles.json").then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(S){
-    var n = S.questions.length, a = [], cur = 0, sl = $("slide"), busy = false;
-    var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    function paint(){
-      $("back").hidden = cur === 0;
-      $("qbar").style.width = (Math.min(cur, n) / n * 100) + "%";
-      if (cur >= n) {
-        $("qcount").textContent = "All done";
-        sl.innerHTML = '<div class="done"><h3 style="min-height:0;margin:0">Your style is ready.</h3><button class="btn" id="see" type="button">See my style →</button></div>';
-        $("see").addEventListener("click", show);
-        return;
-      }
-      var x = S.questions[cur];
-      $("qcount").textContent = "Question " + (cur + 1) + " of " + n;
-      sl.innerHTML = '<h3>' + esc(x.q) + '</h3><div class="opts">' + ['a','b'].map(function(k){
-        return '<button type="button" class="opt' + (a[cur] === k ? ' on' : '') + '" data-k="' + k + '"><b>' + k.toUpperCase() + '</b><span>' + esc(x[k]) + '</span></button>';
-      }).join("") + '</div>';
-    }
-    function go(to){
-      if (still) { cur = to; paint(); return; }
-      busy = true; sl.classList.add("out");
-      setTimeout(function(){
-        cur = to; paint();
-        sl.classList.remove("out"); sl.classList.add("in");
-        void sl.offsetWidth; sl.classList.remove("in");
-        setTimeout(function(){ busy = false; }, 250);
-      }, 250);
-    }
-    sl.addEventListener("click", function(e){
-      var b = e.target.closest(".opt"); if (!b || busy) return;
-      a[cur] = b.dataset.k;
-      Array.prototype.forEach.call(sl.querySelectorAll(".opt"), function(o){ o.classList.toggle("on", o === b); });
-      busy = true; setTimeout(function(){ busy = false; go(cur + 1); }, 220);
-    });
-    $("back").addEventListener("click", function(){ if (!busy && cur > 0) go(cur - 1); });
-    paint();
-    function show(){
-      var dims = {}, split = [];
-      S.questions.forEach(function(x, i){ (dims[x.dim] = dims[x.dim] || []).push(a[i]); });
-      var end = function(d){ var v = dims[d]; if (v[0] !== v[1]) split.push(SPLIT[d]); return v.every(function(k){ return k === "a"; }); };
-      var big = end("focus"), off = end("control"), as = end("contact"), fast = end("pace");
-      var style = big ? (off ? "visionary" : "captain") : (off ? "systems" : "craftsman");
-      var contact = as ? "async" : "live", pace = fast ? "fast" : "deliberate";
-      var st = S.styles[style], ty = S.types[style][pace], key = style + "-" + contact + "-" + pace + sfx;
-      $("r-name").textContent = ty.name;
-      $("r-img").src = "../assets/characters/" + ty.id + ".webp";
-      $("r-img").alt = ty.name + " character";
-      $("r-chips").innerHTML = st.axes.split(" · ").concat([S.pace[pace].label, S.contact[contact].label + " updates"])
-        .map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");
-      $("r-line").textContent = ty.line;
-      $("r-rh").innerHTML = st.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("");
-      $("r-split").textContent = split.length ? "You were split on " + split.join(" and ") + ", so your kit starts with the safer setting: more check-ins at first, fewer later." : "";
+  // Founder Personality Type quiz (assets/fptype.js). A type taken on the landing page is remembered and shown straight away.
+  FPType.getStyles("../kit/styles.json").then(function(S){
+    function render(r, scroll){
+      var d = FPType.describe(S, r), key = d.kit + sfx;
+      $("r-name").textContent = d.name;
+      $("r-img").src = "../assets/characters/" + d.id + ".webp";
+      $("r-img").alt = d.name + " character";
+      $("r-chips").innerHTML = d.chips.map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");
+      $("r-line").textContent = d.line;
+      $("r-rh").innerHTML = d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("");
+      $("r-split").textContent = d.split.length ? "You were split on " + d.split.join(" and ") + ", so your kit starts with the safer setting: more check-ins at first, fewer later." : "";
       $("zip").href = "kits/" + key + ".zip";
       loadPrompt("kits/" + key + ".txt");
       $("mystery").classList.add("done");
-      Array.prototype.forEach.call(document.querySelectorAll(".myst"), function(t){ t.classList.toggle("lit", t.dataset.style === ty.id); });
+      Array.prototype.forEach.call(document.querySelectorAll(".myst"), function(t){ t.classList.toggle("lit", t.dataset.style === d.id); });
+      $("qform").hidden = true;
       $("result").hidden = false;
-      $("result").scrollIntoView({behavior:"smooth", block:"start"});
+      if (scroll) $("result").scrollIntoView({behavior:"smooth", block:"start"});
     }
+    var quiz = FPType.mount(S, {qcount:$("qcount"), back:$("back"), qbar:$("qbar"), slide:$("slide")}, function(r){ render(r, true); });
+    $("retake").addEventListener("click", function(){
+      FPType.clear(); quiz.restart();
+      $("result").hidden = true; $("qform").hidden = false;
+      $("mystery").classList.remove("done");
+      Array.prototype.forEach.call(document.querySelectorAll(".myst"), function(t){ t.classList.remove("lit"); });
+      $("qform").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+    var saved = FPType.load(S);
+    if (saved) render(saved, false);
   }).catch(function(){
     $("qform").innerHTML = '<p class="note">The quiz couldn\'t load here. Download the standard kit below: it asks the style questions inside the chat.</p>';
   });

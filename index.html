@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/quiz.css">
 <style>
 .types{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
 @media (max-width:900px){.types{grid-template-columns:repeat(2,1fr)}}
@@ -26,6 +27,7 @@
 .cta-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:18px;align-items:center}
 .cta-row .meta{margin:0}
 @media (max-width:900px){.hero-types .types{grid-template-columns:repeat(2,1fr);gap:10px}.hero-types .type{padding:8px;gap:6px}.hero-types .type h3{font-size:15px}.hero-types .type p{font-size:12.5px}}
+.linkbtn{background:none;border:0;color:var(--mint);font:600 15px var(--body);cursor:pointer;text-decoration:underline;padding:6px 0}
 </style>
 </head>
 <body>
@@ -33,7 +35,7 @@
 <div class="wrap">
   <header class="top">
     <a class="logo" href="./">Pareto<span>.</span>Talent</a>
-    <a class="small" href="#get">Find my type</a>
+    <a class="small" href="#quiz">Find my type</a>
   </header>
 
   <section class="hero hero-types" aria-labelledby="h1">
@@ -53,11 +55,58 @@
       <div class="type"><img src="assets/characters/architect.webp" alt="" width="309" height="621"><h3>The Architect</h3><p>Designs it once. Never touches it again.</p></div>
     </div>
     <div class="cta-row">
-      <a class="btn" href="#get">Find my type →</a>
+      <a class="btn" href="#quiz">Find my type →</a>
       <div class="meta"><span>8 questions</span><span>Free</span><span>Yours to keep</span></div>
     </div>
   </section>
 
+  <section id="quiz-sec" aria-labelledby="quiz">
+    <div class="stack" style="max-width:760px">
+      <div class="eyebrow">Step 1 · 2-minute quiz</div>
+      <h2 id="quiz">Find your <em>founder personality type</em>.</h2>
+      <p class="lead">8 quick questions. Pick the answer closer to you; there's no right one.</p>
+    </div>
+    <div class="quiz" id="qform" aria-live="polite">
+      <div class="qtop"><span id="qcount">Loading the quiz…</span><button type="button" id="back" hidden>← Back</button></div>
+      <div class="bar"><i id="qbar"></i></div>
+      <div class="slide" id="slide"></div>
+    </div>
+    <div class="result" id="result" hidden aria-live="polite">
+      <div class="rhead">
+        <img id="r-img" src="" alt="" width="309" height="621">
+        <div class="stack" style="gap:8px">
+          <div class="eyebrow">Your Founder Personality Type</div>
+          <h3 id="r-name"></h3>
+        </div>
+      </div>
+      <div class="chips" id="r-chips"></div>
+      <p id="r-line"></p>
+      <div class="row" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+        <a class="btn" href="#get" id="r-next">Get my kit →</a>
+        <button type="button" class="linkbtn" id="retake">Retake the quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="get" aria-labelledby="form-h">
+    <div class="grid2" style="align-items:start">
+      <div class="stack">
+        <div class="eyebrow" id="get-eyebrow">Step 2 · Get the free kit</div>
+        <h2 id="form-h">Where should we send <em id="form-what">your kit</em>?</h2>
+        <p class="lead">Four quick questions, then your kit is ready, built around your type. We email you the link too.</p>
+        <ul class="fit">
+          <li>2-minute quiz, about 30 minutes for the full kit</li>
+          <li>No credit card, no sales pitch to unlock it</li>
+          <li>Yours to keep, even if you never talk to us</li>
+        </ul>
+      </div>
+      <div class="formbox">
+        <!-- GHL form: FP | Franco Mancebo | Qualifying Form (L8) -->
+        <iframe src="https://api.leadconnectorhq.com/widget/form/MDPCet5xhsYIgznCB0gE" id="inline-MDPCet5xhsYIgznCB0gE" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="FP | Franco Mancebo | Qualifying Form" data-layout-iframe-id="inline-MDPCet5xhsYIgznCB0gE" data-form-id="MDPCet5xhsYIgznCB0gE" title="FP | Franco Mancebo | Qualifying Form"></iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+      </div>
+    </div>
+  </section>
 
   <section aria-labelledby="inside">
     <div class="stack">
@@ -74,25 +123,8 @@
 
 
 
-  <section id="get" aria-labelledby="form-h">
-    <div class="grid2" style="align-items:start">
-      <div class="stack">
-        <div class="eyebrow">Get the free kit</div>
-        <h2 id="form-h">Where should we send <em>your style and kit</em>?</h2>
-        <p class="lead">Four quick questions, then you get your kit. We email you the link too.</p>
-        <ul class="fit">
-          <li>2-minute quiz, about 30 minutes for the full kit</li>
-          <li>No credit card, no sales pitch to unlock it</li>
-          <li>Yours to keep, even if you never talk to us</li>
-        </ul>
-      </div>
-      <div class="formbox">
-        <!-- GHL form: FP | Franco Mancebo | Qualifying Form (L8) -->
-        <iframe src="https://api.leadconnectorhq.com/widget/form/MDPCet5xhsYIgznCB0gE" id="inline-MDPCet5xhsYIgznCB0gE" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="FP | Franco Mancebo | Qualifying Form" data-layout-iframe-id="inline-MDPCet5xhsYIgznCB0gE" data-form-id="MDPCet5xhsYIgznCB0gE" title="FP | Franco Mancebo | Qualifying Form"></iframe>
-        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-      </div>
-    </div>
-  </section>
+
+
 
   <section aria-labelledby="proof">
     <div class="stack">
@@ -123,7 +155,7 @@
         <details><summary>Do I need paid Claude?</summary><p>No. Skills and the Gmail and Calendar connectors work on Claude's free plan. Not on Claude? Use the copy-paste version in any AI chat.</p></details>
         <details><summary>Why do you ask about revenue?</summary><p>It helps us see whether a Right Hand fits your business now.</p></details>
       </div>
-      <a class="btn" href="#get">Get my style and kit →</a>
+      <a class="btn" href="#quiz">Find my type →</a>
     </div>
   </section>
 
@@ -132,5 +164,37 @@
     <span>FP | Franco Mancebo · Pareto Bootcamp final project</span>
   </footer>
 </div>
+<script src="assets/fptype.js"></script>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, esc = FPType.esc;
+  FPType.getStyles("kit/styles.json").then(function(S){
+    function show(r, scroll){
+      var d = FPType.describe(S, r);
+      $("r-name").textContent = d.name;
+      $("r-img").src = "assets/characters/" + d.id + ".webp";
+      $("r-img").alt = d.name + " character";
+      $("r-chips").innerHTML = d.chips.map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");
+      $("r-line").textContent = d.line;
+      $("r-next").textContent = "Get my " + d.name.replace(/^The /, "") + " kit →";
+      $("form-what").textContent = "your " + d.name.replace(/^The /, "") + " kit";
+      $("qform").hidden = true;
+      $("result").hidden = false;
+      if (scroll) $("result").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    var quiz = FPType.mount(S, {qcount:$("qcount"), back:$("back"), qbar:$("qbar"), slide:$("slide")}, function(r){ show(r, true); });
+    $("retake").addEventListener("click", function(){
+      FPType.clear(); quiz.restart();
+      $("result").hidden = true; $("qform").hidden = false;
+      $("form-what").textContent = "your kit";
+      $("qform").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+    var saved = FPType.load(S);
+    if (saved) show(saved, false);
+  }).catch(function(){
+    $("qform").innerHTML = '<p class="note">The quiz couldn\'t load here. Fill in the form below and take it on your kit page.</p>';
+  });
+})();
+</script>
 </body>
 </html>

@@ -26,14 +26,14 @@
     <div class="stack">
       <div class="eyebrow">You qualified for a free 20-minute call!</div>
       <h1 id="h1">You're exactly the founder a <em>Right Hand</em> is built for.</h1>
-      <p class="lead">Book your Match Call now and see which hours a Right Hand could take off your plate.</p>
+      <p class="lead" id="lead">Book your Match Call now and see which hours a Right Hand could take off your plate.</p>
       <a class="btn" href="#call">Book my call now →</a>
       <div class="timer" id="timer" aria-live="polite">
         <span class="t-label" id="t-label">Your invite is held for</span>
         <span class="t-clock" id="t-clock">24:00:00</span>
       </div>
     </div>
-    <div class="art"><img src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
+    <div class="art"><img id="art" src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
   </section>
 
   <section aria-labelledby="why">
@@ -43,7 +43,7 @@
     </div>
     <div class="grid3" style="margin-top:28px">
       <div class="card"><span class="num">01</span><h3>See what you should stop doing</h3><p>We go through your week and name the hours a Right Hand would own.</p></div>
-      <div class="card"><span class="num">02</span><h3>Get matched to how you work</h3><p>We shortlist Right Hands who fit your founder personality type.</p></div>
+      <div class="card" id="match-card"><span class="num">02</span><h3 id="match-h">Get matched to how you work</h3><p id="match-p">We shortlist Right Hands who fit your founder personality type.</p></div>
       <div class="card"><span class="num">03</span><h3>Know if it's the right move now</h3><p>An honest yes or no. If it's a no, you still leave with a plan.</p></div>
     </div>
   </section>
@@ -58,7 +58,7 @@
       <iframe src="https://api.leadconnectorhq.com/widget/booking/WSJuUDwPE5cVPDyTvn3K" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" id="WSJuUDwPE5cVPDyTvn3K_1791305515672" title="FP | Franco Mancebo | Right Hand Match Call"></iframe>
       <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
     </div>
-    <p class="note" style="margin-top:14px">Took the quiz? Bring your kit. Haven't yet? It's on <a href="../brief/?q=1#quiz">your kit page</a>.</p>
+    <p class="note" style="margin-top:14px" id="kit-note">Took the quiz? Bring your kit. Haven't yet? It's on <a href="../brief/?q=1#quiz">your kit page</a>.</p>
   </section>
 
   <section aria-labelledby="oncall">
@@ -104,6 +104,25 @@
     setTimeout(tick,1000);
   }
   tick();
+})();
+</script>
+<script src="../assets/fptype.js"></script>
+<script>
+// Personalize by Founder Personality Type when the founder took the quiz on the landing page (same browser).
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, esc = FPType.esc;
+  FPType.getStyles("../kit/styles.json").then(function(S){
+    var r = FPType.load(S); if (!r) return;
+    var d = FPType.describe(S, r), short = d.name.replace(/^The /, ""), an = /^[AEIOU]/.test(short) ? "an " : "a ";
+    $("h1").innerHTML = esc(short) + ", you're exactly the founder a <em>Right Hand</em> is built for.";
+    $("lead").textContent = d.tag + " Book your Match Call and see how a Right Hand would work with " + an + short + ".";
+    $("art").src = "../assets/characters/" + d.id + ".webp";
+    $("art").alt = d.name + " character";
+    $("art").style.objectPosition = "top";
+    $("match-h").textContent = "Matched to how " + an + short + " works";
+    $("match-p").outerHTML = "<p>Your Right Hand should:</p><ul class=\"fit\" style=\"margin-top:8px\">" + d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
+    $("kit-note").innerHTML = "Bring your " + esc(short) + " kit to the call. It's on <a href=\"../brief/?q=1#quiz\">your kit page</a>.";
+  }).catch(function(){});
 })();
 </script>
 </body>

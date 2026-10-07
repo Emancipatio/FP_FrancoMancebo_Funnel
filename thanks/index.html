@@ -14,6 +14,8 @@
 .emblems figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px;display:grid;gap:6px}
 .emblems img{width:100%;height:auto;border-radius:12px;aspect-ratio:3/4;object-fit:cover;object-position:top}
 .emblems figcaption{font:700 12px/1.2 var(--display);text-align:center}
+.emblems.one{grid-template-columns:minmax(0,320px);justify-content:center}
+.emblems.one figcaption{font-size:18px}
 </style>
 </head>
 <body>
@@ -27,11 +29,11 @@
     <div class="stack">
       <div class="eyebrow">Thank you · Check your inbox</div>
       <h1 id="h1">Now find out <em>which founder you are</em>.</h1>
-      <p class="lead">Your quiz is on the kit page: 8 questions, then your kit downloads tuned to your style. We've emailed you the link too.</p>
-      <a class="btn" href="../brief/#quiz">Take the quiz →</a>
+      <p class="lead" id="lead">Your quiz is on the kit page: 8 questions, then your kit downloads tuned to your style. We've emailed you the link too.</p>
+      <a class="btn" id="cta" href="../brief/#quiz">Take the quiz →</a>
       <p class="note">Don't see the email? Check your promotions or spam folder for "Your Right Hand Kit".</p>
     </div>
-    <div class="emblems" aria-label="The 8 founder personality types">
+    <div class="emblems" id="grid" aria-label="The 8 founder personality types">
       <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>The Trailblazer</figcaption></figure>
       <figure><img src="../assets/characters/commander.webp" alt="" width="309" height="621"><figcaption>The Commander</figcaption></figure>
       <figure><img src="../assets/characters/maker.webp" alt="" width="309" height="621"><figcaption>The Maker</figcaption></figure>
@@ -49,7 +51,7 @@
       <h2 id="how">Three steps</h2>
     </div>
     <ol class="steps" style="margin-top:22px;max-width:760px">
-      <li>Take the <strong>2-minute quiz</strong> on the kit page.</li>
+      <li id="step1">Take the <strong>2-minute quiz</strong> on the kit page.</li>
       <li>Download your <strong>tuned kit</strong>, or copy your prompt if you're not on Claude.</li>
       <li>Type <strong>audit my week</strong>.</li>
     </ol>
@@ -61,5 +63,22 @@
     <span>FP | Franco Mancebo · Pareto Bootcamp final project</span>
   </footer>
 </div>
+<script src="../assets/fptype.js"></script>
+<script>
+// Personalize by Founder Personality Type when the founder took the quiz on the landing page (same browser).
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, esc = FPType.esc;
+  FPType.getStyles("../kit/styles.json").then(function(S){
+    var r = FPType.load(S); if (!r) return;
+    var d = FPType.describe(S, r), short = d.name.replace(/^The /, "");
+    $("h1").innerHTML = "Your <em>" + esc(short) + " kit</em> is ready.";
+    $("lead").textContent = "You're " + d.name + ". " + d.tag + " Your kit is built around that. Download it on your kit page; we've emailed you the link too.";
+    $("cta").textContent = "Get my " + short + " kit →";
+    $("grid").className = "emblems one";
+    $("grid").innerHTML = '<figure><img src="../assets/characters/' + d.id + '.webp" alt="' + esc(d.name) + ' character" width="309" height="621"><figcaption>' + esc(d.name) + '</figcaption></figure>';
+    $("step1").innerHTML = "Open your <strong>kit page</strong>: your " + esc(short) + " result is already there.";
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>
