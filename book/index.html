@@ -9,6 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../assets/site.css">
+<style>
+.timer{display:inline-flex;justify-self:start;width:fit-content;align-items:center;gap:12px;margin-top:18px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.95rem;color:var(--muted)}
+.t-clock{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--amber);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.timer.over .t-clock{display:none}
+</style>
 </head>
 <body>
 <!-- FP | Franco Mancebo | Booking Page (L9): qualified founders land here from the form -->
@@ -23,6 +28,10 @@
       <h1 id="h1">You're exactly the founder a <em>Right Hand</em> is built for.</h1>
       <p class="lead">Book your Match Call now and see which hours a Right Hand could take off your plate.</p>
       <a class="btn" href="#call">Book my call now →</a>
+      <div class="timer" id="timer" aria-live="polite">
+        <span class="t-label" id="t-label">Your invite is held for</span>
+        <span class="t-clock" id="t-clock">24:00:00</span>
+      </div>
     </div>
     <div class="art"><img src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
   </section>
@@ -81,5 +90,21 @@
     <span>FP | Franco Mancebo · Pareto Bootcamp final project</span>
   </footer>
 </div>
+<script>
+(function(){
+  var KEY="fp-franco-invite-start", DAY=24*60*60*1000, start=Date.now();
+  try{ var v=parseInt(localStorage.getItem(KEY),10); if(v&&v<=start){start=v;}else{localStorage.setItem(KEY,String(start));} }catch(e){}
+  var box=document.getElementById("timer"), clock=document.getElementById("t-clock"), label=document.getElementById("t-label");
+  function pad(n){return n<10?"0"+n:""+n;}
+  function tick(){
+    var left=start+DAY-Date.now();
+    if(left<=0){ box.classList.add("over"); label.textContent="Your 24-hour invite has ended, but you can still book below."; return; }
+    var s=Math.floor(left/1000);
+    clock.textContent=pad(Math.floor(s/3600))+":"+pad(Math.floor(s/60)%60)+":"+pad(s%60);
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
