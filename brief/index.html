@@ -58,6 +58,18 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
 .emblems figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:8px}
 .emblems img{width:100%;height:auto;border-radius:12px}
 .emblems figcaption{font:700 15px/1.2 var(--display);text-align:center}
+.mystery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:760px;margin-top:22px}
+.myst{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:6px;text-align:center;transition:border-color .4s,box-shadow .4s,transform .4s}
+.myst img{width:100%;height:auto;border-radius:10px;filter:grayscale(1) blur(3px) brightness(.55);transition:filter .6s}
+.myst b{font:700 13px/1.2 var(--display);color:var(--muted);visibility:hidden}
+.myst .qm{position:absolute;left:0;right:0;top:calc(50% - 22px);transform:translateY(-50%);font:800 38px/1 var(--display);color:var(--mint);transition:opacity .4s}
+.myst.lit{border-color:var(--accent);box-shadow:0 0 28px -6px var(--accent);transform:translateY(-4px)}
+.myst.lit img{filter:none}
+.myst.lit b{visibility:visible;color:var(--ink)}
+.myst.lit .qm,.mystery.done .qm{opacity:0}
+.mystery.done .myst:not(.lit){opacity:.45}
+@media (max-width:520px){.mystery{gap:8px}.myst{padding:6px}.myst .qm{font-size:28px}.myst b{font-size:11px}}
+@media (prefers-reduced-motion:reduce){.myst,.myst img{transition:none}}
 </style>
 </head>
 <body>
@@ -90,6 +102,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <p class="lead">8 quick questions. Pick the answer closer to you; there's no right one.</p>
     </div>
     <span id="other"></span>
+    <div class="mystery" id="mystery" aria-label="Which of the 4 founder personalities are you?"><div class="myst" data-style="visionary"><img src="../assets/styles/visionary.svg" alt="" width="240" height="240"><span class="qm" aria-hidden="true">?</span><b>The Visionary</b></div><div class="myst" data-style="captain"><img src="../assets/styles/captain.svg" alt="" width="240" height="240"><span class="qm" aria-hidden="true">?</span><b>The Captain</b></div><div class="myst" data-style="craftsman"><img src="../assets/styles/craftsman.svg" alt="" width="240" height="240"><span class="qm" aria-hidden="true">?</span><b>The Craftsman</b></div><div class="myst" data-style="systems"><img src="../assets/styles/systems.svg" alt="" width="240" height="240"><span class="qm" aria-hidden="true">?</span><b>The Systems Builder</b></div></div>
     <div class="quiz" id="qform" aria-live="polite">
       <div class="qtop"><span id="qcount">Loading the quiz…</span><button type="button" id="back" hidden>← Back</button></div>
       <div class="bar"><i id="qbar"></i></div>
@@ -244,6 +257,8 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       $("r-split").textContent = split.length ? "You were split on " + split.join(" and ") + ", so your kit starts with the safer setting: more check-ins at first, fewer later." : "";
       $("zip").href = "kits/" + key + ".zip";
       loadPrompt("kits/" + key + ".txt");
+      $("mystery").classList.add("done");
+      Array.prototype.forEach.call(document.querySelectorAll(".myst"), function(t){ t.classList.toggle("lit", t.dataset.style === style); });
       $("result").hidden = false;
       $("result").scrollIntoView({behavior:"smooth", block:"start"});
     }
