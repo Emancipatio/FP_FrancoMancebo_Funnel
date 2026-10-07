@@ -17,6 +17,15 @@
 .type img{width:100%;height:auto;border-radius:12px;aspect-ratio:3/4;object-fit:cover;object-position:top}
 .type h3{font-size:19px}
 .type p{margin:0;color:var(--muted);font-size:15px}
+.hero-types{display:block}
+.hero-types .stack{max-width:760px}
+.hero-types .types{margin-top:28px;grid-template-columns:repeat(8,1fr);gap:10px}
+.hero-types .type{padding:8px;gap:6px}
+.hero-types .type h3{font-size:13px;text-align:center}
+.hero-types .type p{font-size:12px;text-align:center;line-height:1.35}
+.cta-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.cta-row .meta{margin:0}
+@media (max-width:900px){.hero-types .types{grid-template-columns:repeat(4,1fr);gap:8px}.hero-types .type{padding:6px;gap:4px}.hero-types .type h3{font-size:12px;text-align:center}.hero-types .type p{display:none}}
 </style>
 </head>
 <body>
@@ -24,24 +33,14 @@
 <div class="wrap">
   <header class="top">
     <a class="logo" href="./">Pareto<span>.</span>Talent</a>
-    <a class="small" href="#get">Get my style and kit</a>
+    <a class="small" href="#get">Find my type</a>
   </header>
 
-  <section class="hero" aria-labelledby="h1">
+  <section class="hero hero-types" aria-labelledby="h1">
     <div class="stack">
       <div class="eyebrow">Free · 2-minute quiz for founders</div>
       <h1 id="h1">Which kind of <em>founder</em> are you?</h1>
-      <p class="lead">8 questions reveal your founder personality type, then your free Right Hand Kit is built around it.</p>
-      <a class="btn" href="#get">Find my style →</a>
-      <div class="meta"><span>8 questions</span><span>Free</span><span>Yours to keep</span></div>
-    </div>
-    <div class="art"><img src="brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
-  </section>
-
-  <section aria-labelledby="types">
-    <div class="stack">
-      <div class="eyebrow">The 8 founder personality types</div>
-      <h2 id="types">Eight ways founders work. <em>One is yours.</em></h2>
+      <p class="lead">There are 8 founder personality types. 8 questions show which one is yours, then your free Right Hand Kit is built around it.</p>
     </div>
     <div class="types">
       <div class="type"><img src="assets/characters/trailblazer.webp" alt="" width="309" height="621"><h3>The Trailblazer</h3><p>Sees it first. Gets there first.</p></div>
@@ -53,11 +52,12 @@
       <div class="type"><img src="assets/characters/craftsman.webp" alt="" width="309" height="621"><h3>The Craftsman</h3><p>Quality is the signature. Letting go is hard.</p></div>
       <div class="type"><img src="assets/characters/architect.webp" alt="" width="309" height="621"><h3>The Architect</h3><p>Designs it once. Never touches it again.</p></div>
     </div>
-    <div class="row" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center">
-      <p class="lead" style="margin:0"><strong style="color:var(--ink)">Which one are you?</strong> Take the quiz to find out.</p>
-      <a class="btn" href="#get">Find my style →</a>
+    <div class="cta-row">
+      <a class="btn" href="#get">Find my type →</a>
+      <div class="meta"><span>8 questions</span><span>Free</span><span>Yours to keep</span></div>
     </div>
   </section>
+
 
   <section aria-labelledby="inside">
     <div class="stack">
