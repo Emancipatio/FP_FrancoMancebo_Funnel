@@ -34,14 +34,14 @@
       <p class="note">Don't see the email? Check your promotions or spam folder for "Your Right Hand Kit".</p>
     </div>
     <div class="emblems" id="grid" aria-label="The 8 entrepreneur personality types">
-      <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>The Trailblazer</figcaption></figure>
-      <figure><img src="../assets/characters/commander.webp" alt="" width="309" height="621"><figcaption>The Commander</figcaption></figure>
-      <figure><img src="../assets/characters/maker.webp" alt="" width="309" height="621"><figcaption>The Maker</figcaption></figure>
-      <figure><img src="../assets/characters/optimizer.webp" alt="" width="309" height="621"><figcaption>The Optimizer</figcaption></figure>
-      <figure><img src="../assets/characters/visionary.webp" alt="" width="309" height="621"><figcaption>The Visionary</figcaption></figure>
-      <figure><img src="../assets/characters/captain.webp" alt="" width="309" height="621"><figcaption>The Captain</figcaption></figure>
-      <figure><img src="../assets/characters/craftsman.webp" alt="" width="309" height="621"><figcaption>The Craftsman</figcaption></figure>
-      <figure><img src="../assets/characters/architect.webp" alt="" width="309" height="621"><figcaption>The Architect</figcaption></figure>
+      <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>🧭 The Trailblazer 🧭</figcaption></figure>
+      <figure><img src="../assets/characters/commander.webp" alt="" width="309" height="621"><figcaption>⚡ The Commander ⚡</figcaption></figure>
+      <figure><img src="../assets/characters/maker.webp" alt="" width="309" height="621"><figcaption>🔨 The Maker 🔨</figcaption></figure>
+      <figure><img src="../assets/characters/optimizer.webp" alt="" width="309" height="621"><figcaption>⚙️ The Optimizer ⚙️</figcaption></figure>
+      <figure><img src="../assets/characters/visionary.webp" alt="" width="309" height="621"><figcaption>🔭 The Visionary 🔭</figcaption></figure>
+      <figure><img src="../assets/characters/captain.webp" alt="" width="309" height="621"><figcaption>⚓ The Captain ⚓</figcaption></figure>
+      <figure><img src="../assets/characters/craftsman.webp" alt="" width="309" height="621"><figcaption>💎 The Craftsman 💎</figcaption></figure>
+      <figure><img src="../assets/characters/architect.webp" alt="" width="309" height="621"><figcaption>📐 The Architect 📐</figcaption></figure>
     </div>
   </section>
 
@@ -71,11 +71,11 @@
   FPType.getStyles("../kit/styles.json").then(function(S){
     var r = FPType.load(S); if (!r) return;
     var d = FPType.describe(S, r), short = d.name.replace(/^The /, "");
-    $("h1").innerHTML = "Your <em>" + esc(short) + " kit</em> is ready.";
-    $("lead").textContent = "You're " + d.name + ". " + d.tag + " Your kit is built around that. Download it on your kit page; we've emailed you the link too.";
+    $("h1").innerHTML = "Your <em>" + esc(d.emoji + " " + short + " " + d.emoji) + " kit</em> is ready.";
+    $("lead").textContent = "You're " + d.title + ". " + d.motto + " Your kit is built around that. Download it on your kit page; we've emailed you the link too.";
     $("cta").textContent = "Get my " + short + " kit →";
     $("grid").className = "emblems one";
-    $("grid").innerHTML = '<figure><img src="../assets/characters/' + d.id + '.webp" alt="' + esc(d.name) + ' character" width="309" height="621"><figcaption>' + esc(d.name) + '</figcaption></figure>';
+    $("grid").innerHTML = '<figure><img src="../assets/characters/' + d.id + '.webp" alt="' + esc(d.name) + ' character" width="309" height="621"><figcaption>' + esc(d.title) + '</figcaption></figure>';
     $("step1").innerHTML = "Open your <strong>kit page</strong>: your " + esc(short) + " result is already there.";
   }).catch(function(){});
 })();

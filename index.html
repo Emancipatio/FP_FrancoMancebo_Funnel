@@ -45,14 +45,14 @@
       <p class="lead">There are 8 entrepreneur personality types. <strong style="color:var(--ink)">Which one is yours?</strong></p>
     </div>
     <div class="types">
-      <div class="type"><img src="assets/characters/trailblazer.webp" alt="" width="309" height="621"><h3>The Trailblazer</h3><p>Sees it first. Gets there first.</p></div>
-      <div class="type"><img src="assets/characters/commander.webp" alt="" width="309" height="621"><h3>The Commander</h3><p>Decides fast. Keeps the big calls.</p></div>
-      <div class="type"><img src="assets/characters/maker.webp" alt="" width="309" height="621"><h3>The Maker</h3><p>Builds it fast. Then makes it great.</p></div>
-      <div class="type"><img src="assets/characters/optimizer.webp" alt="" width="309" height="621"><h3>The Optimizer</h3><p>Fixes the process the moment it slows.</p></div>
-      <div class="type"><img src="assets/characters/visionary.webp" alt="" width="309" height="621"><h3>The Visionary</h3><p>Sets the direction. Hates the details.</p></div>
-      <div class="type"><img src="assets/characters/captain.webp" alt="" width="309" height="621"><h3>The Captain</h3><p>Steers carefully. Keeps the big calls.</p></div>
-      <div class="type"><img src="assets/characters/craftsman.webp" alt="" width="309" height="621"><h3>The Craftsman</h3><p>Quality is the signature. Letting go is hard.</p></div>
-      <div class="type"><img src="assets/characters/architect.webp" alt="" width="309" height="621"><h3>The Architect</h3><p>Designs it once. Never touches it again.</p></div>
+      <div class="type"><img src="assets/characters/trailblazer.webp" alt="" width="309" height="621"><h3>🧭 The Trailblazer 🧭</h3><p>Sees it first. Gets there first.</p></div>
+      <div class="type"><img src="assets/characters/commander.webp" alt="" width="309" height="621"><h3>⚡ The Commander ⚡</h3><p>Decides fast. Keeps the big calls.</p></div>
+      <div class="type"><img src="assets/characters/maker.webp" alt="" width="309" height="621"><h3>🔨 The Maker 🔨</h3><p>Builds it fast. Then makes it great.</p></div>
+      <div class="type"><img src="assets/characters/optimizer.webp" alt="" width="309" height="621"><h3>⚙️ The Optimizer ⚙️</h3><p>Fixes the process the moment it slows.</p></div>
+      <div class="type"><img src="assets/characters/visionary.webp" alt="" width="309" height="621"><h3>🔭 The Visionary 🔭</h3><p>Sets the direction. Hates the details.</p></div>
+      <div class="type"><img src="assets/characters/captain.webp" alt="" width="309" height="621"><h3>⚓ The Captain ⚓</h3><p>Steers carefully. Keeps the big calls.</p></div>
+      <div class="type"><img src="assets/characters/craftsman.webp" alt="" width="309" height="621"><h3>💎 The Craftsman 💎</h3><p>Quality is the signature. Letting go is hard.</p></div>
+      <div class="type"><img src="assets/characters/architect.webp" alt="" width="309" height="621"><h3>📐 The Architect 📐</h3><p>Designs it once. Never touches it again.</p></div>
     </div>
     <div class="cta-row">
       <a class="btn" href="#quiz">Find my type →</a>
@@ -77,6 +77,7 @@
         <div class="stack" style="gap:8px">
           <div class="eyebrow">Your Entrepreneur Personality Type</div>
           <h3 id="r-name"></h3>
+          <p id="r-motto" class="motto"></p>
         </div>
       </div>
       <div class="chips" id="r-chips"></div>
@@ -171,7 +172,8 @@
   FPType.getStyles("kit/styles.json").then(function(S){
     function show(r, scroll){
       var d = FPType.describe(S, r);
-      $("r-name").textContent = d.name;
+      $("r-name").textContent = d.title;
+      $("r-motto").textContent = d.motto;
       $("r-img").src = "assets/characters/" + d.id + ".webp";
       $("r-img").alt = d.name + " character";
       $("r-chips").innerHTML = d.chips.map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");

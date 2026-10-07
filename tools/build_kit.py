@@ -33,7 +33,9 @@ def style_md(style, contact, pace):
     return "\n".join([
         "# My Entrepreneur Personality Type",
         "",
-        f"**{ty['name']}** ({st['axes']} · {p['label']} · {c['label']})",
+        f"**{ty['emoji']} {ty['name']} {ty['emoji']}** ({st['axes']} · {p['label']} · {c['label']})",
+        "",
+        f"*{ty['motto']}* My object: the {ty['object']}.",
         "",
         ty["line"],
         "",

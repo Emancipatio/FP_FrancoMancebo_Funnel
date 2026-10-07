@@ -5,14 +5,14 @@
   // One character hosts each quiz slide (fixed order, unrelated to the answers so it hints nothing).
   var BASE = (document.currentScript && document.currentScript.src || "").replace(/fptype\.js.*$/, "");
   var HOSTS = [
-    ["trailblazer", "The Trailblazer", "Go with your gut. First answer wins."],
-    ["visionary", "The Visionary", "Think of a real week, not a perfect one."],
-    ["commander", "The Commander", "Be honest. Nobody's grading this."],
-    ["captain", "The Captain", "Picture the last time this actually happened."],
-    ["maker", "The Maker", "No wrong answers, only your answers."],
-    ["craftsman", "The Craftsman", "Close call? Pick what's true more often."],
-    ["optimizer", "The Optimizer", "Nearly there. Keep the pace."],
-    ["architect", "The Architect", "Last one. Then your type is ready."]
+    ["trailblazer", "🧭 The Trailblazer 🧭", "Go with your gut. First answer wins."],
+    ["visionary", "🔭 The Visionary 🔭", "Think of a real week, not a perfect one."],
+    ["commander", "⚡ The Commander ⚡", "Be honest. Nobody's grading this."],
+    ["captain", "⚓ The Captain ⚓", "Picture the last time this actually happened."],
+    ["maker", "🔨 The Maker 🔨", "No wrong answers, only your answers."],
+    ["craftsman", "💎 The Craftsman 💎", "Close call? Pick what's true more often."],
+    ["optimizer", "⚙️ The Optimizer ⚙️", "Nearly there. Keep the pace."],
+    ["architect", "📐 The Architect 📐", "Last one. Then your type is ready."]
   ];
   function host(i) {
     var h = HOSTS[i % HOSTS.length];
@@ -55,7 +55,8 @@
   function describe(S, r) {
     var st = S.styles[r.style], ty = S.types[r.style][r.pace];
     return {
-      id: ty.id, name: ty.name, tag: ty.tag, line: ty.line, pain: ty.pain, gain: ty.gain, rh: st.rh,
+      id: ty.id, name: ty.name, emoji: ty.emoji, object: ty.object, motto: ty.motto,
+      title: ty.emoji + " " + ty.name + " " + ty.emoji, tag: ty.tag, line: ty.line, pain: ty.pain, gain: ty.gain, rh: st.rh,
       chips: st.axes.split(" · ").concat([S.pace[r.pace].label, S.contact[r.contact].label + " updates"]),
       kit: r.style + "-" + r.contact + "-" + r.pace,
       split: r.split.map(function (d) { return SPLIT[d] || d; })

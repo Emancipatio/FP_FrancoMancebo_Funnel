@@ -75,3 +75,4 @@ footer{border-top:1px solid var(--line);padding-block:24px 40px;font-size:14px;c
 .host .bubble{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.95rem;color:var(--ink);line-height:1.4}
 .host .bubble::before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;background:inherit;border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:translateY(-50%) rotate(45deg)}
 .host .bubble b{display:block;font-family:var(--display);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mint);margin-bottom:2px}
+.motto{margin:0;font-style:italic;color:var(--amber);font-size:1.05rem}

@@ -90,14 +90,14 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
       <div class="meta"><span>8 questions</span><span>Free</span><span>No sign-up</span></div>
     </div>
     <div class="emblems" aria-label="The 8 entrepreneur personality types">
-      <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>The Trailblazer</figcaption></figure>
-      <figure><img src="../assets/characters/commander.webp" alt="" width="309" height="621"><figcaption>The Commander</figcaption></figure>
-      <figure><img src="../assets/characters/maker.webp" alt="" width="309" height="621"><figcaption>The Maker</figcaption></figure>
-      <figure><img src="../assets/characters/optimizer.webp" alt="" width="309" height="621"><figcaption>The Optimizer</figcaption></figure>
-      <figure><img src="../assets/characters/visionary.webp" alt="" width="309" height="621"><figcaption>The Visionary</figcaption></figure>
-      <figure><img src="../assets/characters/captain.webp" alt="" width="309" height="621"><figcaption>The Captain</figcaption></figure>
-      <figure><img src="../assets/characters/craftsman.webp" alt="" width="309" height="621"><figcaption>The Craftsman</figcaption></figure>
-      <figure><img src="../assets/characters/architect.webp" alt="" width="309" height="621"><figcaption>The Architect</figcaption></figure>
+      <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>🧭 The Trailblazer 🧭</figcaption></figure>
+      <figure><img src="../assets/characters/commander.webp" alt="" width="309" height="621"><figcaption>⚡ The Commander ⚡</figcaption></figure>
+      <figure><img src="../assets/characters/maker.webp" alt="" width="309" height="621"><figcaption>🔨 The Maker 🔨</figcaption></figure>
+      <figure><img src="../assets/characters/optimizer.webp" alt="" width="309" height="621"><figcaption>⚙️ The Optimizer ⚙️</figcaption></figure>
+      <figure><img src="../assets/characters/visionary.webp" alt="" width="309" height="621"><figcaption>🔭 The Visionary 🔭</figcaption></figure>
+      <figure><img src="../assets/characters/captain.webp" alt="" width="309" height="621"><figcaption>⚓ The Captain ⚓</figcaption></figure>
+      <figure><img src="../assets/characters/craftsman.webp" alt="" width="309" height="621"><figcaption>💎 The Craftsman 💎</figcaption></figure>
+      <figure><img src="../assets/characters/architect.webp" alt="" width="309" height="621"><figcaption>📐 The Architect 📐</figcaption></figure>
     </div>
   </section>
 
@@ -120,6 +120,7 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
         <div class="stack" style="gap:8px">
           <div class="eyebrow">Your Entrepreneur Personality Type</div>
           <h3 id="r-name"></h3>
+          <p id="r-motto" class="motto"></p>
         </div>
       </div>
       <div class="chips" id="r-chips"></div>
@@ -212,7 +213,8 @@ textarea{width:100%;min-height:200px;background:var(--bg);color:var(--ink);borde
   FPType.getStyles("../kit/styles.json").then(function(S){
     function render(r, scroll){
       var d = FPType.describe(S, r), key = d.kit + sfx;
-      $("r-name").textContent = d.name;
+      $("r-name").textContent = d.title;
+      $("r-motto").textContent = d.motto;
       $("r-img").src = "../assets/characters/" + d.id + ".webp";
       $("r-img").alt = d.name + " character";
       $("r-chips").innerHTML = d.chips.map(function(c){ return "<span>" + esc(c) + "</span>"; }).join("");

@@ -151,8 +151,8 @@
   FPType.getStyles("../kit/styles.json").then(function(S){
     var r = FPType.load(S); if (!r) return;
     var d = FPType.describe(S, r), short = d.name.replace(/^The /, ""), an = /^[AEIOU]/.test(short) ? "an " : "a ";
-    $("h1").innerHTML = esc(short) + ", you're exactly the founder a <em>Pareto Right Hand</em> is built for.";
-    $("lead").textContent = d.tag + " Book your Match Call and see how a Pareto Right Hand would work with " + an + short + ".";
+    $("h1").innerHTML = esc(d.emoji + " " + short + " " + d.emoji) + ", you're exactly the founder a <em>Pareto Right Hand</em> is built for.";
+    $("lead").textContent = d.motto + " Book your Match Call and see how a Pareto Right Hand would work with " + an + short + ".";
     $("kit-note").innerHTML = "Your free <b>" + esc(short) + " kit</b> is waiting on this page, just below the calendar.";
     $("why-eb").textContent = "Built for " + an + short;
     $("why").innerHTML = "Why " + an + esc(short) + " gains from a <em>Pareto Right Hand</em>";
@@ -168,7 +168,7 @@
     $("kit-img").src = "../assets/characters/" + d.id + ".webp";
     $("kit-img").alt = d.name + " character";
     $("kit-img").hidden = false;
-    $("kit-what").textContent = short + " kit";
+    $("kit-what").textContent = d.emoji + " " + short + " kit " + d.emoji;
     $("kit-p").textContent = "Built around how you work as " + an + short + ". Run it before your Match Call: it audits your week, fixes one leak today and writes the job description, scorecard and SOPs we'll use on the call.";
     $("kit-zip").href = "../brief/kits/" + d.kit + "-fitcall.zip";
     $("kit-zip").setAttribute("download", "right-hand-kit-" + d.id + ".zip");
