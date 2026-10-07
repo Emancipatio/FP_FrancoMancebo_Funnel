@@ -13,6 +13,12 @@
 .timer{display:inline-flex;justify-self:start;width:fit-content;align-items:center;gap:12px;margin-top:18px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.95rem;color:var(--muted)}
 .t-clock{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--amber);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .timer.over .t-clock{display:none}
+.kitcard{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:clamp(18px,3vw,30px)}
+.kitcard img{width:160px;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:16px}
+.kitcard img[hidden]{display:none}
+.kitcard:has(img[hidden]){grid-template-columns:1fr}
+.ghost{color:var(--mint);font-weight:600;text-decoration:underline}
+@media (max-width:600px){.kitcard{grid-template-columns:1fr}.kitcard img{width:120px}}
 </style>
 </head>
 <body>
@@ -58,7 +64,21 @@
       <iframe src="https://api.leadconnectorhq.com/widget/booking/WSJuUDwPE5cVPDyTvn3K" allow="payment" style="width:100%;border:none;overflow:hidden;" scrolling="no" id="WSJuUDwPE5cVPDyTvn3K_1791305515672" title="FP | Franco Mancebo | Right Hand Match Call"></iframe>
       <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
     </div>
-    <p class="note" style="margin-top:14px" id="kit-note">Took the quiz? Bring your kit. Haven't yet? It's on <a href="../brief/?q=1#quiz">your kit page</a>.</p>
+  </section>
+
+  <section aria-labelledby="kit-h">
+    <div class="kitcard">
+      <img id="kit-img" src="../assets/characters/captain.webp" alt="" width="309" height="621" hidden>
+      <div class="stack" style="gap:10px">
+        <div class="eyebrow">Your free kit · bring it to the call</div>
+        <h2 id="kit-h">Get your <em id="kit-what">Right Hand Kit</em></h2>
+        <p class="lead" id="kit-p" style="margin:0">Run it before your Match Call: it audits your week, fixes one leak today and writes the job description, scorecard and SOPs we'll use on the call.</p>
+        <div class="row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px">
+          <a class="btn" id="kit-zip" href="../brief/?q=1#quiz">Get my kit →</a>
+          <a class="ghost" id="kit-page" href="../brief/?q=1#quiz">Open my kit page</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section aria-labelledby="oncall">
@@ -121,7 +141,14 @@
     $("art").style.objectPosition = "top";
     $("match-h").textContent = "Matched to how " + an + short + " works";
     $("match-p").outerHTML = "<p>Your Right Hand should:</p><ul class=\"fit\" style=\"margin-top:8px\">" + d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
-    $("kit-note").innerHTML = "Bring your " + esc(short) + " kit to the call. It's on <a href=\"../brief/?q=1#quiz\">your kit page</a>.";
+    $("kit-img").src = "../assets/characters/" + d.id + ".webp";
+    $("kit-img").alt = d.name + " character";
+    $("kit-img").hidden = false;
+    $("kit-what").textContent = short + " kit";
+    $("kit-p").textContent = "Built around how you work as " + an + short + ". Run it before your Match Call: it audits your week, fixes one leak today and writes the job description, scorecard and SOPs we'll use on the call.";
+    $("kit-zip").href = "../brief/kits/" + d.kit + "-fitcall.zip";
+    $("kit-zip").setAttribute("download", "right-hand-kit-" + d.id + ".zip");
+    $("kit-zip").textContent = "Download my " + short + " kit (.zip) →";
   }).catch(function(){});
 })();
 </script>
