@@ -2,6 +2,22 @@
 // The result lives only in this browser (localStorage), so later pages can greet the founder by type.
 (function (w) {
   var KEY = "fp-franco-type";
+  // One character hosts each quiz slide (fixed order, unrelated to the answers so it hints nothing).
+  var BASE = (document.currentScript && document.currentScript.src || "").replace(/fptype\.js.*$/, "");
+  var HOSTS = [
+    ["trailblazer", "The Trailblazer", "Go with your gut. First answer wins."],
+    ["visionary", "The Visionary", "Think of a real week, not a perfect one."],
+    ["commander", "The Commander", "Be honest. Nobody's grading this."],
+    ["captain", "The Captain", "Picture the last time this actually happened."],
+    ["maker", "The Maker", "No wrong answers, only your answers."],
+    ["craftsman", "The Craftsman", "Close call? Pick what's true more often."],
+    ["optimizer", "The Optimizer", "Nearly there. Keep the pace."],
+    ["architect", "The Architect", "Last one. Then your type is ready."]
+  ];
+  function host(i) {
+    var h = HOSTS[i % HOSTS.length];
+    return '<div class="host"><img src="' + BASE + 'characters/' + h[0] + '.webp" alt="' + h[1] + '" width="309" height="621"><div class="bubble"><b>' + h[1] + '</b>' + esc(h[2]) + '</div></div>';
+  }
   var SPLIT = {focus: "big picture vs detail", control: "hands-off vs hands-on", contact: "written vs live updates", pace: "fast vs checked drafts"};
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
@@ -61,7 +77,7 @@
       }
       var x = S.questions[cur];
       els.qcount.textContent = "Question " + (cur + 1) + " of " + n;
-      sl.innerHTML = '<h3>' + esc(x.q) + '</h3><div class="opts">' + ["a", "b"].map(function (k) {
+      sl.innerHTML = host(cur) + '<h3>' + esc(x.q) + '</h3><div class="opts">' + ["a", "b"].map(function (k) {
         return '<button type="button" class="opt' + (a[cur] === k ? " on" : "") + '" data-k="' + k + '"><b>' + k.toUpperCase() + '</b><span>' + esc(x[k]) + '</span></button>';
       }).join("") + '</div>';
     }
