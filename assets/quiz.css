@@ -1,4 +1,4 @@
-/* Founder Personality Type quiz: shared by the landing and kit pages */
+/* Entrepreneur Personality Type quiz: shared by the landing and kit pages */
 .quiz{max-width:760px;margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,30px);overflow:hidden}
 .qtop{display:flex;justify-content:space-between;align-items:center;gap:12px;font:700 13px/1 var(--display);letter-spacing:.08em;color:var(--muted)}
 .qtop button{background:none;border:0;color:var(--mint);font:600 15px var(--body);cursor:pointer;padding:6px 0}

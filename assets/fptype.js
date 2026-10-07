@@ -1,4 +1,4 @@
-// Founder Personality Type: shared quiz + remembered result (landing, kit, thank-you and booking pages).
+// Entrepreneur Personality Type: shared quiz + remembered result (landing, kit, thank-you and booking pages).
 // The result lives only in this browser (localStorage), so later pages can greet the founder by type.
 (function (w) {
   var KEY = "fp-franco-type";
