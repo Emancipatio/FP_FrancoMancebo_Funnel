@@ -2,7 +2,7 @@
 
 Writes, into brief/:
   right-hand-kit.zip          skill for everyone (ends on Pareto's Right Hand Program)
-  right-hand-kit-fitcall.zip  skill for qualified founders (ends on the Fit Call booking page)
+  right-hand-kit-fitcall.zip  skill for qualified founders (ends on the Match Call booking page)
   prompt.txt / prompt-fitcall.txt  the same kit as one paste-in prompt for any AI chat
   kits/<style>-<contact>-<pace>[-fitcall].zip/.txt  the same, tuned to a Founder Working Style result
 
@@ -19,7 +19,7 @@ OUT = ROOT / "brief"
 
 NEXT = {
     "": "Want someone to run this kit with you? Pareto Talent matches founders with a full-time, AI-trained Right Hand who owns these outcomes, not just tasks. See the Right Hand Program: https://paretotalent.com",
-    "-fitcall": "Bring this kit to your 20-minute Right Hand Fit Call: https://emancipatio.github.io/FP_FrancoMancebo_Funnel/book/ We'll turn it into your Right Hand's role and, if it's a fit, show you 3 hand-picked candidates within 24 hours. You owe nothing unless you're excited about one.",
+    "-fitcall": "Bring this kit to your 20-minute Right Hand Match Call: https://emancipatio.github.io/FP_FrancoMancebo_Funnel/book/ We'll turn it into your Right Hand's role and, if it's a fit, show you 3 hand-picked candidates within 24 hours. You owe nothing unless you're excited about one.",
 }
 
 FILES = ["SKILL.md", "references/playbooks.md", "references/kit-template.md"]
