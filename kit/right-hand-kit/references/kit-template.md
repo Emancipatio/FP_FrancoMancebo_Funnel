@@ -65,7 +65,7 @@ Sent at <time they prefer> by <email or chat>:
 
 ## 6. How to work with me
 
-From the founder's Founder Personality Type (`my-style.md`, or their answers):
+From the founder's Entrepreneur Personality Type (`my-style.md`, or their answers):
 - **My style:** <style name> (<focus> · <control> · <contact> · <pace>), in one sentence
 - **What I want from you:** the 3 behaviours for this style
 - **Decide alone vs ask me:** the decision rule for this style, with the dollar limit
