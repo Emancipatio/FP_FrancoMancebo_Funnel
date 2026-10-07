@@ -32,6 +32,7 @@
 .ghost{color:var(--mint);font-weight:600;text-decoration:underline}
 @media (max-width:600px){.kitcard{grid-template-columns:1fr}.kitcard img{width:120px}}
 </style>
+<style>.art-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2px;height:100%}.art-grid img{width:100%;height:100%;object-fit:cover;object-position:top}.art-grid[hidden]{display:none}</style>
 </head>
 <body>
 <!-- FP | Franco Mancebo | Booking Page (L9): qualified founders land here from the form -->
@@ -56,7 +57,7 @@
       <a class="btn" href="#call">Book my call now →</a>
       <a class="kitnote" href="#kit"><span class="kn-dot">🎁</span><span id="kit-note">Your free <b>Right Hand Kit</b> is waiting on this page, just below the calendar.</span><span aria-hidden="true">↓</span></a>
     </div>
-    <div class="art"><img id="art" src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
+    <div class="art"><div id="art-grid" class="art-grid" role="img" aria-label="The 8 Entrepreneur Personality Types"><img src="../assets/characters/trailblazer.webp" alt="The Trailblazer" width="309" height="621" loading="eager"><img src="../assets/characters/visionary.webp" alt="The Visionary" width="309" height="621" loading="eager"><img src="../assets/characters/commander.webp" alt="The Commander" width="309" height="621" loading="eager"><img src="../assets/characters/captain.webp" alt="The Captain" width="309" height="621" loading="eager"><img src="../assets/characters/maker.webp" alt="The Maker" width="309" height="621" loading="eager"><img src="../assets/characters/craftsman.webp" alt="The Craftsman" width="309" height="621" loading="eager"><img src="../assets/characters/optimizer.webp" alt="The Optimizer" width="309" height="621" loading="eager"><img src="../assets/characters/architect.webp" alt="The Architect" width="309" height="621" loading="eager"></div><img id="art" src="../assets/characters/captain.webp" alt="" width="900" height="1125" hidden></div>
   </section>
 
   <section aria-labelledby="why">
@@ -163,6 +164,8 @@
     $("art").src = "../assets/characters/" + d.id + ".webp";
     $("art").alt = d.name + " character";
     $("art").style.objectPosition = "top";
+    $("art").hidden = false;
+    $("art-grid").hidden = true;
     $("match-h").textContent = "What your Pareto Right Hand owns";
     $("match-p").outerHTML = "<p>Matched to how " + an + esc(short) + " works, your Right Hand:</p><ul class=\"fit\" style=\"margin-top:8px\">" + d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
     $("kit-img").src = "../assets/characters/" + d.id + ".webp";
