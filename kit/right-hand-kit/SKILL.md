@@ -7,7 +7,7 @@ description: The Right Hand Kit by Pareto Talent, tuned to the founder's working
 
 You help a founder find the hours in their real inbox and calendar that someone else should own, get the first ones back today, and hand off the rest. Three parts, in order, in one conversation. Aim for 30 minutes end to end.
 
-Read `references/my-style.md` first if it exists: it holds the founder's Founder Working Style from the quiz on the kit page. Read `references/playbooks.md` before Part 2 and `references/kit-template.md` before Part 3.
+Read `references/my-style.md` first if it exists: it holds the founder's Founder Personality Type from the quiz on the kit page. Read `references/playbooks.md` before Part 2 and `references/kit-template.md` before Part 3.
 
 ## Use the founder's working style
 

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Founder Working Style + Right Hand Kit · Pareto Talent</title>
-<meta name="description" content="Find your Founder Working Style in 8 quick questions, then get a free Claude skill that audits your real inbox and calendar and writes a Right Hand Kit tuned to how you work.">
+<title>Founder Personality Type + Right Hand Kit · Pareto Talent</title>
+<meta name="description" content="Find your founder personality type in 8 quick questions, then get a free Claude skill that audits your real inbox and calendar and writes a Right Hand Kit tuned to how you work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap">
@@ -14,7 +14,7 @@
 .types{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
 @media (max-width:900px){.types{grid-template-columns:repeat(2,1fr)}}
 .type{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;align-content:start}
-.type img{width:100%;height:auto;border-radius:12px}
+.type img{width:100%;height:auto;border-radius:12px;aspect-ratio:3/4;object-fit:cover;object-position:top}
 .type h3{font-size:19px}
 .type p{margin:0;color:var(--muted);font-size:15px}
 </style>
@@ -31,7 +31,7 @@
     <div class="stack">
       <div class="eyebrow">Free · 2-minute quiz for founders</div>
       <h1 id="h1">Which kind of <em>founder</em> are you?</h1>
-      <p class="lead">8 questions reveal your working style, then your free Right Hand Kit is built around it.</p>
+      <p class="lead">8 questions reveal your founder personality type, then your free Right Hand Kit is built around it.</p>
       <a class="btn" href="#get">Find my style →</a>
       <div class="meta"><span>8 questions</span><span>Free</span><span>Yours to keep</span></div>
     </div>
@@ -40,14 +40,18 @@
 
   <section aria-labelledby="types">
     <div class="stack">
-      <div class="eyebrow">The 4 founder styles</div>
-      <h2 id="types">Four ways founders work. <em>One is yours.</em></h2>
+      <div class="eyebrow">The 8 founder personality types</div>
+      <h2 id="types">Eight ways founders work. <em>One is yours.</em></h2>
     </div>
     <div class="types">
-      <div class="type"><img src="assets/styles/visionary.svg" alt="" width="240" height="240"><h3>The Visionary</h3><p>Sets the direction. Hates the details.</p></div>
-      <div class="type"><img src="assets/styles/captain.svg" alt="" width="240" height="240"><h3>The Captain</h3><p>Leads from the front. Keeps the big calls.</p></div>
-      <div class="type"><img src="assets/styles/craftsman.svg" alt="" width="240" height="240"><h3>The Craftsman</h3><p>Quality is the signature. Letting go is hard.</p></div>
-      <div class="type"><img src="assets/styles/systems.svg" alt="" width="240" height="240"><h3>The Systems Builder</h3><p>Builds it once. Never touches it again.</p></div>
+      <div class="type"><img src="assets/characters/trailblazer.webp" alt="" width="309" height="621"><h3>The Trailblazer</h3><p>Sees it first. Gets there first.</p></div>
+      <div class="type"><img src="assets/characters/commander.webp" alt="" width="309" height="621"><h3>The Commander</h3><p>Decides fast. Keeps the big calls.</p></div>
+      <div class="type"><img src="assets/characters/maker.webp" alt="" width="309" height="621"><h3>The Maker</h3><p>Builds it fast. Then makes it great.</p></div>
+      <div class="type"><img src="assets/characters/optimizer.webp" alt="" width="309" height="621"><h3>The Optimizer</h3><p>Fixes the process the moment it slows.</p></div>
+      <div class="type"><img src="assets/characters/visionary.webp" alt="" width="309" height="621"><h3>The Visionary</h3><p>Sets the direction. Hates the details.</p></div>
+      <div class="type"><img src="assets/characters/captain.webp" alt="" width="309" height="621"><h3>The Captain</h3><p>Steers carefully. Keeps the big calls.</p></div>
+      <div class="type"><img src="assets/characters/craftsman.webp" alt="" width="309" height="621"><h3>The Craftsman</h3><p>Quality is the signature. Letting go is hard.</p></div>
+      <div class="type"><img src="assets/characters/architect.webp" alt="" width="309" height="621"><h3>The Architect</h3><p>Designs it once. Never touches it again.</p></div>
     </div>
     <div class="row" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center">
       <p class="lead" style="margin:0"><strong style="color:var(--ink)">Which one are you?</strong> Take the quiz to find out.</p>
@@ -62,7 +66,7 @@
       <p class="lead">Most quizzes stop at the label. Yours turns into a Right Hand Kit for how you work.</p>
     </div>
     <div class="grid3" style="margin-top:28px">
-      <div class="card"><span class="num">01</span><h3>Your working style</h3><p>One of 4 founder styles, plus how you like updates and drafts.</p></div>
+      <div class="card"><span class="num">01</span><h3>Your personality type</h3><p>One of 8 founder personality types, plus how you like your updates.</p></div>
       <div class="card"><span class="num">02</span><h3>Your real week, audited</h3><p>Where your hours go, what they cost, and your first hours back today.</p></div>
       <div class="card"><span class="num">03</span><h3>Your kit, tuned to you</h3><p>Job description, scorecard, SOPs and a "How to work with me" guide.</p></div>
     </div>
@@ -114,7 +118,7 @@
       <div>
         <details><summary>Is it really free?</summary><p>Yes. The kit is yours to keep and use with anyone. If it shows you have more to hand off than you can manage, you can book a call with us to talk about a Right Hand.</p></details>
         <details><summary>What's a Right Hand?</summary><p>A full-time, AI-trained operator who owns outcomes, not tasks: they anticipate instead of waiting, and close loops instead of stopping. Pareto hand-picks them from 1,000+ applicants per placement.</p></details>
-        <details><summary>Is this Myers-Briggs?</summary><p>No. It's a simple 4-style model built for one question: how a Right Hand should work with you.</p></details>
+        <details><summary>Is this Myers-Briggs?</summary><p>No. It's our own 8-type model, inspired by personality tests but built for one question: how a Right Hand should work with you.</p></details>
       <details><summary>Does it read my email?</summary><p>Only inside your own Claude, read only. It never sends, deletes or changes anything, and Pareto never sees your inbox.</p></details>
         <details><summary>Do I need paid Claude?</summary><p>No. Skills and the Gmail and Calendar connectors work on Claude's free plan. Not on Claude? Use the copy-paste version in any AI chat.</p></details>
         <details><summary>Why do you ask about revenue?</summary><p>It helps us see whether a Right Hand fits your business now.</p></details>

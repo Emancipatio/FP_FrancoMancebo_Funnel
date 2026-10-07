@@ -31,7 +31,7 @@ def style_md(style, contact, pace):
     st, c, p = STYLES["styles"][style], STYLES["contact"][contact], STYLES["pace"][pace]
     ty = STYLES["types"][style][pace]
     return "\n".join([
-        "# My Founder Working Style",
+        "# My Founder Personality Type",
         "",
         f"**{ty['name']}** ({st['axes']} · {p['label']} · {c['label']})",
         "",
@@ -63,7 +63,7 @@ def prompt(next_step, style_text=""):
             "Start now with the Start step.\n\n")
     if style_text:
         body = body.replace("`references/my-style.md`", "MY STYLE below")
-        head += "MY STYLE (from the Founder Working Style quiz):\n\n" + style_text + "\n"
+        head += "MY STYLE (from the Founder Personality Type quiz):\n\n" + style_text + "\n"
     return (head + body + "\n\n=== PLAYBOOKS ===\n\n" + read("references/playbooks.md")
             + "\n\n=== KIT TEMPLATE ===\n\n" + read("references/kit-template.md"))
 
