@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Book your Right Hand Match Call · Pareto Talent</title>
+<title>Book your Pareto Right Hand Match Call · Pareto Talent</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,11 @@
 .kitcard img{width:160px;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:16px}
 .kitcard img[hidden]{display:none}
 .kitcard:has(img[hidden]){grid-template-columns:1fr}
+.kitnote{display:inline-flex;justify-self:start;width:fit-content;align-items:center;gap:10px;margin-top:14px;padding:10px 16px;border:1px dashed var(--accent);border-radius:12px;color:var(--ink);text-decoration:none;font-size:.95rem;background:var(--surface)}
+.kitnote:hover{border-style:solid}
+.kitnote b{color:var(--mint)}
+.kitcard{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+#kit{scroll-margin-top:24px}
 .ghost{color:var(--mint);font-weight:600;text-decoration:underline}
 @media (max-width:600px){.kitcard{grid-template-columns:1fr}.kitcard img{width:120px}}
 </style>
@@ -31,9 +36,10 @@
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
       <div class="eyebrow">You qualified for a free 20-minute call!</div>
-      <h1 id="h1">You're exactly the founder a <em>Right Hand</em> is built for.</h1>
+      <h1 id="h1">You're exactly the founder a <em>Pareto Right Hand</em> is built for.</h1>
       <p class="lead" id="lead">Book your Match Call now and see which hours a Right Hand could take off your plate.</p>
       <a class="btn" href="#call">Book my call now →</a>
+      <a class="kitnote" href="#kit"><span class="kn-dot">🎁</span><span id="kit-note">Your free <b>Right Hand Kit</b> is waiting on this page, just below the calendar.</span><span aria-hidden="true">↓</span></a>
       <div class="timer" id="timer" aria-live="polite">
         <span class="t-label" id="t-label">Your invite is held for</span>
         <span class="t-clock" id="t-clock">24:00:00</span>
@@ -44,20 +50,20 @@
 
   <section aria-labelledby="why">
     <div class="stack">
-      <div class="eyebrow">Why a Match Call</div>
-      <h2 id="why">Why book a <em>Right Hand Match Call</em>?</h2>
+      <div class="eyebrow" id="why-eb">Why a Pareto Right Hand</div>
+      <h2 id="why">Why book a <em>Pareto Right Hand Match Call</em>?</h2>
     </div>
     <div class="grid3" style="margin-top:28px">
-      <div class="card"><span class="num">01</span><h3>See what you should stop doing</h3><p>We go through your week and name the hours a Right Hand would own.</p></div>
+      <div class="card"><span class="num">01</span><h3 id="why-1h">See what you should stop doing</h3><p id="why-1p">We go through your week and name the hours a Right Hand would own.</p></div>
       <div class="card" id="match-card"><span class="num">02</span><h3 id="match-h">Get matched to how you work</h3><p id="match-p">We shortlist Right Hands who fit your founder personality type.</p></div>
-      <div class="card"><span class="num">03</span><h3>Know if it's the right move now</h3><p>An honest yes or no. If it's a no, you still leave with a plan.</p></div>
+      <div class="card"><span class="num">03</span><h3 id="why-3h">Know if it's the right move now</h3><p id="why-3p">An honest yes or no. If it's a no, you still leave with a plan.</p></div>
     </div>
   </section>
 
   <section id="call" aria-labelledby="cal-h">
     <div class="stack">
       <div class="eyebrow">Pick a time · 20 minutes</div>
-      <h2 id="cal-h">Book your <em>Right Hand Match Call</em></h2>
+      <h2 id="cal-h">Book your <em>Pareto Right Hand Match Call</em></h2>
     </div>
     <div class="formbox" style="margin-top:22px">
       <!-- GHL calendar: FP | Franco Mancebo | Right Hand Fit Call -->
@@ -66,11 +72,11 @@
     </div>
   </section>
 
-  <section aria-labelledby="kit-h">
+  <section id="kit" aria-labelledby="kit-h">
     <div class="kitcard">
       <img id="kit-img" src="../assets/characters/captain.webp" alt="" width="309" height="621" hidden>
       <div class="stack" style="gap:10px">
-        <div class="eyebrow">Your free kit · bring it to the call</div>
+        <div class="eyebrow">🎁 Your free kit is here · bring it to the call</div>
         <h2 id="kit-h">Get your <em id="kit-what">Right Hand Kit</em></h2>
         <p class="lead" id="kit-p" style="margin:0">Run it before your Match Call: it audits your week, fixes one leak today and writes the job description, scorecard and SOPs we'll use on the call.</p>
         <div class="row" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px">
@@ -134,13 +140,20 @@
   FPType.getStyles("../kit/styles.json").then(function(S){
     var r = FPType.load(S); if (!r) return;
     var d = FPType.describe(S, r), short = d.name.replace(/^The /, ""), an = /^[AEIOU]/.test(short) ? "an " : "a ";
-    $("h1").innerHTML = esc(short) + ", you're exactly the founder a <em>Right Hand</em> is built for.";
-    $("lead").textContent = d.tag + " Book your Match Call and see how a Right Hand would work with " + an + short + ".";
+    $("h1").innerHTML = esc(short) + ", you're exactly the founder a <em>Pareto Right Hand</em> is built for.";
+    $("lead").textContent = d.tag + " Book your Match Call and see how a Pareto Right Hand would work with " + an + short + ".";
+    $("kit-note").innerHTML = "Your free <b>" + esc(short) + " kit</b> is waiting on this page, just below the calendar.";
+    $("why-eb").textContent = "Built for " + an + short;
+    $("why").innerHTML = "Why " + an + esc(short) + " gains from a <em>Pareto Right Hand</em>";
+    $("why-1h").textContent = "Where your time goes now";
+    $("why-1p").textContent = d.pain;
+    $("why-3h").textContent = "What you get back";
+    $("why-3p").textContent = d.gain;
     $("art").src = "../assets/characters/" + d.id + ".webp";
     $("art").alt = d.name + " character";
     $("art").style.objectPosition = "top";
-    $("match-h").textContent = "Matched to how " + an + short + " works";
-    $("match-p").outerHTML = "<p>Your Right Hand should:</p><ul class=\"fit\" style=\"margin-top:8px\">" + d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
+    $("match-h").textContent = "What your Pareto Right Hand owns";
+    $("match-p").outerHTML = "<p>Matched to how " + an + esc(short) + " works, your Right Hand:</p><ul class=\"fit\" style=\"margin-top:8px\">" + d.rh.map(function(t){ return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>";
     $("kit-img").src = "../assets/characters/" + d.id + ".webp";
     $("kit-img").alt = d.name + " character";
     $("kit-img").hidden = false;

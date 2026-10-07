@@ -39,7 +39,7 @@
   function describe(S, r) {
     var st = S.styles[r.style], ty = S.types[r.style][r.pace];
     return {
-      id: ty.id, name: ty.name, tag: ty.tag, line: ty.line, rh: st.rh,
+      id: ty.id, name: ty.name, tag: ty.tag, line: ty.line, pain: ty.pain, gain: ty.gain, rh: st.rh,
       chips: st.axes.split(" · ").concat([S.pace[r.pace].label, S.contact[r.contact].label + " updates"]),
       kit: r.style + "-" + r.contact + "-" + r.pace,
       split: r.split.map(function (d) { return SPLIT[d] || d; })

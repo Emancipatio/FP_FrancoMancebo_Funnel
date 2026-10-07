@@ -125,13 +125,17 @@
         "id": "trailblazer",
         "name": "The Trailblazer",
         "tag": "Sees it first. Gets there first.",
-        "line": "You see where things are going and want to be there yesterday. You'd rather launch and adjust than wait for perfect."
+        "line": "You see where things are going and want to be there yesterday. You'd rather launch and adjust than wait for perfect.",
+        "pain": "New ideas outrun the follow-through, so half-launched projects wait on you.",
+        "gain": "Your ideas get shipped while you're already on the next one."
       },
       "deliberate": {
         "id": "visionary",
         "name": "The Visionary",
         "tag": "Sets the direction. Hates the details.",
-        "line": "You set the direction and want it handled well. You think in outcomes, lose energy in the details, and like big moves thought through."
+        "line": "You set the direction and want it handled well. You think in outcomes, lose energy in the details, and like big moves thought through.",
+        "pain": "You set the direction, then get pulled into details that drain you.",
+        "gain": "The direction stays yours; the details get owned end to end."
       }
     },
     "captain": {
@@ -139,13 +143,17 @@
         "id": "commander",
         "name": "The Commander",
         "tag": "Decides fast. Keeps the big calls.",
-        "line": "You lead from the front and decide fast. You want the big calls to stay yours and everything else moving now."
+        "line": "You lead from the front and decide fast. You want the big calls to stay yours and everything else moving now.",
+        "pain": "Every decision waits on your yes, so the team stalls when you're busy.",
+        "gain": "Options arrive ready to decide, and follow-through starts the moment you do."
       },
       "deliberate": {
         "id": "captain",
         "name": "The Captain",
         "tag": "Steers carefully. Keeps the big calls.",
-        "line": "You like to steer, and you weigh the big calls before you make them. You want them to stay yours, without doing the legwork."
+        "line": "You like to steer, and you weigh the big calls before you make them. You want them to stay yours, without doing the legwork.",
+        "pain": "You weigh the big calls, but the prep and legwork land on you too.",
+        "gain": "Every big call arrives prepared with options, and you keep the final say."
       }
     },
     "craftsman": {
@@ -153,13 +161,17 @@
         "id": "maker",
         "name": "The Maker",
         "tag": "Builds it fast. Then makes it great.",
-        "line": "You care how things are made, and you like making them quickly. You'd rather improve a real draft than plan the perfect one."
+        "line": "You care how things are made, and you like making them quickly. You'd rather improve a real draft than plan the perfect one.",
+        "pain": "You build fast, so you end up building everything yourself.",
+        "gain": "Your drafts get finished, polished and shipped by someone who follows your lead."
       },
       "deliberate": {
         "id": "craftsman",
         "name": "The Craftsman",
         "tag": "Quality is the signature. Letting go is hard.",
-        "line": "You care how things are done, not just that they're done. Quality is your signature, and it's why letting go is hard."
+        "line": "You care how things are done, not just that they're done. Quality is your signature, and it's why letting go is hard.",
+        "pain": "Your standard is high, so nothing leaves your desk without you.",
+        "gain": "Your standard gets written down and met, so you can let go task by task."
       }
     },
     "systems": {
@@ -167,13 +179,17 @@
         "id": "optimizer",
         "name": "The Optimizer",
         "tag": "Fixes the process the moment it slows.",
-        "line": "You hate doing anything twice. You fix the process the moment it slows you down, and you'd rather automate today than plan for next month."
+        "line": "You hate doing anything twice. You fix the process the moment it slows you down, and you'd rather automate today than plan for next month.",
+        "pain": "You fix the process yourself every time it slows, on top of your real work.",
+        "gain": "Someone runs and improves your systems, and only flags you on exceptions."
       },
       "deliberate": {
         "id": "architect",
         "name": "The Architect",
         "tag": "Designs it once. Never touches it again.",
-        "line": "You like things to run on rules, not on you. You design the system carefully once so you never have to touch it again."
+        "line": "You like things to run on rules, not on you. You design the system carefully once so you never have to touch it again.",
+        "pain": "You designed the system, but you're still the one keeping it running.",
+        "gain": "The rules run without you; you only see the exceptions they don't cover."
       }
     }
   }
