@@ -1,13 +1,53 @@
 {
   "questions": [
-    {"dim": "focus", "q": "A new project lands on your desk. First, you want to know…", "a": "The outcome and the deadline", "b": "The plan, step by step"},
-    {"dim": "focus", "q": "When someone hands you finished work, you notice first…", "a": "Whether it moves the goal", "b": "The details that are off"},
-    {"dim": "control", "q": "A good result reached a different way than yours…", "a": "Fine by me, it's done", "b": "I'd rather it was done my way"},
-    {"dim": "control", "q": "How much do you want to approve before it goes out?", "a": "Only the big things", "b": "Most things"},
-    {"dim": "contact", "q": "The best way to get an update from your team is…", "a": "A written note I read when I'm ready", "b": "A quick call"},
-    {"dim": "contact", "q": "When something is unclear, you'd rather…", "a": "Get a message with options", "b": "Talk it through"},
-    {"dim": "pace", "q": "Which would you rather have?", "a": "A draft that's 80% right today", "b": "A draft that's 100% right on Friday"},
-    {"dim": "pace", "q": "Before something goes to a client, you want…", "a": "It out fast; fix it later if needed", "b": "A second check first"}
+    {
+      "dim": "focus",
+      "q": "A new project lands on your desk. First, you want to know…",
+      "a": "The outcome and the deadline",
+      "b": "The plan, step by step"
+    },
+    {
+      "dim": "focus",
+      "q": "When someone hands you finished work, you notice first…",
+      "a": "Whether it moves the goal",
+      "b": "The details that are off"
+    },
+    {
+      "dim": "control",
+      "q": "A good result reached a different way than yours…",
+      "a": "Fine by me, it's done",
+      "b": "I'd rather it was done my way"
+    },
+    {
+      "dim": "control",
+      "q": "How much do you want to approve before it goes out?",
+      "a": "Only the big things",
+      "b": "Most things"
+    },
+    {
+      "dim": "contact",
+      "q": "The best way to get an update from your team is…",
+      "a": "A written note I read when I'm ready",
+      "b": "A quick call"
+    },
+    {
+      "dim": "contact",
+      "q": "When something is unclear, you'd rather…",
+      "a": "Get a message with options",
+      "b": "Talk it through"
+    },
+    {
+      "dim": "pace",
+      "q": "Which would you rather have?",
+      "a": "A draft that's 80% right today",
+      "b": "A draft that's 100% right on Friday"
+    },
+    {
+      "dim": "pace",
+      "q": "Before something goes to a client, you want…",
+      "a": "It out fast; fix it later if needed",
+      "b": "A second check first"
+    }
   ],
   "styles": {
     "visionary": {
@@ -47,7 +87,7 @@
       "decide": "For the first 30 days you review at checkpoints; each task moves to 'decides alone' once it passes two reviews in a row."
     },
     "systems": {
-      "name": "The Systems Builder",
+      "name": "The Architect",
       "axes": "Detail · Hands-off",
       "line": "You like things to run on rules, not on you. You'd rather design the system once than touch it every day.",
       "rh": [
@@ -60,11 +100,81 @@
     }
   },
   "contact": {
-    "async": {"label": "Async", "update": "A written update at the end of each day (done / in progress / blocked / needs your decision). Urgent items only by direct message."},
-    "live": {"label": "Live", "update": "A 10-minute check-in call each day, followed by a short written recap of what was agreed."}
+    "async": {
+      "label": "Async",
+      "update": "A written update at the end of each day (done / in progress / blocked / needs your decision). Urgent items only by direct message."
+    },
+    "live": {
+      "label": "Live",
+      "update": "A 10-minute check-in call each day, followed by a short written recap of what was agreed."
+    }
   },
   "pace": {
-    "fast": {"label": "Fast", "drafts": "Send 80% drafts early and improve them in the open. Speed beats polish on internal work."},
-    "deliberate": {"label": "Deliberate", "drafts": "Double-check before anything goes out, and flag risks before they become problems. Polish beats speed on client-facing work."}
+    "fast": {
+      "label": "Fast",
+      "drafts": "Send 80% drafts early and improve them in the open. Speed beats polish on internal work."
+    },
+    "deliberate": {
+      "label": "Deliberate",
+      "drafts": "Double-check before anything goes out, and flag risks before they become problems. Polish beats speed on client-facing work."
+    }
+  },
+  "types": {
+    "visionary": {
+      "fast": {
+        "id": "trailblazer",
+        "name": "The Trailblazer",
+        "tag": "Sees it first. Gets there first.",
+        "line": "You see where things are going and want to be there yesterday. You'd rather launch and adjust than wait for perfect."
+      },
+      "deliberate": {
+        "id": "visionary",
+        "name": "The Visionary",
+        "tag": "Sets the direction. Hates the details.",
+        "line": "You set the direction and want it handled well. You think in outcomes, lose energy in the details, and like big moves thought through."
+      }
+    },
+    "captain": {
+      "fast": {
+        "id": "commander",
+        "name": "The Commander",
+        "tag": "Decides fast. Keeps the big calls.",
+        "line": "You lead from the front and decide fast. You want the big calls to stay yours and everything else moving now."
+      },
+      "deliberate": {
+        "id": "captain",
+        "name": "The Captain",
+        "tag": "Steers carefully. Keeps the big calls.",
+        "line": "You like to steer, and you weigh the big calls before you make them. You want them to stay yours, without doing the legwork."
+      }
+    },
+    "craftsman": {
+      "fast": {
+        "id": "maker",
+        "name": "The Maker",
+        "tag": "Builds it fast. Then makes it great.",
+        "line": "You care how things are made, and you like making them quickly. You'd rather improve a real draft than plan the perfect one."
+      },
+      "deliberate": {
+        "id": "craftsman",
+        "name": "The Craftsman",
+        "tag": "Quality is the signature. Letting go is hard.",
+        "line": "You care how things are done, not just that they're done. Quality is your signature, and it's why letting go is hard."
+      }
+    },
+    "systems": {
+      "fast": {
+        "id": "optimizer",
+        "name": "The Optimizer",
+        "tag": "Fixes the process the moment it slows.",
+        "line": "You hate doing anything twice. You fix the process the moment it slows you down, and you'd rather automate today than plan for next month."
+      },
+      "deliberate": {
+        "id": "architect",
+        "name": "The Architect",
+        "tag": "Designs it once. Never touches it again.",
+        "line": "You like things to run on rules, not on you. You design the system carefully once so you never have to touch it again."
+      }
+    }
   }
 }

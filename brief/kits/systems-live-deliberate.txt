@@ -4,9 +4,9 @@ MY STYLE (from the Founder Working Style quiz):
 
 # My Founder Working Style
 
-**The Systems Builder** (Detail · Hands-off · Live · Deliberate)
+**The Architect** (Detail · Hands-off · Deliberate · Live)
 
-You like things to run on rules, not on you. You'd rather design the system once than touch it every day.
+You like things to run on rules, not on you. You design the system carefully once so you never have to touch it again.
 
 ## What I want from my Right Hand
 - Documents every process and keeps the SOPs current

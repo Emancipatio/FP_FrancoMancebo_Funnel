@@ -29,12 +29,13 @@ KITS = OUT / "kits"
 
 def style_md(style, contact, pace):
     st, c, p = STYLES["styles"][style], STYLES["contact"][contact], STYLES["pace"][pace]
+    ty = STYLES["types"][style][pace]
     return "\n".join([
         "# My Founder Working Style",
         "",
-        f"**{st['name']}** ({st['axes']} · {c['label']} · {p['label']})",
+        f"**{ty['name']}** ({st['axes']} · {p['label']} · {c['label']})",
         "",
-        st["line"],
+        ty["line"],
         "",
         "## What I want from my Right Hand",
         *[f"- {x}" for x in st["rh"]],
