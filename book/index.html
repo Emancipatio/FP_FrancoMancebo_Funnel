@@ -13,6 +13,13 @@
 .timer{display:inline-flex;justify-self:start;width:fit-content;align-items:center;gap:12px;margin-top:18px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.95rem;color:var(--muted)}
 .t-clock{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--amber);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .timer.over .t-clock{display:none}
+.qbox{display:grid;gap:10px;justify-items:start;padding:clamp(18px,3vw,26px);border:2px solid var(--accent);border-radius:20px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 22%,var(--surface)),var(--surface) 70%);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 14%,transparent),0 18px 50px -20px color-mix(in srgb,var(--accent) 60%,transparent);margin-bottom:8px}
+.qbadge{font:800 13px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);background:var(--mint);padding:8px 12px;border-radius:999px}
+.qbig{margin:0;font:800 clamp(1.7rem,4.2vw,2.6rem)/1.08 var(--display);letter-spacing:-.025em;color:var(--ink);text-wrap:balance}
+.qbig span{color:var(--amber)}
+.qsub{margin:0;color:var(--ink);opacity:.85;font-size:1rem;max-width:52ch}
+.qbox .timer{margin-top:6px;border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:var(--bg);color:var(--ink)}
+.qbox .t-clock{font-size:1.6rem}
 .kitcard{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:clamp(18px,3vw,30px)}
 .kitcard img{width:160px;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:16px}
 .kitcard img[hidden]{display:none}
@@ -35,15 +42,19 @@
 
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
-      <div class="eyebrow">You qualified for a free 20-minute call!</div>
+      <div class="qbox">
+        <div class="qbadge">✓ You qualified</div>
+        <p class="qbig">You qualified for a <span>FREE</span> 20-minute call!</p>
+        <p class="qsub">This invite is only for founders who qualify. Not everyone gets it. You did, because your business is exactly where a Right Hand changes everything.</p>
+        <div class="timer" id="timer" aria-live="polite">
+          <span class="t-label" id="t-label">Your invite is held for</span>
+          <span class="t-clock" id="t-clock">24:00:00</span>
+        </div>
+      </div>
       <h1 id="h1">You're exactly the founder a <em>Pareto Right Hand</em> is built for.</h1>
       <p class="lead" id="lead">Book your Match Call now and see which hours a Right Hand could take off your plate.</p>
       <a class="btn" href="#call">Book my call now →</a>
       <a class="kitnote" href="#kit"><span class="kn-dot">🎁</span><span id="kit-note">Your free <b>Right Hand Kit</b> is waiting on this page, just below the calendar.</span><span aria-hidden="true">↓</span></a>
-      <div class="timer" id="timer" aria-live="polite">
-        <span class="t-label" id="t-label">Your invite is held for</span>
-        <span class="t-clock" id="t-clock">24:00:00</span>
-      </div>
     </div>
     <div class="art"><img id="art" src="../brief/hero.webp" alt="A relaxed founder at a desk in the evening, with a labelled stack of handed-off work beside him" width="900" height="1125"></div>
   </section>
