@@ -16,6 +16,11 @@
 .emblems figcaption{font:700 12px/1.2 var(--display);text-align:center}
 .emblems.one{grid-template-columns:minmax(0,320px);justify-content:center}
 .emblems.one figcaption{font-size:18px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.link{color:var(--mint);font-weight:600;text-decoration:underline}
+.status{color:var(--mint);font-size:14px}
+.timeline .card b{font:700 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--mint)}
+.soft{margin-top:8px;text-align:center}
 </style>
 </head>
 <body>
@@ -27,11 +32,15 @@
 
   <section class="hero" aria-labelledby="h1">
     <div class="stack">
-      <div class="eyebrow">Thank you · Check your inbox</div>
-      <h1 id="h1">Now find out <em>which entrepreneur you are</em>.</h1>
-      <p class="lead" id="lead">Your quiz is on the kit page: 8 questions, then your kit downloads tuned to your style. We've emailed you the link too.</p>
-      <a class="btn" id="cta" href="../brief/#quiz">Take the quiz →</a>
-      <p class="note">Don't see the email? Check your promotions or spam folder for "Your Right Hand Kit".</p>
+      <div class="eyebrow">✓ You're in · Thank you</div>
+      <h1 id="h1">Thank you. Your <em>Right Hand Kit</em> is ready.</h1>
+      <p class="lead" id="lead">It's yours to keep, free. Download it now; we've also emailed you the link, so it's in your inbox whenever you need it.</p>
+      <div class="actions">
+        <a class="btn" id="zip" href="../brief/right-hand-kit.zip" download="right-hand-kit.zip">Download my kit (.zip) →</a>
+        <button class="btn ghost" id="copy" type="button">Copy my prompt</button>
+      </div>
+      <p class="note">Not on Claude? Copy the prompt and paste it into ChatGPT or Gemini. <a class="link" id="ptxt" href="../brief/prompt.txt">Open it as a text file</a>. <span class="status" id="status" role="status"></span></p>
+      <p class="note" id="quizline">Don't know your type yet? <a class="link" href="../#quiz">Take the 2-minute quiz</a> and get a kit tuned to you.</p>
     </div>
     <div class="emblems" id="grid" aria-label="The 8 entrepreneur personality types">
       <figure><img src="../assets/characters/trailblazer.webp" alt="" width="309" height="621"><figcaption>🧭 The Trailblazer 🧭</figcaption></figure>
@@ -45,18 +54,43 @@
     </div>
   </section>
 
+  <section aria-labelledby="inside">
+    <div class="stack">
+      <div class="eyebrow">What's inside</div>
+      <h2 id="inside">Your kit, <em id="inside-for">in four parts</em></h2>
+    </div>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card"><h3>1 · Week audit</h3><p>Reads your last 2 weeks of Gmail and Calendar (or asks 6 quick questions) and shows where your hours go, what to keep, delegate or automate, and what it costs you.</p></div>
+      <div class="card"><h3>2 · One fix today</h3><p>Pick one of your top 3 leaks and the kit builds the filters, templates or calendar rules on the spot. First hours back the same day.</p></div>
+      <div class="card"><h3>3 · Your hand-off file</h3><p>Job description, 30-day scorecard, your top 3 SOPs, access checklist and daily update format, ready for whoever takes the work.</p></div>
+      <div class="card"><h3>4 · How to work with me</h3><p id="card4">A one-page guide to how you like to work, so anyone who helps you gets it right from day one.</p></div>
+    </div>
+  </section>
+
   <section aria-labelledby="how">
     <div class="stack">
-      <div class="eyebrow">Get the most out of it</div>
-      <h2 id="how">Three steps</h2>
+      <div class="eyebrow">Set it up in 3 steps</div>
+      <h2 id="how">Two minutes to your <em>first audit</em></h2>
     </div>
     <ol class="steps" style="margin-top:22px;max-width:760px">
-      <li id="step1">Take the <strong>2-minute quiz</strong> on the kit page.</li>
-      <li>Download your <strong>tuned kit</strong>, or copy your prompt if you're not on Claude.</li>
+      <li><strong>Download</strong> your kit above (the .zip file).</li>
+      <li>In Claude, open <strong>Customize → Skills</strong>, choose <strong>Upload a skill</strong> and pick the .zip. Works on every plan, Free included.</li>
       <li>Type <strong>audit my week</strong>.</li>
     </ol>
   </section>
 
+  <section aria-labelledby="next">
+    <div class="stack">
+      <div class="eyebrow">What happens next</div>
+      <h2 id="next">From here, <em>it's your move</em></h2>
+    </div>
+    <div class="grid3 timeline" style="margin-top:22px">
+      <div class="card"><b>Now</b><h3>Kit in your inbox</h3><p>Look for "Your Right Hand Kit". Not there? Check promotions or spam.</p></div>
+      <div class="card"><b>In 2 days</b><h3>"Start with one leak"</h3><p>A short email on the single fix that wins back the most hours first.</p></div>
+      <div class="card"><b>Any time</b><h3>Run it again</h3><p>Type "audit my week" again in a few weeks: it re-reads your latest 14 days and compares them with your last run.</p></div>
+    </div>
+    <p class="note soft">When you're ready for someone to run your kit with you, <a class="link" href="https://paretotalent.com">see how a Pareto Right Hand works</a>.</p>
+  </section>
 
   <footer>
     <span>Pareto Talent · 100+ founders served · 93% retention at 12 months</span>
@@ -65,18 +99,34 @@
 </div>
 <script src="../assets/fptype.js"></script>
 <script>
-// Personalize by Entrepreneur Personality Type when the founder took the quiz on the landing page (same browser).
 (function(){
   var $ = function(id){ return document.getElementById(id); }, esc = FPType.esc;
+  var promptUrl = "../brief/prompt.txt";
+
+  // Copy the prompt; fall back to opening the text file.
+  $("copy").addEventListener("click", function(){
+    fetch(promptUrl).then(function(r){ return r.text(); })
+      .then(function(t){ return navigator.clipboard.writeText(t); })
+      .then(function(){ $("status").textContent = "Prompt copied. Paste it into any AI chat."; })
+      .catch(function(){ window.open(promptUrl, "_blank"); });
+  });
+
+  // Personalize by Entrepreneur Personality Type when the founder took the quiz on the landing page (same browser).
   FPType.getStyles("../kit/styles.json").then(function(S){
     var r = FPType.load(S); if (!r) return;
     var d = FPType.describe(S, r), short = d.name.replace(/^The /, "");
-    $("h1").innerHTML = "Your <em>" + esc(d.emoji + " " + short + " " + d.emoji) + " kit</em> is ready.";
-    $("lead").textContent = "You're " + d.title + ". " + d.motto + " Your kit is built around that. Download it on your kit page; we've emailed you the link too.";
-    $("cta").textContent = "Get my " + short + " kit →";
+    promptUrl = "../brief/kits/" + d.kit + ".txt";
+    $("h1").innerHTML = "Thank you, " + esc(short) + ". Your <em>" + esc(short) + " kit</em> is ready.";
+    $("lead").textContent = "You're " + d.title + ". " + d.motto + " Your Right Hand Kit is built around that, free and yours to keep. We've also emailed you the link.";
+    $("zip").href = "../brief/kits/" + d.kit + ".zip";
+    $("zip").setAttribute("download", "right-hand-kit-" + d.id + ".zip");
+    $("zip").textContent = "Download my " + short + " kit (.zip) →";
+    $("ptxt").href = promptUrl;
+    $("quizline").hidden = true;
+    $("inside-for").textContent = "built for " + (/^[AEIOU]/.test(short) ? "an " : "a ") + short;
+    $("card4").textContent = "A one-page guide written for " + (/^[AEIOU]/.test(short) ? "an " : "a ") + short + ": how you like updates, which decisions stay yours, and how to hand things to you.";
     $("grid").className = "emblems one";
     $("grid").innerHTML = '<figure><img src="../assets/characters/' + d.id + '.webp" alt="' + esc(d.name) + ' character" width="309" height="621"><figcaption>' + esc(d.title) + '</figcaption></figure>';
-    $("step1").innerHTML = "Open your <strong>kit page</strong>: your " + esc(short) + " result is already there.";
   }).catch(function(){});
 })();
 </script>
